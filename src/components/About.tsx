@@ -9,8 +9,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { ScrambleText } from "@/components/ScrambleText";
 import { about } from "@/data/about";
 import { cn, sectionShell } from "@/lib/utils";
+import { scrambleStagger } from "@/locales/scramble-stagger";
+import { useMessages } from "@/locales/use-messages";
 
 const view = {
   once: true,
@@ -35,10 +38,35 @@ const educationIcons = {
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+const METRIC_LABEL_STAGGER = [
+  scrambleStagger.aboutMetric0,
+  scrambleStagger.aboutMetric1,
+  scrambleStagger.aboutMetric2,
+] as const;
+
+const EDUCATION_STAGGER = [
+  {
+    title: scrambleStagger.aboutEdu0Title,
+    institution: scrambleStagger.aboutEdu0Institution,
+    period: scrambleStagger.aboutEdu0Period,
+  },
+  {
+    title: scrambleStagger.aboutEdu1Title,
+    institution: scrambleStagger.aboutEdu1Institution,
+    period: scrambleStagger.aboutEdu1Period,
+  },
+  {
+    title: scrambleStagger.aboutEdu2Title,
+    institution: scrambleStagger.aboutEdu2Institution,
+    period: scrambleStagger.aboutEdu2Period,
+  },
+] as const;
+
 function MetricCard({
   value,
   suffix,
   label,
+  labelStaggerMs,
   iconKey,
   run,
   countDelay,
@@ -47,6 +75,7 @@ function MetricCard({
   value: number;
   suffix: string;
   label: string;
+  labelStaggerMs: number;
   iconKey: keyof typeof metricIcons;
   run: boolean;
   countDelay: number;
@@ -81,7 +110,7 @@ function MetricCard({
             {suffix}
           </p>
           <p className="mt-1 text-sm leading-snug text-muted-foreground">
-            {label}
+            <ScrambleText text={label} staggerMs={labelStaggerMs} />
           </p>
         </div>
         <div className="flex size-11 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10 text-primary">
@@ -95,16 +124,18 @@ function MetricCard({
 function MetricsColumn() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const m = useMessages();
 
   return (
     <div ref={ref} className="flex flex-col gap-4">
-      {about.metrics.map((m, index) => (
+      {about.metrics.map((metric, index) => (
         <MetricCard
-          key={m.label}
-          value={m.value}
-          suffix={m.suffix}
-          label={m.label}
-          iconKey={m.icon}
+          key={metric.icon}
+          value={metric.value}
+          suffix={metric.suffix}
+          label={m.about.metrics[index]}
+          labelStaggerMs={METRIC_LABEL_STAGGER[index]}
+          iconKey={metric.icon}
           run={inView}
           countDelay={0.08 + index * 0.14}
           entranceDelay={index * 0.08}
@@ -120,12 +151,14 @@ function EducationCard({
   period,
   iconKey,
   index,
+  stagger,
 }: {
   title: string;
   institution: string;
   period: string;
   iconKey: keyof typeof educationIcons;
   index: number;
+  stagger: (typeof EDUCATION_STAGGER)[number];
 }) {
   const Icon = educationIcons[iconKey];
 
@@ -155,11 +188,13 @@ function EducationCard({
         </div>
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold leading-snug text-foreground">
-            {title}
+            <ScrambleText text={title} staggerMs={stagger.title} />
           </h3>
-          <p className="mt-1 text-sm text-muted-foreground">{institution}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            <ScrambleText text={institution} staggerMs={stagger.institution} />
+          </p>
           <p className="mt-2 font-mono text-xs uppercase tracking-wider text-primary">
-            {period}
+            <ScrambleText text={period} staggerMs={stagger.period} />
           </p>
         </div>
       </div>
@@ -168,6 +203,8 @@ function EducationCard({
 }
 
 export function About() {
+  const m = useMessages();
+
   return (
     <section
       id="sobre"
@@ -180,9 +217,12 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={view}
             transition={{ duration: 0.4, ease: easeOut }}
-            className="shrink-0 font-mono text-sm font-semibold tracking-[0.2em] text-primary"
+            className="shrink-0 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-primary"
           >
-            SOBRE
+            <ScrambleText
+              text={m.about.sectionLabel}
+              staggerMs={scrambleStagger.aboutSectionLabel}
+            />
           </motion.h2>
           <motion.div
             className="h-px flex-1 origin-left bg-primary sm:max-w-xl"
@@ -195,15 +235,19 @@ export function About() {
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={view}
             transition={{ duration: 0.48, ease: easeOut, delay: 0.06 }}
             className="text-lg font-medium leading-relaxed text-foreground sm:text-xl lg:col-span-7"
           >
-            {about.summary}
-          </motion.p>
+            <ScrambleText
+              as="p"
+              text={m.about.summary}
+              staggerMs={scrambleStagger.aboutSummary}
+            />
+          </motion.div>
 
           <div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
             <MetricsColumn />
@@ -212,12 +256,13 @@ export function About() {
           <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:col-start-1 lg:row-start-2 lg:grid-cols-1 xl:grid-cols-2">
             {about.education.map((item, index) => (
               <EducationCard
-                key={`${item.title}-${item.period}`}
-                title={item.title}
-                institution={item.institution}
-                period={item.period}
+                key={`${item.icon}-${index}`}
+                title={m.about.education[index].title}
+                institution={m.about.education[index].institution}
+                period={m.about.education[index].period}
                 iconKey={item.icon}
                 index={index}
+                stagger={EDUCATION_STAGGER[index]}
               />
             ))}
           </div>

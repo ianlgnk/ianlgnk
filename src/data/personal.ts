@@ -1,7 +1,6 @@
 export const personal = {
   name: "Ian Langkammer",
   handle: "ianlgnk",
-  title: "Engenheiro de Software Full Stack",
   location: "Belo Horizonte, MG",
   email: "ianlgnk@gmail.com",
   github: "https://github.com/ianlgnk",

@@ -3,13 +3,16 @@ import { ChevronDown, ExternalLink, ImageIcon, Sparkles } from "lucide-react";
 import { useId, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 
+import { ScrambleText } from "@/components/ScrambleText";
 import {
   academicProjects,
-  getProjectStatusLabel,
   mainProjects,
   type Project,
   type ProjectStatus,
 } from "@/data/projects";
+import { formatNamed } from "@/lib/format-named";
+import { useMessages } from "@/locales/use-messages";
+import { scrambleContent, scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionPaddingX, sectionShell } from "@/lib/utils";
 
 const view = {
@@ -62,7 +65,14 @@ function statusBadgeClass(status: ProjectStatus) {
   }
 }
 
-function StatusBadge({ status }: { status: ProjectStatus }) {
+function StatusBadge({
+  status,
+  staggerMs = scrambleContent.projectStatus,
+}: {
+  status: ProjectStatus;
+  staggerMs?: number;
+}) {
+  const m = useMessages();
   return (
     <span
       className={cn(
@@ -70,7 +80,10 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
         statusBadgeClass(status),
       )}
     >
-      {getProjectStatusLabel(status)}
+      <ScrambleText
+        text={m.projects.status[status]}
+        staggerMs={staggerMs}
+      />
     </span>
   );
 }
@@ -134,10 +147,22 @@ function LinkIconButton({
   );
 }
 
-function ImageHoverOverlay({ project }: { project: Project }) {
+function ImageHoverOverlay({
+  project,
+  displayTitle,
+}: {
+  project: Project;
+  displayTitle: string;
+}) {
+  const m = useMessages();
   const gh = project.github?.trim();
   const demo = project.demo?.trim();
   if (!gh && !demo) return null;
+
+  const demoLabel =
+    demo && demo.toLowerCase().endsWith(".pdf")
+      ? formatNamed(m.projects.ariaDemoPdf, { name: displayTitle })
+      : formatNamed(m.projects.ariaDemoSite, { name: displayTitle });
 
   return (
     <div
@@ -148,19 +173,15 @@ function ImageHoverOverlay({ project }: { project: Project }) {
     >
       <div className="flex gap-3">
         {gh ? (
-          <LinkIconButton href={gh} label={`GitHub: ${project.name}`}>
+          <LinkIconButton
+            href={gh}
+            label={formatNamed(m.projects.ariaGithub, { name: displayTitle })}
+          >
             <FaGithub className="size-5" />
           </LinkIconButton>
         ) : null}
         {demo ? (
-          <LinkIconButton
-            href={demo}
-            label={
-              demo.toLowerCase().endsWith(".pdf")
-                ? `Documento PDF: ${project.name}`
-                : `Demo ou site: ${project.name}`
-            }
-          >
+          <LinkIconButton href={demo} label={demoLabel}>
             <ExternalLink className="size-5" />
           </LinkIconButton>
         ) : null}
@@ -169,10 +190,22 @@ function ImageHoverOverlay({ project }: { project: Project }) {
   );
 }
 
-function FooterLinks({ project }: { project: Project }) {
+function FooterLinks({
+  project,
+  displayTitle,
+}: {
+  project: Project;
+  displayTitle: string;
+}) {
+  const m = useMessages();
   const gh = project.github?.trim();
   const demo = project.demo?.trim();
   if (!gh && !demo) return null;
+
+  const demoLabel =
+    demo && demo.toLowerCase().endsWith(".pdf")
+      ? formatNamed(m.projects.ariaDemoPdf, { name: displayTitle })
+      : formatNamed(m.projects.ariaDemoSite, { name: displayTitle });
 
   return (
     <div className="mt-4 flex items-center gap-2 md:hidden">
@@ -182,7 +215,7 @@ function FooterLinks({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-          aria-label={`GitHub: ${project.name}`}
+          aria-label={formatNamed(m.projects.ariaGithub, { name: displayTitle })}
         >
           <FaGithub className="size-4" />
         </a>
@@ -193,11 +226,7 @@ function FooterLinks({ project }: { project: Project }) {
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-          aria-label={
-            demo.toLowerCase().endsWith(".pdf")
-              ? `PDF: ${project.name}`
-              : `Site ou demo: ${project.name}`
-          }
+          aria-label={demoLabel}
         >
           <ExternalLink className="size-4" />
         </a>
@@ -206,12 +235,20 @@ function FooterLinks({ project }: { project: Project }) {
   );
 }
 
-function TechTags({ tags, baseDelay }: { tags: string[]; baseDelay: number }) {
+function TechTags({
+  slug,
+  tags,
+  baseDelay,
+}: {
+  slug: string;
+  tags: string[];
+  baseDelay: number;
+}) {
   return (
     <div className="mt-4 flex flex-wrap gap-2">
       {tags.map((tag, i) => (
         <motion.span
-          key={tag}
+          key={`${slug}-${tag}-${i}`}
           initial={{ opacity: 0, y: 6 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -232,25 +269,45 @@ function TechTags({ tags, baseDelay }: { tags: string[]; baseDelay: number }) {
 function ProjectCardBody({
   project,
   tagBaseDelay,
+  titleStaggerMs = scrambleContent.projectTitles,
+  descriptionStaggerMs = scrambleContent.projectDescriptions,
+  statusStaggerMs = scrambleContent.projectStatus,
 }: {
   project: Project;
   tagBaseDelay: number;
+  titleStaggerMs?: number;
+  descriptionStaggerMs?: number;
+  statusStaggerMs?: number;
 }) {
+  const m = useMessages();
+  const description = m.projects.descriptions[project.slug];
+  const displayTitle = m.projects.titles[project.slug];
+
   return (
     <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-2">
         <h3 className="font-mono text-base font-semibold text-card-foreground sm:text-lg">
-          {project.name}
+          <ScrambleText
+            text={displayTitle}
+            staggerMs={titleStaggerMs}
+          />
         </h3>
       </div>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-        {project.description}
+        <ScrambleText
+          text={description}
+          staggerMs={descriptionStaggerMs}
+        />
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <StatusBadge status={project.status} />
+        <StatusBadge status={project.status} staggerMs={statusStaggerMs} />
       </div>
-      <TechTags tags={project.tags} baseDelay={tagBaseDelay} />
-      <FooterLinks project={project} />
+      <TechTags
+        slug={project.slug}
+        tags={[...project.tags]}
+        baseDelay={tagBaseDelay}
+      />
+      <FooterLinks project={project} displayTitle={displayTitle} />
     </div>
   );
 }
@@ -258,10 +315,19 @@ function ProjectCardBody({
 function ProjectCard({
   project,
   tagBaseDelay = 0.2,
+  titleStaggerMs,
+  descriptionStaggerMs,
+  statusStaggerMs,
 }: {
   project: Project;
   tagBaseDelay?: number;
+  titleStaggerMs?: number;
+  descriptionStaggerMs?: number;
+  statusStaggerMs?: number;
 }) {
+  const m = useMessages();
+  const displayTitle = m.projects.titles[project.slug];
+
   return (
     <article
       className={cn(
@@ -276,14 +342,29 @@ function ProjectCard({
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/15 to-transparent"
           aria-hidden
         />
-        <ImageHoverOverlay project={project} />
+        <ImageHoverOverlay project={project} displayTitle={displayTitle} />
       </div>
-      <ProjectCardBody project={project} tagBaseDelay={tagBaseDelay} />
+      <ProjectCardBody
+        project={project}
+        tagBaseDelay={tagBaseDelay}
+        titleStaggerMs={titleStaggerMs}
+        descriptionStaggerMs={descriptionStaggerMs}
+        statusStaggerMs={statusStaggerMs}
+      />
     </article>
   );
 }
 
 function FeaturedProjectCard({ project }: { project: Project }) {
+  const m = useMessages();
+  const description = m.projects.descriptions[project.slug];
+  const displayTitle = m.projects.titles[project.slug];
+  const demoRaw = project.demo?.trim();
+  const demoLabel =
+    demoRaw && demoRaw.toLowerCase().endsWith(".pdf")
+      ? formatNamed(m.projects.ariaDemoPdf, { name: displayTitle })
+      : formatNamed(m.projects.ariaDemoSite, { name: displayTitle });
+
   return (
     <article
       className={cn(
@@ -297,35 +378,41 @@ function FeaturedProjectCard({ project }: { project: Project }) {
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1 rounded-full border border-primary/35 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
             <Sparkles className="size-3.5" aria-hidden />
-            Destaque
+            <ScrambleText
+              text={m.projects.featuredLabel}
+              staggerMs={scrambleContent.projectFeaturedLabel}
+            />
           </span>
           <StatusBadge status={project.status} />
         </div>
         <h3 className="mt-4 font-mono text-xl font-semibold text-card-foreground sm:text-2xl">
-          {project.name}
+          <ScrambleText
+            text={displayTitle}
+            staggerMs={scrambleContent.projectTitles}
+          />
         </h3>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-          {project.description}
+          <ScrambleText
+            text={description}
+            staggerMs={scrambleContent.projectDescriptions}
+          />
         </p>
-        <TechTags tags={project.tags} baseDelay={0.22} />
+        <TechTags
+          slug={project.slug}
+          tags={[...project.tags]}
+          baseDelay={0.22}
+        />
         <div className="mt-6 flex flex-wrap gap-3">
           {project.github?.trim() ? (
             <LinkIconButton
               href={project.github.trim()}
-              label={`GitHub: ${project.name}`}
+              label={formatNamed(m.projects.ariaGithub, { name: displayTitle })}
             >
               <FaGithub className="size-5" />
             </LinkIconButton>
           ) : null}
           {project.demo?.trim() ? (
-            <LinkIconButton
-              href={project.demo.trim()}
-              label={
-                project.demo.toLowerCase().endsWith(".pdf")
-                  ? `Documento: ${project.name}`
-                  : `Demo ou site: ${project.name}`
-              }
-            >
+            <LinkIconButton href={project.demo.trim()} label={demoLabel}>
               <ExternalLink className="size-5" />
             </LinkIconButton>
           ) : null}
@@ -338,7 +425,7 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-background/25 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-background/35"
           aria-hidden
         />
-        <ImageHoverOverlay project={project} />
+        <ImageHoverOverlay project={project} displayTitle={displayTitle} />
       </div>
     </article>
   );
@@ -347,17 +434,21 @@ function FeaturedProjectCard({ project }: { project: Project }) {
 function AcademicCollapsible() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
+  const m = useMessages();
 
   return (
     <div className="mt-12 rounded-xl border border-border bg-muted/25">
       <div
         className={cn(
-          "flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+          "flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
           sectionPaddingX,
         )}
       >
         <h3 className="font-mono text-sm font-semibold text-foreground">
-          Outros projetos acadêmicos
+          <ScrambleText
+            text={m.projects.academicSectionTitle}
+            staggerMs={scrambleContent.academicSectionTitle}
+          />
         </h3>
         <button
           type="button"
@@ -370,7 +461,9 @@ function AcademicCollapsible() {
             "sm:self-auto",
           )}
         >
-          {open ? "Ocultar projetos acadêmicos" : "Ver projetos acadêmicos"}
+          {open
+            ? m.projects.academicToggleHide
+            : m.projects.academicToggleShow}
           <ChevronDown
             className={cn(
               "size-4 shrink-0 transition-transform duration-300 ease-out",
@@ -392,11 +485,12 @@ function AcademicCollapsible() {
             transition={{ duration: 0.35, ease: easeOut }}
             className="overflow-hidden"
           >
-            <div className={cn("pb-5 pt-4", sectionPaddingX)}>
+            <div className={cn("border-t border-border pb-5 pt-4", sectionPaddingX)}>
               <p className="mb-4 px-1 text-xs text-muted-foreground">
-                Projetos de pesquisa e extensão durante o curso técnico em
-                informática. Projetos desenvolvidos durante a graduação em
-                Sistemas de Informação.
+                <ScrambleText
+                  text={m.projects.academicIntro}
+                  staggerMs={scrambleContent.academicIntro}
+                />
               </p>
               <motion.div
                 initial="hidden"
@@ -405,8 +499,16 @@ function AcademicCollapsible() {
                 className="grid gap-6 sm:grid-cols-2"
               >
                 {academicProjects.map((p) => (
-                  <motion.div key={p.name} variants={gridItem}>
-                    <ProjectCard project={p} tagBaseDelay={0.12} />
+                  <motion.div key={p.slug} variants={gridItem}>
+                    <ProjectCard
+                      project={p}
+                      tagBaseDelay={0.12}
+                      titleStaggerMs={scrambleContent.academicProjectTitles}
+                      descriptionStaggerMs={
+                        scrambleContent.academicProjectDescriptions
+                      }
+                      statusStaggerMs={scrambleContent.academicProjectStatus}
+                    />
                   </motion.div>
                 ))}
               </motion.div>
@@ -421,6 +523,7 @@ function AcademicCollapsible() {
 export function Projects() {
   const featured = mainProjects.find((p) => p.featured);
   const rest = mainProjects.filter((p) => !p.featured);
+  const m = useMessages();
 
   return (
     <section
@@ -435,11 +538,16 @@ export function Projects() {
           transition={{ duration: 0.45, ease: easeOut }}
         >
           <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
-            Projetos
+            <ScrambleText
+              text={m.projects.sectionTitle}
+              staggerMs={scrambleStagger.projectsTitle}
+            />
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Seleção de trabalhos e experimentos — destaque para produto em
-            construção.
+            <ScrambleText
+              text={m.projects.sectionSubtitle}
+              staggerMs={scrambleStagger.projectsSubtitle}
+            />
           </p>
 
           <div className="mt-10 space-y-8">
@@ -463,7 +571,7 @@ export function Projects() {
               className="grid gap-6 sm:grid-cols-2"
             >
               {rest.map((project) => (
-                <motion.div key={project.name} variants={gridItem}>
+                <motion.div key={project.slug} variants={gridItem}>
                   <ProjectCard project={project} />
                 </motion.div>
               ))}

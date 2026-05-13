@@ -5,12 +5,19 @@ import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { HeroName } from "@/components/hero/HeroName";
 import { HeroParticles } from "@/components/hero/HeroParticles";
 import { HeroTypewriter } from "@/components/hero/HeroTypewriter";
+import { ScrambleText } from "@/components/ScrambleText";
 import { Button } from "@/components/ui/button";
+import { useLocale, type Locale } from "@/components/locale-provider";
 import { personal } from "@/data/personal";
+import { useMessages } from "@/locales/use-messages";
+import { scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionShell } from "@/lib/utils";
 
-const cvFile = "ianlgnk(pt-Br).pdf";
-const cvPath = `${import.meta.env.BASE_URL}cv/${encodeURIComponent(cvFile)}`;
+/** Filenames in `public/cv/` (asset names keep mixed casing). */
+const CV_FILE_BY_LOCALE: Record<Locale, string> = {
+  "pt-BR": "ianlgnk(pt-Br).pdf",
+  "en-US": "ianlgnk(en-Us).pdf",
+};
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -21,6 +28,11 @@ const enter = {
 };
 
 export function Hero() {
+  const { locale } = useLocale();
+  const m = useMessages();
+  const cvFile = CV_FILE_BY_LOCALE[locale];
+  const cvPath = `${import.meta.env.BASE_URL}cv/${encodeURIComponent(cvFile)}`;
+
   return (
     <section
       id="hero"
@@ -40,7 +52,11 @@ export function Hero() {
             transition={{ ...enter.transition, delay: 0 }}
             className="font-mono text-sm text-primary sm:text-base"
           >
-            {personal.title}
+            <ScrambleText
+              text={m.hero.roleTitle}
+              className="font-mono text-sm text-primary sm:text-base"
+              staggerMs={scrambleStagger.heroRole}
+            />
           </motion.p>
 
           <motion.div
@@ -54,7 +70,7 @@ export function Hero() {
             {...enter}
             transition={{ ...enter.transition, delay: 0.2 }}
           >
-            <HeroTypewriter />
+            <HeroTypewriter key={locale} />
           </motion.div>
 
           <motion.p
@@ -62,9 +78,17 @@ export function Hero() {
             transition={{ ...enter.transition, delay: 0.35 }}
             className="max-w-xl text-base leading-relaxed text-muted-foreground"
           >
-            Estudando programação desde os 15 anos.
+            <ScrambleText
+              as="span"
+              text={m.hero.bioLine1}
+              staggerMs={scrambleStagger.heroBio1}
+            />
             <br />
-            Desenvolvendo soluções Web/Mobile desde os 19!
+            <ScrambleText
+              as="span"
+              text={m.hero.bioLine2}
+              staggerMs={scrambleStagger.heroBio2}
+            />
           </motion.p>
 
           <motion.div
@@ -73,12 +97,24 @@ export function Hero() {
             className="flex flex-wrap items-center gap-3 pt-2"
           >
             <Button asChild size="lg">
-              <a href="#projetos">Ver Projetos</a>
+              <a href="#projetos">
+                <ScrambleText
+                  text={m.hero.ctaProjects}
+                  staggerMs={scrambleStagger.heroCtaProjects}
+                />
+              </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <a href={cvPath} download>
+              <a
+                href={cvPath}
+                download={cvFile}
+                className="inline-flex items-center gap-2"
+              >
                 <Download className="size-4" />
-                Baixar CV
+                <ScrambleText
+                  text={m.hero.ctaCv}
+                  staggerMs={scrambleStagger.heroCtaCv}
+                />
               </a>
             </Button>
           </motion.div>
@@ -93,7 +129,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              aria-label="GitHub"
+              aria-label={m.hero.ariaGithub}
             >
               <FaGithub className="size-5" />
             </a>
@@ -102,7 +138,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              aria-label="LinkedIn"
+              aria-label={m.hero.ariaLinkedin}
             >
               <FaLinkedin className="size-5" />
             </a>
@@ -111,7 +147,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              aria-label="Currículo Lattes"
+              aria-label={m.hero.ariaLattes}
             >
               <GraduationCap className="size-5" />
             </a>

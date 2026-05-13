@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -16,8 +17,12 @@ import {
 import { Building2, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ScrambleText } from "@/components/ScrambleText";
 import type { ExperienceItem } from "@/data/experience";
-import { experience } from "@/data/experience";
+import { experienceCore } from "@/data/experience";
+import { formatNamed } from "@/lib/format-named";
+import { useMessages } from "@/locales/use-messages";
+import { scrambleContent, scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionShell } from "@/lib/utils";
 
 const view = {
@@ -103,6 +108,7 @@ function ExperienceCard({
   index: number;
   isLg: boolean;
 }) {
+  const m = useMessages();
   const [expanded, setExpanded] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
 
@@ -125,7 +131,9 @@ function ExperienceCard({
         href={item.websiteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Visitar site de ${item.company} (abre em nova aba)`}
+        aria-label={formatNamed(m.experience.visitSiteAria, {
+          company: item.company,
+        })}
         className="absolute right-4 top-4 block rounded-lg ring-offset-2 ring-offset-background transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:right-5 sm:top-5"
       >
         {logoFailed ? (
@@ -155,11 +163,19 @@ function ExperienceCard({
               : "border-border bg-muted/90 text-muted-foreground",
           )}
         >
-          {item.current ? "Atual" : "Anterior"}
+          <ScrambleText
+            text={
+              item.current ? m.experience.badgeCurrent : m.experience.badgePast
+            }
+            staggerMs={scrambleContent.experienceBadges}
+          />
         </span>
 
         <h3 className="mt-3 text-lg font-semibold leading-snug text-foreground">
-          {item.role}
+          <ScrambleText
+            text={item.role}
+            staggerMs={scrambleContent.experienceRoles}
+          />
         </h3>
         <a
           href={item.websiteUrl}
@@ -170,9 +186,10 @@ function ExperienceCard({
           {item.company}
         </a>
         <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground">
-          {item.period}
-          <span className="text-muted-foreground/70"> · </span>
-          <span>{item.duration}</span>
+          <ScrambleText
+            text={`${item.period} · ${item.duration}`}
+            staggerMs={scrambleContent.experienceMeta}
+          />
         </p>
       </div>
 
@@ -208,7 +225,10 @@ function ExperienceCard({
             )}
             aria-hidden
           />
-          Responsabilidades
+          <ScrambleText
+            text={m.experience.responsibilitiesToggle}
+            staggerMs={scrambleContent.experienceRespToggle}
+          />
         </Button>
         <AnimatePresence initial={false}>
           {expanded ? (
@@ -221,10 +241,19 @@ function ExperienceCard({
             >
               <div className="pt-2 text-sm leading-relaxed text-muted-foreground">
                 {item.responsibilities.trim() ? (
-                  <p className="whitespace-pre-line">{item.responsibilities}</p>
+                  <p className="whitespace-pre-line">
+                    <ScrambleText
+                      as="span"
+                      text={item.responsibilities}
+                      staggerMs={scrambleContent.experienceRespBodies}
+                    />
+                  </p>
                 ) : (
                   <p className="italic text-muted-foreground">
-                    Descrição das responsabilidades em breve.
+                    <ScrambleText
+                      text={m.experience.responsibilitiesPlaceholder}
+                      staggerMs={scrambleContent.experienceRespBodies}
+                    />
                   </p>
                 )}
               </div>
@@ -237,6 +266,16 @@ function ExperienceCard({
 }
 
 export function Experience() {
+  const m = useMessages();
+  const items = useMemo(
+    () =>
+      experienceCore.map((core) => ({
+        ...core,
+        ...m.experience.items[core.id],
+      })),
+    [m.experience],
+  );
+
   const timelineRef = useRef<HTMLDivElement>(null);
   const dotSlotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeDotIndex, setActiveDotIndex] = useState(0);
@@ -258,7 +297,7 @@ export function Experience() {
     const tipY = c.top + progress * c.height;
 
     let next = 0;
-    for (let i = 0; i < experience.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       const slot = dotSlotRefs.current[i];
       if (!slot) continue;
       const r = slot.getBoundingClientRect();
@@ -266,7 +305,7 @@ export function Experience() {
       if (tipY >= dotY - 2) next = i;
     }
     setActiveDotIndex((p) => (p === next ? p : next));
-  }, []);
+  }, [items.length]);
 
   useMotionValueEvent(scrollYProgress, "change", updateActiveFromLineProgress);
 
@@ -293,11 +332,16 @@ export function Experience() {
           transition={{ duration: 0.45, ease }}
         >
           <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
-            Experiência
+            <ScrambleText
+              text={m.experience.sectionTitle}
+              staggerMs={scrambleStagger.experienceTitle}
+            />
           </h2>
           <p className="mt-2 max-w-2xl text-muted-foreground">
-            Trajetória profissional em ordem cronológica (mais recente
-            primeiro).
+            <ScrambleText
+              text={m.experience.sectionSubtitle}
+              staggerMs={scrambleStagger.experienceSubtitle}
+            />
           </p>
         </motion.div>
 
@@ -313,7 +357,7 @@ export function Experience() {
           />
 
           <ol className="relative z-[1] m-0 list-none space-y-14 p-0 lg:space-y-20">
-            {experience.map((item, index) => {
+            {items.map((item, index) => {
               const isLeft = index % 2 === 0;
               return (
                 <li key={item.id}>

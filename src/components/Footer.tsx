@@ -3,7 +3,12 @@ import { GraduationCap } from "lucide-react";
 import { Fragment } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
+import { ScrambleText } from "@/components/ScrambleText";
 import { personal } from "@/data/personal";
+import { formatNamed } from "@/lib/format-named";
+import type { Messages } from "@/locales/messages";
+import { useMessages } from "@/locales/use-messages";
+import { scrambleContent, scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionShell } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -14,16 +19,27 @@ const view = {
   amount: 0.2 as const,
 };
 
-const navLinks = [
-  { href: "#hero", label: "Início" },
-  { href: "#sobre", label: "Sobre" },
-  { href: "#experiencia", label: "Experiência" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#habilidades", label: "Habilidades" },
-  { href: "#contato", label: "Contato" },
-] as const;
+const FOOTER_NAV: readonly {
+  href: string;
+  linkKey: keyof Messages["nav"]["links"];
+}[] = [
+  { href: "#hero", linkKey: "hero" },
+  { href: "#sobre", linkKey: "about" },
+  { href: "#experiencia", linkKey: "experience" },
+  { href: "#projetos", linkKey: "projects" },
+  { href: "#habilidades", linkKey: "skills" },
+  { href: "#contato", linkKey: "contact" },
+];
 
-function FooterNavLink({ href, label }: { href: string; label: string }) {
+function FooterNavLink({
+  href,
+  label,
+  staggerMs,
+}: {
+  href: string;
+  label: string;
+  staggerMs: number;
+}) {
   return (
     <a
       href={href}
@@ -33,7 +49,7 @@ function FooterNavLink({ href, label }: { href: string; label: string }) {
         "hover:after:scale-x-100",
       )}
     >
-      {label}
+      <ScrambleText text={label} staggerMs={staggerMs} />
     </a>
   );
 }
@@ -63,6 +79,9 @@ function SocialIcon({
 }
 
 export function Footer() {
+  const m = useMessages();
+  const creditLead = formatNamed(m.footer.creditLead, { name: personal.name });
+
   return (
     <footer className="relative border-t border-border/60 bg-muted/35 py-10 dark:bg-black/45">
       <div className={sectionShell}>
@@ -81,18 +100,28 @@ export function Footer() {
           transition={{ duration: 0.4, ease: easeOut, delay: 0.08 }}
           className="flex flex-col items-center gap-8 text-center md:flex-row md:items-start md:justify-between md:gap-6 md:text-left"
         >
-          <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            © 2026{" "}
-            <span className="font-medium text-foreground">{personal.name}</span>
-            {" · "}
-            Feito com{" "}
-            <span className="text-red-500 dark:text-red-400" aria-hidden>
-              ♥
-            </span>{" "}
-            em Belo Horizonte
-            <br />
-            <span className="text-xs">
-              com{" "}
+          <div className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <p className="inline-block text-left">
+              <ScrambleText
+                text={creditLead}
+                staggerMs={scrambleContent.footerCredit}
+              />{" "}
+              <span
+                className="text-red-500 dark:text-red-400"
+                aria-hidden
+              >
+                ♥
+              </span>{" "}
+              <ScrambleText
+                text={m.footer.creditTrail}
+                staggerMs={scrambleContent.footerCredit}
+              />
+            </p>
+            <p className="mt-1 text-xs">
+              <ScrambleText
+                text={m.footer.stackWith}
+                staggerMs={scrambleContent.footerStackWith}
+              />{" "}
               <a
                 href="https://react.dev"
                 target="_blank"
@@ -101,7 +130,10 @@ export function Footer() {
               >
                 React
               </a>{" "}
-              e{" "}
+              <ScrambleText
+                text={m.footer.stackAnd}
+                staggerMs={scrambleContent.footerStackAnd}
+              />{" "}
               <a
                 href="https://tailwindcss.com"
                 target="_blank"
@@ -110,33 +142,37 @@ export function Footer() {
               >
                 Tailwind
               </a>
-            </span>
-          </p>
+            </p>
+          </div>
 
           <nav
             className="flex flex-wrap items-center justify-center gap-y-2 text-sm md:justify-center"
-            aria-label="Rodapé"
+            aria-label={m.footer.navAria}
           >
-            {navLinks.map((link, i) => (
+            {FOOTER_NAV.map((link, i) => (
               <Fragment key={link.href}>
                 {i > 0 ? (
                   <span className="mx-2 text-muted-foreground/45 select-none" aria-hidden>
                     ·
                   </span>
                 ) : null}
-                <FooterNavLink href={link.href} label={link.label} />
+                <FooterNavLink
+                  href={link.href}
+                  label={m.nav.links[link.linkKey]}
+                  staggerMs={scrambleStagger.navLink(i)}
+                />
               </Fragment>
             ))}
           </nav>
 
           <div className="flex items-center justify-center gap-4 md:justify-end">
-            <SocialIcon href={personal.github} label="GitHub">
+            <SocialIcon href={personal.github} label={m.hero.ariaGithub}>
               <FaGithub className="size-5" />
             </SocialIcon>
-            <SocialIcon href={personal.linkedin} label="LinkedIn">
+            <SocialIcon href={personal.linkedin} label={m.hero.ariaLinkedin}>
               <FaLinkedin className="size-5" />
             </SocialIcon>
-            <SocialIcon href={personal.lattes} label="Currículo Lattes">
+            <SocialIcon href={personal.lattes} label={m.contact.ariaLattes}>
               <GraduationCap className="size-5" strokeWidth={2} />
             </SocialIcon>
           </div>

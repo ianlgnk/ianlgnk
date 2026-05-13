@@ -4,15 +4,20 @@
     <meta charset="UTF-8" />
     <script>
       try {
-        var t =
-          localStorage.getItem('ianlgnk-theme') ||
-          localStorage.getItem('portfolio-theme')
-        document.documentElement.classList.toggle('dark', t !== 'light')
+        var t = localStorage.getItem("ianlgnk-theme");
+        var dark;
+        if (t === "light") dark = false;
+        else if (t === "dark") dark = true;
+        else dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
       } catch (_) {
-        document.documentElement.classList.add('dark')
+        document.documentElement.classList.add("dark");
       }
     </script>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑🏼‍💻</text></svg>"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -25,6 +30,29 @@
       rel="stylesheet"
     />
     <title>Ian Langkammer · Portfólio</title>
+    <script>
+      try {
+        var loc = localStorage.getItem("ianlgnk-locale");
+        var descEl = document.querySelector('meta[name="description"]');
+        if (loc === "en-US") {
+          document.documentElement.lang = "en-US";
+          if (descEl)
+            descEl.setAttribute(
+              "content",
+              "Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte.",
+            );
+          document.title = "Ian Langkammer · Portfolio";
+        } else {
+          document.documentElement.lang = "pt-BR";
+          if (descEl)
+            descEl.setAttribute(
+              "content",
+              "Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.",
+            );
+          document.title = "Ian Langkammer · Portfólio";
+        }
+      } catch (_) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

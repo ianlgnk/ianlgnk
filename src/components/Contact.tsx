@@ -7,16 +7,19 @@ import {
   Mail,
   Send,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ElementType, ReactNode } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { Button } from "@/components/ui/button";
+import { ScrambleText } from "@/components/ScrambleText";
 import {
-  contactSection,
   emailJsTemplateFields,
 } from "@/data/contact";
 import { personal } from "@/data/personal";
+import type { ContactMessages } from "@/locales/contact-messages";
+import { useMessages } from "@/locales/use-messages";
+import { scrambleContent, scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionShell } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -32,6 +35,33 @@ const errEase = [0.22, 1, 0.36, 1] as const;
 const fieldShakeEase = [0.33, 0, 0.25, 1] as const;
 const fieldShakeTimes = [0, 0.18, 0.36, 0.55, 0.75, 1] as const;
 const fieldShakeX = [0, -4, 4, -2.5, 2.5, 0] as const;
+
+/** Fake placeholder so locale change can run `ScrambleText` (native `placeholder` cannot). */
+function GhostPlaceholder({
+  show,
+  text,
+  staggerMs,
+  multiline,
+}: {
+  show: boolean;
+  text: string;
+  staggerMs: number;
+  multiline?: boolean;
+}) {
+  if (!show) return null;
+  return (
+    <span
+      className={cn(
+        "pointer-events-none absolute left-3.5 z-[1] text-sm leading-normal text-muted-foreground",
+        multiline
+          ? "top-3 right-4 whitespace-pre-wrap pr-1"
+          : "top-1/2 max-w-[calc(100%-1.75rem)] -translate-y-1/2 truncate",
+      )}
+    >
+      <ScrambleText text={text} staggerMs={staggerMs} />
+    </span>
+  );
+}
 
 function FormFieldError({
   id,
@@ -100,7 +130,7 @@ function getEmailJsConfig() {
   return { publicKey, serviceId, templateId, isReady: Boolean(publicKey && serviceId && templateId) };
 }
 
-function AvailabilityBadge() {
+function AvailabilityBadge({ children }: { children: ReactNode }) {
   return (
     <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/35 bg-primary/10 px-3 py-1.5 text-sm font-medium text-foreground">
       <span className="relative flex size-3 shrink-0 items-center justify-center">
@@ -113,7 +143,7 @@ function AvailabilityBadge() {
           aria-hidden
         />
       </span>
-      <span>{contactSection.badge}</span>
+      {children}
     </div>
   );
 }
@@ -125,11 +155,14 @@ function SocialLinkButton({
   label,
   icon: Icon,
   variant = "outline",
+  scrambleStaggerMs,
 }: {
   href: string;
   label: string;
   icon: ElementType<{ className?: string; "aria-hidden"?: boolean }>;
   variant?: "primary" | "outline";
+  /** When set, label is rendered with locale-change scramble. */
+  scrambleStaggerMs?: number;
 }) {
   return (
     <motion.a
@@ -154,7 +187,13 @@ function SocialLinkButton({
         )}
         aria-hidden
       />
-      <span className="truncate">{label}</span>
+      <span className="min-w-0 truncate">
+        {scrambleStaggerMs !== undefined ? (
+          <ScrambleText text={label} staggerMs={scrambleStaggerMs} />
+        ) : (
+          label
+        )}
+      </span>
     </motion.a>
   );
 }
@@ -168,14 +207,19 @@ const fieldBaseClass = cn(
 
 type ContactFieldKey = "name" | "email" | "message";
 
-function validateForm(name: string, email: string, message: string) {
+function validateForm(
+  copy: ContactMessages,
+  name: string,
+  email: string,
+  message: string,
+) {
   const errors: { name?: string; email?: string; message?: string } = {};
   const n = name.trim();
   const e = email.trim();
   const m = message.trim();
-  if (n.length < 2) errors.name = "Informe seu nome (mín. 2 caracteres).";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) errors.email = "Informe um e-mail válido.";
-  if (m.length < 12) errors.message = "Escreva uma mensagem um pouco mais completa (mín. 12 caracteres).";
+  if (n.length < 2) errors.name = copy.errorName;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) errors.email = copy.errorEmail;
+  if (m.length < 12) errors.message = copy.errorMessage;
   return errors;
 }
 
@@ -220,6 +264,7 @@ function ContactFieldGroup({
 
 export function Contact() {
   const mailto = `mailto:${personal.email}`;
+  const m = useMessages();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -227,12 +272,18 @@ export function Contact() {
   const [touched, setTouched] = useState({ name: false, email: false, message: false });
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorBanner, setErrorBanner] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<ReturnType<typeof validateForm>>({});
+  /** Fields that were invalid on the last submit attempt (drives visibility; copy comes from `liveFieldErrors`). */
+  const [staleInvalidKeys, setStaleInvalidKeys] = useState<Partial<Record<ContactFieldKey, true>>>({});
   const [fieldShake, setFieldShake] = useState<Record<ContactFieldKey, boolean>>({
     name: false,
     email: false,
     message: false,
   });
+
+  const liveFieldErrors = useMemo(
+    () => validateForm(m.contact, name, email, message),
+    [m.contact, name, email, message],
+  );
 
   const handleFieldShakeEnd = useCallback((key: ContactFieldKey) => {
     setFieldShake((s) => (s[key] ? { ...s, [key]: false } : s));
@@ -249,8 +300,16 @@ export function Contact() {
     setTouched({ name: true, email: true, message: true });
     setErrorBanner(null);
 
-    const errs = validateForm(name, email, message);
-    setFieldErrors(errs);
+    const errs = validateForm(m.contact, name, email, message);
+    setStaleInvalidKeys(
+      Object.keys(errs).length > 0
+        ? {
+            ...(errs.name ? { name: true as const } : {}),
+            ...(errs.email ? { email: true as const } : {}),
+            ...(errs.message ? { message: true as const } : {}),
+          }
+        : {},
+    );
     if (Object.keys(errs).length > 0) {
       setFieldShake({
         name: Boolean(errs.name),
@@ -263,9 +322,7 @@ export function Contact() {
     const { publicKey, serviceId, templateId, isReady } = getEmailJsConfig();
     if (!isReady) {
       setSubmitStatus("error");
-      setErrorBanner(
-        "Formulário ainda não configurado: defina VITE_EMAILJS_* no ficheiro .env (vê .env.example).",
-      );
+      setErrorBanner(m.contact.errorConfig);
       return;
     }
 
@@ -286,16 +343,15 @@ export function Contact() {
       setEmail("");
       setMessage("");
       setTouched({ name: false, email: false, message: false });
+      setStaleInvalidKeys({});
     } catch {
       setSubmitStatus("error");
-      setErrorBanner(
-        "Não foi possível enviar agora. Tenta de novo daqui a pouco ou envia um e-mail direto.",
-      );
+      setErrorBanner(m.contact.errorSend);
     }
   };
 
-  const showFieldError = (key: keyof typeof touched) =>
-    touched[key] && fieldErrors[key];
+  const showFieldError = (key: ContactFieldKey) =>
+    Boolean(touched[key] && staleInvalidKeys[key] && liveFieldErrors[key]);
 
   return (
     <section
@@ -313,17 +369,31 @@ export function Contact() {
           >
             <div>
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                {contactSection.label}
+                <ScrambleText
+                  text={m.contact.label}
+                  staggerMs={scrambleStagger.contactLabel}
+                />
               </p>
               <h2 className="mt-2 font-mono text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-                {contactSection.title}
+                <ScrambleText
+                  text={m.contact.title}
+                  staggerMs={scrambleStagger.contactTitle}
+                />
               </h2>
               <p className="mt-3 max-w-md text-base leading-relaxed text-muted-foreground">
-                {contactSection.subtitle}
+                <ScrambleText
+                  text={m.contact.subtitle}
+                  staggerMs={scrambleStagger.contactSubtitle}
+                />
               </p>
             </div>
 
-            <AvailabilityBadge />
+            <AvailabilityBadge>
+              <ScrambleText
+                text={m.contact.badge}
+                staggerMs={scrambleStagger.contactBadge}
+              />
+            </AvailabilityBadge>
 
             <div className="flex flex-col gap-3 pt-2">
               <SocialLinkButton
@@ -332,9 +402,9 @@ export function Contact() {
                 icon={Mail}
                 variant="primary"
               />
-              <SocialLinkButton href={personal.github} label="GitHub" icon={FaGithub} />
-              <SocialLinkButton href={personal.linkedin} label="LinkedIn" icon={FaLinkedin} />
-              <SocialLinkButton href={personal.lattes} label="Currículo Lattes" icon={GraduationCap} />
+              <SocialLinkButton href={personal.github} label={m.hero.ariaGithub} icon={FaGithub} scrambleStaggerMs={scrambleContent.contactSocial} />
+              <SocialLinkButton href={personal.linkedin} label={m.hero.ariaLinkedin} icon={FaLinkedin} scrambleStaggerMs={scrambleContent.contactSocial} />
+              <SocialLinkButton href={personal.lattes} label={m.contact.ariaLattes} icon={GraduationCap} scrambleStaggerMs={scrambleContent.contactSocial} />
             </div>
           </motion.div>
 
@@ -350,10 +420,16 @@ export function Contact() {
               noValidate
             >
               <h3 className="font-mono text-sm font-semibold text-foreground">
-                Enviar mensagem
+                <ScrambleText
+                  text={m.contact.formTitle}
+                  staggerMs={scrambleStagger.contactFormTitle}
+                />
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Resposta típica em poucas horas. Campos marcados são validados antes do envio.
+                <ScrambleText
+                  text={m.contact.formHint}
+                  staggerMs={scrambleContent.contactFormHint}
+                />
               </p>
 
               <div className="mt-6 space-y-5">
@@ -364,25 +440,39 @@ export function Contact() {
                   onShakeEnd={handleFieldShakeEnd}
                 >
                   <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-muted-foreground">
-                    Nome
+                    <ScrambleText
+                      text={m.contact.fieldName}
+                      staggerMs={scrambleContent.contactFieldLabels}
+                    />
                   </label>
-                  <input
-                    id="contact-name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    value={name}
-                    onChange={(ev) => setName(ev.target.value)}
-                    onBlur={() => setTouched((t) => ({ ...t, name: true }))}
-                    className={fieldBaseClass}
-                    placeholder="Como posso te chamar?"
-                    aria-invalid={showFieldError("name") ? true : undefined}
-                    aria-describedby={showFieldError("name") ? "err-name" : undefined}
-                  />
+                  <div className="relative">
+                    <GhostPlaceholder
+                      show={!name.trim()}
+                      text={m.contact.placeholderName}
+                      staggerMs={scrambleContent.contactPlaceholders}
+                    />
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      value={name}
+                      onChange={(ev) => setName(ev.target.value)}
+                      onBlur={() => setTouched((t) => ({ ...t, name: true }))}
+                      className={cn(
+                        fieldBaseClass,
+                        "relative z-[2]",
+                        !name.trim() && "text-transparent caret-foreground",
+                      )}
+                      placeholder=" "
+                      aria-invalid={showFieldError("name") ? true : undefined}
+                      aria-describedby={showFieldError("name") ? "err-name" : undefined}
+                    />
+                  </div>
                   <FormFieldError
                     id="err-name"
                     show={Boolean(showFieldError("name"))}
-                    text={fieldErrors.name}
+                    text={liveFieldErrors.name}
                   />
                 </ContactFieldGroup>
 
@@ -393,25 +483,39 @@ export function Contact() {
                   onShakeEnd={handleFieldShakeEnd}
                 >
                   <label htmlFor="contact-email" className="mb-1.5 block text-xs font-medium text-muted-foreground">
-                    E-mail
+                    <ScrambleText
+                      text={m.contact.fieldEmail}
+                      staggerMs={scrambleContent.contactFieldLabels}
+                    />
                   </label>
-                  <input
-                    id="contact-email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(ev) => setEmail(ev.target.value)}
-                    onBlur={() => setTouched((t) => ({ ...t, email: true }))}
-                    className={fieldBaseClass}
-                    placeholder="seu@email.com"
-                    aria-invalid={showFieldError("email") ? true : undefined}
-                    aria-describedby={showFieldError("email") ? "err-email" : undefined}
-                  />
+                  <div className="relative">
+                    <GhostPlaceholder
+                      show={!email.trim()}
+                      text={m.contact.placeholderEmail}
+                      staggerMs={scrambleContent.contactPlaceholders}
+                    />
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(ev) => setEmail(ev.target.value)}
+                      onBlur={() => setTouched((t) => ({ ...t, email: true }))}
+                      className={cn(
+                        fieldBaseClass,
+                        "relative z-[2]",
+                        !email.trim() && "text-transparent caret-foreground",
+                      )}
+                      placeholder=" "
+                      aria-invalid={showFieldError("email") ? true : undefined}
+                      aria-describedby={showFieldError("email") ? "err-email" : undefined}
+                    />
+                  </div>
                   <FormFieldError
                     id="err-email"
                     show={Boolean(showFieldError("email"))}
-                    text={fieldErrors.email}
+                    text={liveFieldErrors.email}
                   />
                 </ContactFieldGroup>
 
@@ -422,24 +526,39 @@ export function Contact() {
                   onShakeEnd={handleFieldShakeEnd}
                 >
                   <label htmlFor="contact-message" className="mb-1.5 block text-xs font-medium text-muted-foreground">
-                    Mensagem
+                    <ScrambleText
+                      text={m.contact.fieldMessage}
+                      staggerMs={scrambleContent.contactFieldLabels}
+                    />
                   </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    rows={5}
-                    value={message}
-                    onChange={(ev) => setMessage(ev.target.value)}
-                    onBlur={() => setTouched((t) => ({ ...t, message: true }))}
-                    className={cn(fieldBaseClass, "min-h-[7.5rem] resize-y")}
-                    placeholder="Conta um pouco do projeto, prazo ou o que buscas…"
-                    aria-invalid={showFieldError("message") ? true : undefined}
-                    aria-describedby={showFieldError("message") ? "err-msg" : undefined}
-                  />
+                  <div className="relative">
+                    <GhostPlaceholder
+                      show={!message.trim()}
+                      text={m.contact.placeholderMessage}
+                      staggerMs={scrambleContent.contactPlaceholders}
+                      multiline
+                    />
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={5}
+                      value={message}
+                      onChange={(ev) => setMessage(ev.target.value)}
+                      onBlur={() => setTouched((t) => ({ ...t, message: true }))}
+                      className={cn(
+                        fieldBaseClass,
+                        "relative z-[2] min-h-[7.5rem] resize-y",
+                        !message.trim() && "text-transparent caret-foreground",
+                      )}
+                      placeholder=" "
+                      aria-invalid={showFieldError("message") ? true : undefined}
+                      aria-describedby={showFieldError("message") ? "err-msg" : undefined}
+                    />
+                  </div>
                   <FormFieldError
                     id="err-msg"
                     show={Boolean(showFieldError("message"))}
-                    text={fieldErrors.message}
+                    text={liveFieldErrors.message}
                   />
                 </ContactFieldGroup>
               </div>
@@ -448,33 +567,50 @@ export function Contact() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 sm:w-auto"
                   disabled={submitStatus === "loading" || submitStatus === "success"}
                 >
                   {submitStatus === "loading" ? (
                     <>
-                      <Loader2 className="size-4 animate-spin" aria-hidden />
-                      Enviando…
+                      <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden />
+                      <ScrambleText
+                        text={m.contact.submitting}
+                        staggerMs={scrambleContent.contactSubmit}
+                      />
                     </>
                   ) : submitStatus === "success" ? (
                     <>
-                      <Check className="size-4" aria-hidden />
-                      Mensagem enviada!
+                      <Check className="size-4 shrink-0" aria-hidden />
+                      <ScrambleText
+                        text={m.contact.success}
+                        staggerMs={scrambleContent.contactSubmit}
+                      />
                     </>
                   ) : (
                     <>
-                      <Send className="size-4" aria-hidden />
-                      Enviar mensagem
+                      <Send className="size-4 shrink-0" aria-hidden />
+                      <ScrambleText
+                        text={m.contact.submit}
+                        staggerMs={scrambleContent.contactSubmit}
+                      />
                     </>
                   )}
                 </Button>
 
                 <FormBanner show={submitStatus === "error" && Boolean(errorBanner)} variant="error">
-                  {errorBanner}
+                  {errorBanner ? (
+                    <ScrambleText
+                      text={errorBanner}
+                      staggerMs={scrambleContent.contactBanners}
+                    />
+                  ) : null}
                 </FormBanner>
 
                 <FormBanner show={submitStatus === "success"} variant="success">
-                  Obrigado! Recebi a tua mensagem e respondo em breve.
+                  <ScrambleText
+                    text={m.contact.successBanner}
+                    staggerMs={scrambleContent.contactBanners}
+                  />
                 </FormBanner>
               </div>
             </form>

@@ -13,25 +13,34 @@ import {
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { ScrambleText } from '@/components/ScrambleText'
 import { personal } from '@/data/personal'
+import { useMessages } from '@/locales/use-messages'
+import { scrambleStagger } from '@/locales/scramble-stagger'
+import type { Messages } from '@/locales/messages'
 import { cn, sectionPaddingX, sectionShell } from '@/lib/utils'
 
-const links: readonly {
+type NavLinkKey = keyof Messages['nav']['links']
+
+const NAV_LINK_DEFS: readonly {
   href: string
-  label: string
+  linkKey: NavLinkKey
   icon: LucideIcon
 }[] = [
-  { href: '#hero', label: 'Início', icon: Home },
-  { href: '#sobre', label: 'Sobre', icon: UserRound },
-  { href: '#experiencia', label: 'Experiência', icon: BriefcaseBusiness },
-  { href: '#projetos', label: 'Projetos', icon: FolderKanban },
-  { href: '#habilidades', label: 'Habilidades', icon: Layers },
-  { href: '#contato', label: 'Contato', icon: Mail },
+  { href: '#hero', linkKey: 'hero', icon: Home },
+  { href: '#sobre', linkKey: 'about', icon: UserRound },
+  { href: '#experiencia', linkKey: 'experience', icon: BriefcaseBusiness },
+  { href: '#projetos', linkKey: 'projects', icon: FolderKanban },
+  { href: '#habilidades', linkKey: 'skills', icon: Layers },
+  { href: '#contato', linkKey: 'contact', icon: Mail },
 ]
 
-/** Section `id`s matching `links` order — used for scroll spy. */
-const navSectionIds = links.map((l) => l.href.slice(1))
+/** Section `id`s matching `NAV_LINK_DEFS` order — used for scroll spy. */
+const navSectionIds = NAV_LINK_DEFS.map((l) => l.href.slice(1))
+
+// Locale scramble: all stagger delays are 0 (`SCRAMBLE_STEP_MS` in scramble-stagger).
 
 /** ~fixed header (h-16) + small buffer so the line sits just below the bar. */
 const SCROLL_SPY_TOP_PX = 72
@@ -110,6 +119,7 @@ function scrollToSectionId(id: string) {
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const activeSectionId = useActiveSectionId()
+  const m = useMessages()
 
   const handleMobileNavClick =
     (href: string) => (e: MouseEvent<HTMLAnchorElement>) => {
@@ -124,7 +134,7 @@ export function Navbar() {
     }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 max-md:overflow-hidden border-b border-border/80 bg-background/80 backdrop-blur-md md:overflow-visible">
+    <header className="fixed inset-x-0 top-0 z-50 overflow-visible border-b border-border/80 bg-background/80 backdrop-blur-md">
       <div
         className={cn(
           'flex h-16 items-center justify-between gap-4',
@@ -150,9 +160,10 @@ export function Navbar() {
 
         <nav
           className="hidden items-center gap-1 md:flex"
-          aria-label="Principal"
+          aria-label={m.nav.sectionLabelDesktop}
         >
-          {links.map(({ href, label, icon: Icon }) => {
+          {NAV_LINK_DEFS.map(({ href, linkKey, icon: Icon }, index) => {
+            const label = m.nav.links[linkKey]
             const id = href.slice(1)
             const active = activeSectionId === id
             return (
@@ -176,13 +187,17 @@ export function Navbar() {
                   )}
                   aria-hidden
                 />
-                {label}
+                <ScrambleText
+                  text={label}
+                  staggerMs={scrambleStagger.navLink(index)}
+                />
               </a>
             )
           })}
         </nav>
 
         <div className="flex items-center gap-1">
+          <LanguageToggle />
           <ThemeToggle />
           <Button
             type="button"
@@ -190,7 +205,7 @@ export function Navbar() {
             size="icon"
             className="md:hidden"
             aria-expanded={open}
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={open ? m.nav.closeMenu : m.nav.openMenu}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -214,12 +229,13 @@ export function Navbar() {
           >
             <motion.nav
               className={cn('flex flex-col pb-4 pt-1', sectionPaddingX)}
-              aria-label="Mobile"
+              aria-label={m.nav.sectionLabelMobile}
               variants={listVariants}
               initial="hidden"
               animate="visible"
             >
-              {links.map(({ href, label, icon: Icon }) => {
+              {NAV_LINK_DEFS.map(({ href, linkKey, icon: Icon }, index) => {
+                const label = m.nav.links[linkKey]
                 const id = href.slice(1)
                 const active = activeSectionId === id
                 return (
@@ -251,7 +267,10 @@ export function Navbar() {
                         )}
                         aria-hidden
                       />
-                      {label}
+                      <ScrambleText
+                        text={label}
+                        staggerMs={scrambleStagger.navLink(index)}
+                      />
                     </motion.span>
                   </a>
                 )

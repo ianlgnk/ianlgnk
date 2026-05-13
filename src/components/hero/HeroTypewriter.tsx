@@ -1,14 +1,8 @@
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+import { useMessages } from "@/locales/use-messages";
 import { cn } from "@/lib/utils";
-
-const PHRASES = [
-  "Engenheiro de Software Full Stack",
-  "Desenvolvedor React",
-  "Engenheiro Node.js",
-  "Desenvolvedor Web/Mobile",
-] as const;
 
 const TYPE_MS = 42;
 const DELETE_MS = 28;
@@ -19,6 +13,9 @@ type Phase = "typing" | "deleting";
 
 export function HeroTypewriter({ className }: { className?: string }) {
   const reduced = useReducedMotion();
+  const m = useMessages();
+  const phrases = m.hero.typewriterPhrases;
+
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [display, setDisplay] = useState("");
   const [phase, setPhase] = useState<Phase>("typing");
@@ -26,12 +23,12 @@ export function HeroTypewriter({ className }: { className?: string }) {
   useEffect(() => {
     if (reduced) {
       queueMicrotask(() => {
-        setDisplay(PHRASES[0]);
+        setDisplay(phrases[0]);
       });
       return;
     }
 
-    const target = PHRASES[phraseIndex];
+    const target = phrases[phraseIndex];
     let t: ReturnType<typeof setTimeout>;
 
     if (phase === "typing") {
@@ -51,14 +48,14 @@ export function HeroTypewriter({ className }: { className?: string }) {
         }, DELETE_MS);
       } else {
         t = setTimeout(() => {
-          setPhraseIndex((i) => (i + 1) % PHRASES.length);
+          setPhraseIndex((i) => (i + 1) % phrases.length);
           setPhase("typing");
         }, PAUSE_EMPTY_MS);
       }
     }
 
     return () => clearTimeout(t);
-  }, [reduced, phraseIndex, display, phase]);
+  }, [reduced, phraseIndex, display, phase, phrases]);
 
   return (
     <p
@@ -68,7 +65,7 @@ export function HeroTypewriter({ className }: { className?: string }) {
       )}
       aria-live="polite"
     >
-      <span>{reduced ? PHRASES[0] : display}</span>
+      <span>{reduced ? phrases[0] : display}</span>
       {!reduced ? (
         <span
           className="ml-0.5 inline-block w-[0.55ch] animate-hero-cursor font-medium text-primary"

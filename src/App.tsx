@@ -9,6 +9,8 @@ import { Navbar } from '@/components/Navbar'
 import { Projects } from '@/components/Projects'
 import { Skills } from '@/components/Skills'
 
+import { DocumentMetaSync } from '@/components/DocumentMetaSync'
+
 function scrollToHashElement() {
   const raw = window.location.hash.slice(1)
   if (!raw) return
@@ -31,6 +33,7 @@ function App() {
 
   return (
     <div className="min-h-dvh bg-background">
+      <DocumentMetaSync />
       <Navbar />
       <main>
         <Hero />

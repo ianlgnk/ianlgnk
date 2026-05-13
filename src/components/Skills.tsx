@@ -1,18 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Code2, Kanban, LayoutGrid, Server, Wrench } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useState } from "react";
 
+import { ScrambleText } from "@/components/ScrambleText";
 import { getSkillVisual } from "@/data/skillBadges";
 import {
   isCategoryVisible,
   skillCategories,
-  skillFilterOptions,
+  SKILL_FILTER_IDS,
   type SkillCategory,
   type SkillEntry,
   type SkillFilterId,
 } from "@/data/skills";
 import { cn, sectionShell } from "@/lib/utils";
-import { useState } from "react";
+import { scrambleStagger } from "@/locales/scramble-stagger";
+import { useMessages } from "@/locales/use-messages";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -41,6 +44,52 @@ const CATEGORY_HEADER_ICON: Record<string, LucideIcon> = {
   tools: Wrench,
   methodologies: Kanban,
 };
+
+const SKILL_FILTER_STAGGER: Record<SkillFilterId, number> = {
+  all: scrambleStagger.skillsFilterAll,
+  frontend: scrambleStagger.skillsFilterFrontend,
+  backend: scrambleStagger.skillsFilterBackend,
+  tools: scrambleStagger.skillsFilterTools,
+  methodologies: scrambleStagger.skillsFilterMethodologies,
+};
+
+function categoryScrambleStagger(categoryId: string): {
+  title: number;
+  count: number;
+} {
+  switch (categoryId) {
+    case "languages":
+      return {
+        title: scrambleStagger.skillsCategoryLanguagesTitle,
+        count: scrambleStagger.skillsCategoryLanguagesCount,
+      };
+    case "frontend":
+      return {
+        title: scrambleStagger.skillsCategoryFrontendTitle,
+        count: scrambleStagger.skillsCategoryFrontendCount,
+      };
+    case "backend":
+      return {
+        title: scrambleStagger.skillsCategoryBackendTitle,
+        count: scrambleStagger.skillsCategoryBackendCount,
+      };
+    case "tools":
+      return {
+        title: scrambleStagger.skillsCategoryToolsTitle,
+        count: scrambleStagger.skillsCategoryToolsCount,
+      };
+    case "methodologies":
+      return {
+        title: scrambleStagger.skillsCategoryMethodologiesTitle,
+        count: scrambleStagger.skillsCategoryMethodologiesCount,
+      };
+    default:
+      return {
+        title: scrambleStagger.skillsCategoryLanguagesTitle,
+        count: scrambleStagger.skillsCategoryLanguagesCount,
+      };
+  }
+}
 
 function CategoryHeaderIcon({ categoryId }: { categoryId: string }) {
   const Icon = CATEGORY_HEADER_ICON[categoryId] ?? Code2;
@@ -198,17 +247,26 @@ function SkillCell({
 }
 
 function CategoryCardContent({ category }: { category: SkillCategory }) {
+  const m = useMessages();
+  const stagger = categoryScrambleStagger(category.id);
+  const title =
+    (m.skills.categories as Record<string, string>)[category.id] ?? category.id;
+  const countWord =
+    category.skills.length === 1
+      ? m.skills.skillCountOne
+      : m.skills.skillCountOther;
+  const countLine = `${category.skills.length} ${countWord}`;
+
   return (
     <>
       <div className="flex items-start gap-3 border-b border-border px-5 py-4 sm:px-6 sm:py-5">
         <CategoryHeaderIcon categoryId={category.id} />
         <div className="min-w-0 pt-0.5">
           <h3 className="font-mono text-sm font-semibold text-card-foreground sm:text-base">
-            {category.title}
+            <ScrambleText text={title} staggerMs={stagger.title} />
           </h3>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            {category.skills.length}{" "}
-            {category.skills.length === 1 ? "habilidade" : "habilidades"}
+            <ScrambleText text={countLine} staggerMs={stagger.count} />
           </p>
         </div>
       </div>
@@ -223,6 +281,7 @@ function CategoryCardContent({ category }: { category: SkillCategory }) {
 }
 
 export function Skills() {
+  const m = useMessages();
   const [filter, setFilter] = useState<SkillFilterId>("all");
 
   const visible = skillCategories.filter((c) => isCategoryVisible(c, filter));
@@ -240,24 +299,30 @@ export function Skills() {
           transition={{ duration: 0.45, ease: easeOut }}
         >
           <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
-            Habilidades
+            <ScrambleText
+              text={m.skills.sectionTitle}
+              staggerMs={scrambleStagger.skillsSectionTitle}
+            />
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Stack, ferramentas e níveis de proficiência — filtre por área.
+            <ScrambleText
+              text={m.skills.sectionSubtitle}
+              staggerMs={scrambleStagger.skillsSectionSubtitle}
+            />
           </p>
 
           <div
             className="mt-8 flex flex-wrap gap-2"
             role="toolbar"
-            aria-label="Filtrar habilidades por categoria"
+            aria-label={m.skills.filterToolbarAria}
           >
-            {skillFilterOptions.map((opt) => {
-              const active = filter === opt.id;
+            {SKILL_FILTER_IDS.map((id) => {
+              const active = filter === id;
               return (
                 <button
-                  key={opt.id}
+                  key={id}
                   type="button"
-                  onClick={() => setFilter(opt.id)}
+                  onClick={() => setFilter(id)}
                   className={cn(
                     "rounded-lg border px-3.5 py-2 text-sm font-medium transition-colors duration-200 ease-out",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45",
@@ -266,7 +331,10 @@ export function Skills() {
                       : "border-border bg-muted text-muted-foreground hover:border-border hover:bg-muted/80 hover:text-foreground",
                   )}
                 >
-                  {opt.label}
+                  <ScrambleText
+                    text={m.skills.filters[id]}
+                    staggerMs={SKILL_FILTER_STAGGER[id]}
+                  />
                 </button>
               );
             })}

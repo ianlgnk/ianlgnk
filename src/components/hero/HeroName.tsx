@@ -1,13 +1,8 @@
 import { useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
+import { randomGlyph } from '@/lib/scramble-glyphs'
 import { cn } from '@/lib/utils'
-
-const CODE_SCRAMBLE = `={}[]()<>;:.,_|&!?#@$%^+*~'"\`\\/0123456789-`
-
-function randomGl() {
-  return CODE_SCRAMBLE[Math.floor(Math.random() * CODE_SCRAMBLE.length)] ?? '/'
-}
 
 type HeroNameProps = {
   name: string
@@ -21,7 +16,7 @@ export function HeroName({ name, className }: HeroNameProps) {
     reduced
       ? name
       : Array.from(name)
-          .map((c) => (c === ' ' ? ' ' : randomGl()))
+          .map((c) => (c === ' ' ? ' ' : randomGlyph()))
           .join(''),
   )
 
@@ -52,7 +47,7 @@ export function HeroName({ name, className }: HeroNameProps) {
 
       const out = chars.map((c, i) => {
         if (c === ' ') return ' '
-        return i < reveal ? c : randomGl()
+        return i < reveal ? c : randomGlyph()
       })
       setText(out.join(''))
 

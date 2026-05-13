@@ -61,4 +61,48 @@
   body {
     @apply min-h-dvh bg-background font-sans text-foreground antialiased;
   }
+
+  html.theme-fallback-transitioning body {
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.theme-fallback-transitioning body {
+      transition-duration: 0ms;
+    }
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation-name: theme-reveal;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--click-x) var(--click-y));
+  }
+
+  to {
+    clip-path: circle(150vmax at var(--click-x) var(--click-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0ms;
+  }
 }
