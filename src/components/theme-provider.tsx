@@ -1,0 +1,83 @@
+/* eslint-disable react-refresh/only-export-components -- Provider + useTheme hook */
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react'
+
+type Theme = 'light' | 'dark'
+
+type ThemeContextValue = {
+  theme: Theme
+  toggleTheme: () => void
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null)
+
+const STORAGE_KEY = 'ianlgnk-theme'
+const LEGACY_THEME_KEY = 'portfolio-theme'
+
+function readStoredTheme(): Theme {
+  try {
+    let raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) {
+      raw = localStorage.getItem(LEGACY_THEME_KEY)
+      if (raw === 'light' || raw === 'dark') {
+        localStorage.setItem(STORAGE_KEY, raw)
+      }
+    }
+    if (raw === 'light' || raw === 'dark') return raw
+  } catch {
+    /* ignore */
+  }
+  return 'dark'
+}
+
+function applyDomTheme(theme: Theme) {
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+}
+
+/** Sincroniza classe `dark` no `<html>` e persiste preferência. */
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark'
+    return readStoredTheme()
+  })
+
+  useLayoutEffect(() => {
+    applyDomTheme(theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next: Theme = prev === 'dark' ? 'light' : 'dark'
+      try {
+        localStorage.setItem(STORAGE_KEY, next)
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
+  }, [])
+
+  const value = useMemo(
+    () => ({ theme, toggleTheme }),
+    [theme, toggleTheme],
+  )
+
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  )
+}
+
+export function useTheme() {
+  const ctx = useContext(ThemeContext)
+  if (!ctx) {
+    throw new Error('useTheme must be used within ThemeProvider')
+  }
+  return ctx
+}
