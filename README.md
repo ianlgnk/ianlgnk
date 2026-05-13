@@ -61,9 +61,11 @@ yarn dev
 
 ## GitHub em números
 
+<!-- A instância pública github-readme-stats.vercel.app costuma retornar 503 (DEPLOYMENT_PAUSED). Usamos um espelho compatível com a mesma API. -->
+
 <p align="center">
-  <img height="160" src="https://github-readme-stats.vercel.app/api?username=ianlgnk&show_icons=true&theme=tokyonight&hide_border=true&locale=pt-br" alt="Estatísticas do GitHub" />
-  <img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ianlgnk&layout=compact&theme=tokyonight&hide_border=true&locale=pt-br" alt="Linguagens mais usadas" />
+  <img height="160" src="https://readme-stats-github.vercel.app/api?username=ianlgnk&show_icons=true&theme=tokyonight&hide_border=true&locale=pt-br" alt="Estatísticas do GitHub" />
+  <img height="160" src="https://readme-stats-github.vercel.app/api/top-langs/?username=ianlgnk&layout=compact&theme=tokyonight&hide_border=true&locale=pt-br" alt="Linguagens mais usadas" />
 </p>
 
 <br />
