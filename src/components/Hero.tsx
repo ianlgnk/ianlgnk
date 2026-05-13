@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Download } from "lucide-react";
+import { Download, GraduationCap } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { HeroName } from "@/components/hero/HeroName";
@@ -7,6 +7,7 @@ import { HeroParticles } from "@/components/hero/HeroParticles";
 import { HeroTypewriter } from "@/components/hero/HeroTypewriter";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/personal";
+import { cn, sectionShell } from "@/lib/utils";
 
 const cvFile = "ianlgnk(pt-Br).pdf";
 const cvPath = `${import.meta.env.BASE_URL}cv/${encodeURIComponent(cvFile)}`;
@@ -27,7 +28,12 @@ export function Hero() {
     >
       <HeroParticles />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-20">
+      <div
+        className={cn(
+          "relative z-10 flex flex-1 flex-col justify-center pb-16 pt-16 sm:pb-20 sm:pt-20",
+          sectionShell,
+        )}
+      >
         <div className="max-w-3xl space-y-6">
           <motion.p
             {...enter}
@@ -99,6 +105,15 @@ export function Hero() {
               aria-label="LinkedIn"
             >
               <FaLinkedin className="size-5" />
+            </a>
+            <a
+              href={personal.lattes}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              aria-label="Currículo Lattes"
+            >
+              <GraduationCap className="size-5" />
             </a>
           </motion.div>
         </div>

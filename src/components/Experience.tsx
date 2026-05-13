@@ -18,7 +18,7 @@ import { Building2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ExperienceItem } from "@/data/experience";
 import { experience } from "@/data/experience";
-import { cn } from "@/lib/utils";
+import { cn, sectionShell } from "@/lib/utils";
 
 const view = {
   once: true,
@@ -283,9 +283,9 @@ export function Experience() {
   return (
     <section
       id="experiencia"
-      className="scroll-mt-4 border-b border-border/60 px-4 py-20 sm:px-6 sm:py-24"
+      className="scroll-mt-4 border-b border-border/60 py-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className={sectionShell}>
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

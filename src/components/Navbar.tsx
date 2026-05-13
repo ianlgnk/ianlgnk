@@ -15,7 +15,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { personal } from '@/data/personal'
-import { cn } from '@/lib/utils'
+import { cn, sectionPaddingX, sectionShell } from '@/lib/utils'
 
 const links: readonly {
   href: string
@@ -125,7 +125,12 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 max-md:overflow-hidden border-b border-border/80 bg-background/80 backdrop-blur-md md:overflow-visible">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div
+        className={cn(
+          'flex h-16 items-center justify-between gap-4',
+          sectionShell,
+        )}
+      >
         <a
           href="#hero"
           className={cn(
@@ -208,7 +213,7 @@ export function Navbar() {
             className="md:hidden overflow-hidden border-b border-border bg-background"
           >
             <motion.nav
-              className="flex flex-col px-4 pb-4 pt-1"
+              className={cn('flex flex-col pb-4 pt-1', sectionPaddingX)}
               aria-label="Mobile"
               variants={listVariants}
               initial="hidden"

@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { personal } from "@/data/personal";
-import { cn } from "@/lib/utils";
+import { cn, sectionShell } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -64,8 +64,8 @@ function SocialIcon({
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border/60 bg-muted/35 px-4 py-10 dark:bg-black/45 sm:px-6">
-      <div className="mx-auto max-w-5xl">
+    <footer className="relative border-t border-border/60 bg-muted/35 py-10 dark:bg-black/45">
+      <div className={sectionShell}>
         <motion.div
           className="mx-auto mb-8 h-px max-w-3xl origin-left rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
           initial={{ scaleX: 0, opacity: 0.6 }}

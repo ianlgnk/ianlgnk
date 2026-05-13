@@ -43,6 +43,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "JavaScript", proficiency: 80, simpleIconSlug: "javascript" },
       { name: "TypeScript", proficiency: 95, simpleIconSlug: "typescript" },
       { name: "Kotlin", proficiency: 50, simpleIconSlug: "kotlin" },
+      { name: "Python", proficiency: 45, simpleIconSlug: "python" },
     ],
   },
   {

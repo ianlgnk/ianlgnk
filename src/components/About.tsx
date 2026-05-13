@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { about } from "@/data/about";
-import { cn } from "@/lib/utils";
+import { cn, sectionShell } from "@/lib/utils";
 
 const view = {
   once: true,
@@ -171,9 +171,9 @@ export function About() {
   return (
     <section
       id="sobre"
-      className=" border-b border-border/60 px-4 py-20 sm:px-6 sm:py-24"
+      className="border-b border-border/60 py-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className={sectionShell}>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}

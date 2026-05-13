@@ -17,7 +17,7 @@ import {
   emailJsTemplateFields,
 } from "@/data/contact";
 import { personal } from "@/data/personal";
-import { cn } from "@/lib/utils";
+import { cn, sectionShell } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -300,9 +300,9 @@ export function Contact() {
   return (
     <section
       id="contato"
-      className="scroll-mt-4 border-b border-border/60 px-4 py-20 sm:px-6 sm:py-24"
+      className="scroll-mt-4 border-b border-border/60 py-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className={sectionShell}>
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-14 lg:items-start">
           <motion.div
             initial={{ opacity: 0, x: -28 }}

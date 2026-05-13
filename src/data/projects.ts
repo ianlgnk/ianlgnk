@@ -32,7 +32,6 @@ export const mainProjects: Project[] = [
     tags: ["React", "Node.js", "SaaS"],
     status: "in_progress",
     featured: true,
-    // Adicione `github`, `demo` e `image` quando estiverem disponíveis.
     github: "",
     demo: "",
     image: undefined,
@@ -54,8 +53,7 @@ export const mainProjects: Project[] = [
     tags: ["UFOP", "2024–2025", "TCC", "E-commerce"],
     status: "completed",
     github: "",
-    demo:
-      "https://www.monografias.ufop.br/bitstream/35400000/7416/3/MONOGRAFIA_DesenvolvimentoEcommerceMarca.pdf",
+    demo: "https://www.monografias.ufop.br/bitstream/35400000/7416/3/MONOGRAFIA_DesenvolvimentoEcommerceMarca.pdf",
     image: undefined,
   },
   {

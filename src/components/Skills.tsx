@@ -11,7 +11,7 @@ import {
   type SkillEntry,
   type SkillFilterId,
 } from "@/data/skills";
-import { cn } from "@/lib/utils";
+import { cn, sectionShell } from "@/lib/utils";
 import { useState } from "react";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -230,9 +230,9 @@ export function Skills() {
   return (
     <section
       id="habilidades"
-      className="scroll-mt-4 border-b border-border/60 px-4 py-20 sm:px-6 sm:py-24"
+      className="scroll-mt-4 border-b border-border/60 py-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className={sectionShell}>
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -14,6 +14,7 @@ import {
   SiKotlin,
   SiNodedotjs,
   SiPostgresql,
+  SiPython,
   SiReact,
   SiTypescript,
   SiVuedotjs,
@@ -51,6 +52,11 @@ export const skillVisualByName: Record<string, SkillVisual> = {
     SiKotlin,
     "border-[#7F52FF]/45 bg-[#7F52FF]/12 text-foreground",
     "text-[#7F52FF]",
+  ),
+  Python: meta(
+    SiPython,
+    "border-[#3776AB]/45 bg-[#3776AB]/12 text-foreground",
+    "text-[#306998] dark:text-[#FFD43B]",
   ),
   React: meta(
     SiReact,

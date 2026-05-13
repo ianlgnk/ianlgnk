@@ -10,7 +10,7 @@ import {
   type Project,
   type ProjectStatus,
 } from "@/data/projects";
-import { cn } from "@/lib/utils";
+import { cn, sectionPaddingX, sectionShell } from "@/lib/utils";
 
 const view = {
   once: true,
@@ -350,7 +350,12 @@ function AcademicCollapsible() {
 
   return (
     <div className="mt-12 rounded-xl border border-border bg-muted/25">
-      <div className="flex flex-col gap-1 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+      <div
+        className={cn(
+          "flex flex-col gap-1 border-b border-border py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+          sectionPaddingX,
+        )}
+      >
         <h3 className="font-mono text-sm font-semibold text-foreground">
           Outros projetos acadêmicos
         </h3>
@@ -387,7 +392,7 @@ function AcademicCollapsible() {
             transition={{ duration: 0.35, ease: easeOut }}
             className="overflow-hidden"
           >
-            <div className="px-3 pb-5 pt-4 sm:px-4">
+            <div className={cn("pb-5 pt-4", sectionPaddingX)}>
               <p className="mb-4 px-1 text-xs text-muted-foreground">
                 Projetos de pesquisa e extensão durante o curso técnico em
                 informática. Projetos desenvolvidos durante a graduação em
@@ -420,9 +425,9 @@ export function Projects() {
   return (
     <section
       id="projetos"
-      className="scroll-mt-4 border-b border-border/60 px-4 py-20 sm:px-6 sm:py-24"
+      className="scroll-mt-4 border-b border-border/60 py-20 sm:py-24"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className={sectionShell}>
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
