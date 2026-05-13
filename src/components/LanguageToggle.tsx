@@ -121,9 +121,7 @@ export function LanguageToggle() {
             exit={{ opacity: 0, scale: 0.94 }}
             transition={menuTransition}
             className={cn(
-              'absolute right-0 z-[200] min-w-[220px] origin-top-right rounded-md border border-border bg-popover p-1 pt-1.5 text-popover-foreground shadow-md',
-              'md:top-full md:mt-0',
-              'max-md:bottom-full max-md:mb-0 max-md:origin-bottom-right',
+              'absolute right-0 top-full z-[200] mt-1 min-w-[220px] origin-top-right rounded-md border border-border bg-popover p-1 pt-1.5 text-popover-foreground shadow-md',
             )}
           >
             {SUPPORTED_LOCALES.map((code) => (
