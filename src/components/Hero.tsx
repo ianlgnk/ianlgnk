@@ -8,7 +8,8 @@ import { HeroTypewriter } from "@/components/hero/HeroTypewriter";
 import { Button } from "@/components/ui/button";
 import { personal } from "@/data/personal";
 
-const cvPath = `${import.meta.env.BASE_URL}/cv/pt-Br.pdf`;
+const cvFile = "ianlgnk(pt-Br).pdf";
+const cvPath = `${import.meta.env.BASE_URL}cv/${encodeURIComponent(cvFile)}`;
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
