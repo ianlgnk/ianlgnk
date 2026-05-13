@@ -30,6 +30,14 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: 📝 Write .env from repository secret
+        run: |
+          if [ -n "${ENV_FILE:-}" ]; then
+            printf '%s\n' "$ENV_FILE" > .env
+          fi
+        env:
+          ENV_FILE: ${{ secrets.ENV }}
+
       - name: 🏗️ Build
         run: yarn build
         env:
