@@ -25,19 +25,18 @@ Este repositório é o **código-fonte do meu portfólio** — o mesmo projeto q
 
 <br />
 
-## Destaques do site
+## Stack
 
-| | |
+| Tecnologia | Papel no projeto |
 | :--- | :--- |
-| **Idioma** | Português (BR) e inglês (US), com troca persistente |
-| **Tema** | Claro / escuro / sistema, com transição suave |
-| **Motion** | Animações com Framer Motion e microinterações |
-| **Contato** | Formulário com validação e integração via EmailJS |
-| **Deploy** | GitHub Actions → GitHub Pages (`Vite` + `TypeScript`) |
-
-<br />
-
-## Stack deste projeto
+| **React 19** | UI em componentes; seções do site (Hero, About, Experience, Projects, Skills, Contact). |
+| **TypeScript** | Tipagem estática em dados, mensagens i18n e props dos componentes. |
+| **Vite 8** | Dev server, HMR e build de produção para `dist/`. |
+| **Tailwind CSS** | Estilos utilitários, tema claro/escuro e layout responsivo. |
+| **Framer Motion** | Animações de entrada, transições e microinterações. |
+| **Radix UI** | Primitivos acessíveis (ex.: `Slot` no botão). |
+| **EmailJS** | Envio do formulário de contato no browser (variáveis `VITE_EMAILJS_*`). |
+| **GitHub Actions** | CI: instala dependências, build e publicação no GitHub Pages. |
 
 <p align="left">
   <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
@@ -45,27 +44,69 @@ Este repositório é o **código-fonte do meu portfólio** — o mesmo projeto q
   <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion" />
-  <img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radixui&logoColor=white" alt="Radix UI" />
 </p>
+
+<br />
+
+## Desenvolvimento local
+
+**Requisito:** [Node.js 22](https://nodejs.org/) (ver `.nvmrc` e `engines` no `package.json`).
 
 ```bash
 git clone https://github.com/ianlgnk/ianlgnk.git
 cd ianlgnk
 yarn install
+cp .env.example .env   # opcional: formulário de contato (EmailJS)
 yarn dev
 ```
 
-> **Node 22** — ver `engines` no `package.json`.
+O app sobe em **http://localhost:5173** com `base` em `/` (padrão do Vite).
+
+Para testar o build como no GitHub Pages (assets em `/ianlgnk/`):
+
+```bash
+VITE_BASE_PATH=/ianlgnk/ yarn build
+yarn preview
+```
+
+Variáveis no `.env` (ver `.env.example`):
+
+| Variável | Uso |
+| :--- | :--- |
+| `VITE_EMAILJS_PUBLIC_KEY` | Chave pública do EmailJS |
+| `VITE_EMAILJS_SERVICE_ID` | ID do serviço |
+| `VITE_EMAILJS_TEMPLATE_ID` | ID do template (`from_name`, `from_email`, `message`) |
 
 <br />
 
-## GitHub em números
+## Build e deploy
 
-<!-- A instância pública github-readme-stats.vercel.app costuma retornar 503 (DEPLOYMENT_PAUSED). Usamos um espelho compatível com a mesma API. -->
+O workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) roda em cada **push na `main`**:
 
-<p align="center">
-  <img height="160" src="https://readme-stats-github.vercel.app/api?username=ianlgnk&show_icons=true&theme=tokyonight&hide_border=true&locale=pt-br" alt="Estatísticas do GitHub" />
-  <img height="160" src="https://readme-stats-github.vercel.app/api/top-langs/?username=ianlgnk&layout=compact&theme=tokyonight&hide_border=true&locale=pt-br" alt="Linguagens mais usadas" />
+1. **Checkout** do repositório e **Node 22** (cache do Yarn).
+2. **`yarn install --frozen-lockfile`** e gravação do `.env` a partir do secret **`ENV`** (variáveis do EmailJS em produção).
+3. **`yarn build`** com `VITE_BASE_PATH=/ianlgnk/` — o Vite gera `dist/` com caminhos corretos para o subpath do GitHub Pages.
+4. **Upload** do artefato e **deploy** no ambiente `github-pages`.
+
+Site publicado: **https://ianlgnk.github.io/ianlgnk/**
+
+Comandos úteis localmente:
+
+```bash
+yarn build    # tsc -b && vite build
+yarn lint     # ESLint
+yarn preview  # serve a pasta dist/ após o build
+```
+
+<br />
+
+## GitHub
+
+<p align="left">
+  <a href="https://github.com/ianlgnk?tab=repositories">
+    <img src="https://img.shields.io/github/followers/ianlgnk?label=Seguidores&style=flat-square&logo=github" alt="Seguidores no GitHub" />
+  </a>
+  <img src="https://img.shields.io/github/stars/ianlgnk/ianlgnk?style=flat-square&logo=github&label=Stars%20neste%20repo" alt="Stars neste repositório" />
 </p>
 
 <br />
