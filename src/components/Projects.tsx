@@ -10,6 +10,11 @@ import {
   type Project,
   type ProjectStatus,
 } from "@/data/projects";
+import {
+  collegeGithubRepos,
+  collegeRepoPreviewUrl,
+  type CollegeGithubRepo,
+} from "@/data/college-github-repos";
 import { formatNamed } from "@/lib/format-named";
 import { useMessages } from "@/locales/use-messages";
 import { scrambleContent, scrambleStagger } from "@/locales/scramble-stagger";
@@ -88,6 +93,14 @@ function StatusBadge({
   );
 }
 
+function StatusYearPill({ year }: { year: number }) {
+  return (
+    <span className="inline-flex shrink-0 rounded-full border border-border bg-muted/50 px-2 py-0.5 font-mono text-[11px] font-medium tabular-nums text-muted-foreground">
+      {year}
+    </span>
+  );
+}
+
 function PreviewMedia({
   project,
   className,
@@ -148,19 +161,21 @@ function LinkIconButton({
 }
 
 function ImageHoverOverlay({
-  project,
   displayTitle,
+  github,
+  demo,
 }: {
-  project: Project;
-  displayTitle: string;
+  displayTitle: string
+  github?: string
+  demo?: string
 }) {
   const m = useMessages();
-  const gh = project.github?.trim();
-  const demo = project.demo?.trim();
-  if (!gh && !demo) return null;
+  const gh = github?.trim();
+  const demoRaw = demo?.trim();
+  if (!gh && !demoRaw) return null;
 
   const demoLabel =
-    demo && demo.toLowerCase().endsWith(".pdf")
+    demoRaw && demoRaw.toLowerCase().endsWith(".pdf")
       ? formatNamed(m.projects.ariaDemoPdf, { name: displayTitle })
       : formatNamed(m.projects.ariaDemoSite, { name: displayTitle });
 
@@ -180,8 +195,8 @@ function ImageHoverOverlay({
             <FaGithub className="size-5" />
           </LinkIconButton>
         ) : null}
-        {demo ? (
-          <LinkIconButton href={demo} label={demoLabel}>
+        {demoRaw ? (
+          <LinkIconButton href={demoRaw} label={demoLabel}>
             <ExternalLink className="size-5" />
           </LinkIconButton>
         ) : null}
@@ -191,19 +206,21 @@ function ImageHoverOverlay({
 }
 
 function FooterLinks({
-  project,
   displayTitle,
+  github,
+  demo,
 }: {
-  project: Project;
-  displayTitle: string;
+  displayTitle: string
+  github?: string
+  demo?: string
 }) {
   const m = useMessages();
-  const gh = project.github?.trim();
-  const demo = project.demo?.trim();
-  if (!gh && !demo) return null;
+  const gh = github?.trim();
+  const demoRaw = demo?.trim();
+  if (!gh && !demoRaw) return null;
 
   const demoLabel =
-    demo && demo.toLowerCase().endsWith(".pdf")
+    demoRaw && demoRaw.toLowerCase().endsWith(".pdf")
       ? formatNamed(m.projects.ariaDemoPdf, { name: displayTitle })
       : formatNamed(m.projects.ariaDemoSite, { name: displayTitle });
 
@@ -220,9 +237,9 @@ function FooterLinks({
           <FaGithub className="size-4" />
         </a>
       ) : null}
-      {demo ? (
+      {demoRaw ? (
         <a
-          href={demo}
+          href={demoRaw}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
@@ -301,13 +318,20 @@ function ProjectCardBody({
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <StatusBadge status={project.status} staggerMs={statusStaggerMs} />
+        {project.statusYear != null ? (
+          <StatusYearPill year={project.statusYear} />
+        ) : null}
       </div>
       <TechTags
         slug={project.slug}
         tags={[...project.tags]}
         baseDelay={tagBaseDelay}
       />
-      <FooterLinks project={project} displayTitle={displayTitle} />
+      <FooterLinks
+        displayTitle={displayTitle}
+        github={project.github}
+        demo={project.demo}
+      />
     </div>
   );
 }
@@ -342,7 +366,11 @@ function ProjectCard({
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/15 to-transparent"
           aria-hidden
         />
-        <ImageHoverOverlay project={project} displayTitle={displayTitle} />
+        <ImageHoverOverlay
+          displayTitle={displayTitle}
+          github={project.github}
+          demo={project.demo}
+        />
       </div>
       <ProjectCardBody
         project={project}
@@ -384,6 +412,9 @@ function FeaturedProjectCard({ project }: { project: Project }) {
             />
           </span>
           <StatusBadge status={project.status} />
+          {project.statusYear != null ? (
+            <StatusYearPill year={project.statusYear} />
+          ) : null}
         </div>
         <h3 className="mt-4 font-mono text-xl font-semibold text-card-foreground sm:text-2xl">
           <ScrambleText
@@ -425,7 +456,112 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-background/25 lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-background/35"
           aria-hidden
         />
-        <ImageHoverOverlay project={project} displayTitle={displayTitle} />
+        <ImageHoverOverlay
+          displayTitle={displayTitle}
+          github={project.github}
+          demo={project.demo}
+        />
+      </div>
+    </article>
+  );
+}
+
+function CollegeRepoPreviewMedia({
+  repo,
+  className,
+}: {
+  repo: CollegeGithubRepo;
+  className?: string;
+}) {
+  const src = repo.previewFile ? collegeRepoPreviewUrl(repo.previewFile) : null;
+
+  if (src) {
+    return (
+      <img
+        src={src}
+        alt=""
+        className={cn("size-full object-cover", className)}
+        loading="lazy"
+      />
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "flex size-full items-center justify-center bg-gradient-to-br from-muted via-muted/80 to-muted/50",
+        className,
+      )}
+      aria-hidden
+    >
+      <ImageIcon className="size-12 text-muted-foreground/70" strokeWidth={1.25} />
+    </div>
+  );
+}
+
+function CollegeRepoCard({
+  repo,
+  tagBaseDelay = 0.12,
+}: {
+  repo: CollegeGithubRepo;
+  tagBaseDelay?: number;
+}) {
+  const m = useMessages();
+  const displayTitle = m.projects.collegeGithubTitles[repo.slug];
+  const description = m.projects.collegeGithubDescriptions[repo.slug];
+  const gh = repo.github?.trim();
+  const demo = repo.demo?.trim();
+
+  return (
+    <article
+      className={cn(
+        "group/card relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm",
+        "transition-all duration-200 ease-out",
+        "hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20",
+      )}
+    >
+      <div className="group/image relative aspect-video w-full shrink-0 overflow-hidden border-b border-border">
+        <CollegeRepoPreviewMedia repo={repo} />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-background/15 to-transparent"
+          aria-hidden
+        />
+        <ImageHoverOverlay
+          displayTitle={displayTitle}
+          github={gh}
+          demo={demo}
+        />
+      </div>
+      <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
+        <h3 className="font-mono text-base font-semibold text-card-foreground sm:text-lg">
+          <ScrambleText
+            text={displayTitle}
+            staggerMs={scrambleContent.collegeGithubProjectTitles}
+          />
+        </h3>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+          <ScrambleText
+            text={description}
+            staggerMs={scrambleContent.collegeGithubProjectDescriptions}
+          />
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <StatusBadge
+            status="archived"
+            staggerMs={scrambleContent.collegeGithubProjectStatus}
+          />
+          <StatusYearPill year={repo.statusYear} />
+        </div>
+        <TechTags
+          slug={repo.slug}
+          tags={[...repo.tags]}
+          baseDelay={tagBaseDelay}
+        />
+        <FooterLinks
+          displayTitle={displayTitle}
+          github={gh}
+          demo={demo}
+        />
       </div>
     </article>
   );
@@ -486,10 +622,16 @@ function AcademicCollapsible() {
             className="overflow-hidden"
           >
             <div className={cn("border-t border-border pb-5 pt-4", sectionPaddingX)}>
-              <p className="mb-4 px-1 text-xs text-muted-foreground">
+              <h4 className="font-mono text-sm font-semibold text-foreground">
                 <ScrambleText
-                  text={m.projects.academicIntro}
-                  staggerMs={scrambleContent.academicIntro}
+                  text={m.projects.collegeGithubSectionTitle}
+                  staggerMs={scrambleContent.collegeGithubSectionTitle}
+                />
+              </h4>
+              <p className="mt-2 mb-4 px-1 text-xs text-muted-foreground">
+                <ScrambleText
+                  text={m.projects.collegeGithubIntro}
+                  staggerMs={scrambleContent.collegeGithubIntro}
                 />
               </p>
               <motion.div
@@ -498,20 +640,47 @@ function AcademicCollapsible() {
                 variants={gridContainer}
                 className="grid gap-6 sm:grid-cols-2"
               >
-                {academicProjects.map((p) => (
-                  <motion.div key={p.slug} variants={gridItem}>
-                    <ProjectCard
-                      project={p}
-                      tagBaseDelay={0.12}
-                      titleStaggerMs={scrambleContent.academicProjectTitles}
-                      descriptionStaggerMs={
-                        scrambleContent.academicProjectDescriptions
-                      }
-                      statusStaggerMs={scrambleContent.academicProjectStatus}
-                    />
+                {collegeGithubRepos.map((repo) => (
+                  <motion.div key={repo.slug} variants={gridItem}>
+                    <CollegeRepoCard repo={repo} tagBaseDelay={0.1} />
                   </motion.div>
                 ))}
               </motion.div>
+
+              <div className="mt-10 border-t border-border pt-8">
+                <h4 className="font-mono text-sm font-semibold text-foreground">
+                  <ScrambleText
+                    text={m.projects.academicTechnicalSectionTitle}
+                    staggerMs={scrambleContent.academicTechnicalSectionTitle}
+                  />
+                </h4>
+                <p className="mt-2 px-1 text-xs text-muted-foreground">
+                  <ScrambleText
+                    text={m.projects.academicTechnicalIntro}
+                    staggerMs={scrambleContent.academicTechnicalIntro}
+                  />
+                </p>
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={gridContainer}
+                  className="mt-6 grid gap-6 sm:grid-cols-2"
+                >
+                  {academicProjects.map((p) => (
+                    <motion.div key={p.slug} variants={gridItem}>
+                      <ProjectCard
+                        project={p}
+                        tagBaseDelay={0.12}
+                        titleStaggerMs={scrambleContent.academicProjectTitles}
+                        descriptionStaggerMs={
+                          scrambleContent.academicProjectDescriptions
+                        }
+                        statusStaggerMs={scrambleContent.academicProjectStatus}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         ) : null}

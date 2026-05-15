@@ -80,7 +80,6 @@ export const scrambleContent = {
   projectStatus: contentStagger(7),
   projectFeaturedLabel: contentStagger(8),
   academicSectionTitle: contentStagger(9),
-  academicIntro: contentStagger(10),
   academicProjectTitles: contentStagger(11),
   academicProjectDescriptions: contentStagger(12),
   academicProjectStatus: contentStagger(13),
@@ -93,7 +92,14 @@ export const scrambleContent = {
   footerCredit: contentStagger(20),
   footerStackWith: contentStagger(21),
   footerStackAnd: contentStagger(22),
+  collegeGithubSectionTitle: contentStagger(23),
+  collegeGithubIntro: contentStagger(24),
+  collegeGithubProjectTitles: contentStagger(25),
+  collegeGithubProjectDescriptions: contentStagger(26),
+  collegeGithubProjectStatus: contentStagger(27),
+  academicTechnicalSectionTitle: contentStagger(28),
+  academicTechnicalIntro: contentStagger(29),
 } as const
 
 /** Próximo índice de slot livre (convénio; delays continuam 0). */
-export const SCRAMBLE_NEXT_FREE_SLOT = CONTENT_SLOT_START + 23
+export const SCRAMBLE_NEXT_FREE_SLOT = CONTENT_SLOT_START + 30

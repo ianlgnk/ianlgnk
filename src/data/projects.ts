@@ -16,6 +16,8 @@ export type Project = {
   featured?: boolean
   status: ProjectStatus
   image?: string
+  /** Reference year next to the status pill (last meaningful activity). */
+  statusYear?: number
 }
 
 /** Projeto em destaque + listagem principal — títulos em `messages.projects.titles`. */
@@ -28,6 +30,7 @@ export const mainProjects: Project[] = [
     github: '',
     demo: '',
     image: undefined,
+    statusYear: 2026,
   },
   {
     slug: 'pyfaces',
@@ -36,6 +39,7 @@ export const mainProjects: Project[] = [
     github: '',
     demo: '',
     image: undefined,
+    statusYear: 2026,
   },
   {
     slug: 'tcc-ecommerce',
@@ -45,6 +49,7 @@ export const mainProjects: Project[] = [
     demo:
       'https://www.monografias.ufop.br/bitstream/35400000/7416/3/MONOGRAFIA_DesenvolvimentoEcommerceMarca.pdf',
     image: undefined,
+    statusYear: 2025,
   },
   {
     slug: 'bastianetto',
@@ -53,6 +58,7 @@ export const mainProjects: Project[] = [
     github: '',
     demo: 'https://www.bastianettoalessi.com.br/',
     image: undefined,
+    statusYear: 2021,
   },
 ]
 
@@ -65,6 +71,7 @@ export const academicProjects: Project[] = [
     github: '',
     demo: '',
     image: undefined,
+    statusYear: 2018,
   },
   {
     slug: 'academic-irrigation',
@@ -73,5 +80,6 @@ export const academicProjects: Project[] = [
     github: '',
     demo: '',
     image: undefined,
+    statusYear: 2017,
   },
 ]

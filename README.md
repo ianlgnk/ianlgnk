@@ -25,6 +25,53 @@ Este repositório é o **código-fonte do meu portfólio** — o mesmo projeto q
 
 <br />
 
+## Projetos da faculdade
+
+Referência aos repositórios que fui construindo na graduação. GIFs e capturas de demonstração estão em [`public/college-projects/`](public/college-projects/) (servidos pelo site e reutilizados aqui no README).
+
+| Repositório | Notas |
+| :--- | :--- |
+| [**atelie-da-gisa**](https://github.com/ianlgnk/atelie-da-gisa) | SPA de vendas de macramê; Next.js, Firebase, UI com shadcn. |
+| [**tcc**](https://github.com/ianlgnk/tcc) | Front-end do TCC (Vite, TypeScript); deploy Firebase. |
+| [**tcc-cloudfunctions**](https://github.com/ianlgnk/tcc-cloudfunctions) | Cloud Functions (TypeScript) associadas ao TCC. |
+| [**pandafilmes-frontend**](https://github.com/ianlgnk/pandafilmes-frontend) | Catálogo de filmes com Vue, Vuetify, Vue Router e Vuex. |
+| [**shot_in_fly**](https://github.com/ianlgnk/shot_in_fly) | Jogo em Java (JDK 8) com sockets e threads (cliente/servidor). |
+| [**cassandra-project**](https://github.com/ianlgnk/cassandra-project) | Exploração do Cassandra (NoSQL); front Vue e API em Node. |
+| [**social4devs-frontend**](https://github.com/ianlgnk/social4devs-frontend) | Rede social para devs — Vue 3, TypeScript, Naive UI. |
+| [**clt-pj-converter**](https://github.com/ianlgnk/clt-pj-converter) | Conversor salário CLT → PJ (Vue 3 + TypeScript); [demo](https://converter-clt-pj.netlify.app/). |
+| [**insertion-sort_assembly**](https://github.com/ianlgnk/insertion-sort_assembly) | Insertion sort em Assembly (UFOP — Organização de Computadores). |
+| [**github-profile-explorer**](https://github.com/ianlgnk/github-profile-explorer) | Busca de utilizadores GitHub (React + TypeScript + API); [demo](https://githubexplorer-ianlgk.netlify.app/). |
+| [**guess-the-number**](https://github.com/ianlgnk/guess-the-number) | Adivinha o número (React); [demo](https://guess-the-number-ianlgk.netlify.app/). |
+| [**todo-list**](https://github.com/ianlgnk/todo-list) | To-do com Vue e `localStorage`; [demo](https://todo-list-ianlgk.netlify.app/). |
+| [**snake-fila**](https://github.com/ianlgnk/snake-fila) | Snake em C com lógica de fila (trabalho de AEDS — UFOP). |
+
+<details>
+<summary><b>Pré-visualizações</b> (GIF / imagem)</summary>
+
+<p align="center">
+  <b>GitHub Profile Explorer</b><br />
+  <a href="https://github.com/ianlgnk/github-profile-explorer"><img src="public/college-projects/github-explorer.gif" alt="Demo do GitHub Profile Explorer" width="640" /></a>
+</p>
+
+<p align="center">
+  <b>Guess the Number</b><br />
+  <a href="https://github.com/ianlgnk/guess-the-number"><img src="public/college-projects/guess-the-number.gif" alt="Demo do Guess the Number" width="640" /></a>
+</p>
+
+<p align="center">
+  <b>To-do List</b><br />
+  <a href="https://github.com/ianlgnk/todo-list"><img src="public/college-projects/ToDo-Gif.gif" alt="Demo da To-do List" width="640" /></a>
+</p>
+
+<p align="center">
+  <b>Conversor CLT → PJ</b><br />
+  <a href="https://github.com/ianlgnk/clt-pj-converter"><img src="public/college-projects/converter-clt-pj.png" alt="Screenshot do conversor CLT PJ" width="640" /></a>
+</p>
+
+</details>
+
+<br />
+
 ## Stack
 
 | Tecnologia | Papel no projeto |
