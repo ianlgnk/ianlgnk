@@ -91,6 +91,22 @@ export const projects: readonly Project[] = [
         href: 'https://apps.apple.com/br/app/beerpass-club/id1605400165',
       },
     ],
+    // Gerado por `node scripts/render-video.mjs beerpass` a partir de video/beerpass/.
+    media: {
+      type: 'video',
+      sources: {
+        'pt-BR': {
+          webm: 'projects/beerpass/video-pt.webm',
+          mp4: 'projects/beerpass/video-pt.mp4',
+          poster: 'projects/beerpass/poster-pt.jpg',
+        },
+        'en-US': {
+          webm: 'projects/beerpass/video-en.webm',
+          mp4: 'projects/beerpass/video-en.mp4',
+          poster: 'projects/beerpass/poster-en.jpg',
+        },
+      },
+    },
   },
   {
     slug: 'inkaboxe',

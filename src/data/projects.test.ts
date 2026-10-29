@@ -47,16 +47,21 @@ describe('projects', () => {
     expect(inkaboxe?.links).toEqual([])
   })
 
-  it('uses https links; only Avance Trainer and Pedro Porto have real media for now', () => {
+  it('uses https links; only Avance Trainer, Pedro Porto and Beerpass have real media for now', () => {
     for (const p of projects) {
       for (const l of p.links) expect(l.href.startsWith('https://')).toBe(true)
     }
-    expect(projects.filter((p) => p.media).map((p) => p.slug)).toEqual(['avance-trainer', 'pedro-porto-design'])
+    expect(projects.filter((p) => p.media).map((p) => p.slug)).toEqual([
+      'avance-trainer',
+      'pedro-porto-design',
+      'beerpass-club',
+    ])
   })
 
   it.each([
     ['avance-trainer', 'avance'],
     ['pedro-porto-design', 'pedro-porto'],
+    ['beerpass-club', 'beerpass'],
   ])('gives %s a presentation video per locale, with files in public/', (slug, dir) => {
     const media = bySlug(slug)?.media
     expect(media?.type).toBe('video')
