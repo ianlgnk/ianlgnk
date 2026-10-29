@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import { formatUptime } from '@/lib/uptime'
 import { useInView } from '@/lib/use-in-view'
-import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { cn, sectionShell } from '@/lib/utils'
 import { useMessages } from '@/locales/use-messages'
 
@@ -11,21 +10,31 @@ const secondsSincePageLoad = () => Math.floor(performance.now() / 1000)
 /**
  * Footer em "prompt de terminal": whoami / uptime / exit. As linhas digitam
  * ao entrar na viewport; o contador de uptime só roda enquanto o footer está
- * visível e nunca com movimento reduzido.
+ * visível (inclusive com movimento reduzido: o relógio é informação, não animação).
  */
 export function TerminalFooter() {
   const m = useMessages()
-  const reduced = useReducedMotion()
   const { ref, inView } = useInView<HTMLElement>({ once: false })
   const [seconds, setSeconds] = useState(secondsSincePageLoad)
+  // `inView` nasce `true` com movimento reduzido (só para revelar o conteúdo); o relógio precisa
+  // da visibilidade real, senão ficaria parado em 00:00:00 ou rodaria fora da tela.
+  const [visible, setVisible] = useState(() => typeof IntersectionObserver === 'undefined')
 
   useEffect(() => {
-    if (!inView || reduced) return
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [ref])
+
+  useEffect(() => {
+    if (!visible) return
     const tick = () => setSeconds(secondsSincePageLoad())
     tick()
     const id = window.setInterval(tick, 1000)
     return () => window.clearInterval(id)
-  }, [inView, reduced])
+  }, [visible])
 
   const line = (index: number) => ({
     className: inView ? 'type-in' : 'opacity-0',

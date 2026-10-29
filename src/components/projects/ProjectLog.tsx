@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { ScrambleText } from '@/components/ScrambleText'
 import { ProjectMedia } from '@/components/projects/ProjectMedia'
+import { onOpenRequest } from '@/components/projects/open-bus'
 import { toggleOpen } from '@/components/projects/toggle-open'
 import { projects, type ProjectLink, type ProjectSlug } from '@/data/projects'
 import { cn, sectionShell } from '@/lib/utils'
@@ -29,7 +30,11 @@ export function ProjectLog() {
       if (slug) setOpen(slug)
     }
     window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    const offOpen = onOpenRequest(setOpen)
+    return () => {
+      window.removeEventListener('hashchange', onHashChange)
+      offOpen()
+    }
   }, [])
 
   return (

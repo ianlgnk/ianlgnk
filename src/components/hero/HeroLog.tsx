@@ -1,4 +1,5 @@
 import { ScrambleText } from '@/components/ScrambleText'
+import { requestOpen } from '@/components/projects/open-bus'
 import { projects } from '@/data/projects'
 import { useMessages } from '@/locales/use-messages'
 
@@ -16,11 +17,12 @@ export function HeroLog() {
         >
           <a
             href={`#${project.slug}`}
-            className="flex items-baseline gap-3 py-2.5 transition-colors hover:text-accent sm:gap-5"
+            onClick={() => requestOpen(project.slug)}
+            className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 py-2.5 transition-colors hover:text-accent sm:flex-nowrap sm:gap-5"
           >
             <span className="w-6 shrink-0 text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
-            <span className="min-w-0 flex-1 truncate">{project.name}</span>
-            <span className="shrink-0 text-accent"><ScrambleText text={m.projects.items[project.slug].short} /></span>
+            <span className="min-w-0 flex-1">{project.name}</span>
+            <span className="basis-full pl-9 text-accent sm:shrink-0 sm:basis-auto sm:pl-0"><ScrambleText text={m.projects.items[project.slug].short} /></span>
           </a>
         </li>
       ))}

@@ -1,4 +1,6 @@
+import { useLocale } from '@/components/locale-provider'
 import { experience } from '@/data/experience'
+import { formatDuration, monthsSince } from '@/lib/duration'
 import { useInView } from '@/lib/use-in-view'
 import { cn } from '@/lib/utils'
 import { useMessages } from '@/locales/use-messages'
@@ -6,6 +8,7 @@ import { useMessages } from '@/locales/use-messages'
 /** Experiência como histórico de commits; o cargo atual é o `HEAD`. */
 export function GitLog() {
   const m = useMessages()
+  const { locale } = useLocale()
   const { ref, inView } = useInView<HTMLOListElement>()
 
   return (
@@ -17,6 +20,9 @@ export function GitLog() {
       <ol ref={ref} className="mt-6 ml-1 border-l border-border pl-6">
         {experience.map((entry, i) => {
           const copy = m.experience.items[entry.id]
+          const duration = entry.since
+            ? formatDuration(monthsSince(entry.since, new Date()), locale)
+            : copy.duration
           return (
             <li
               key={entry.id}
@@ -32,7 +38,7 @@ export function GitLog() {
               />
               <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:text-xs">
                 {entry.current ? <span className="text-accent">{m.about.headLabel} · </span> : null}
-                {copy.period} · {copy.duration}
+                {copy.period} · {duration}
               </p>
               <h3 className="mt-1 text-sm font-bold uppercase tracking-[0.06em] sm:text-base">{copy.role}</h3>
               <p className="text-xs text-muted-foreground sm:text-sm">{entry.company}</p>

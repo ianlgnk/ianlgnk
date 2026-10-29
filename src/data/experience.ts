@@ -12,6 +12,8 @@ export type ExperienceEntry = {
   technologies: readonly string[]
   /** Cargo atual (vira `HEAD` no git log). */
   current: boolean
+  /** Mês de início do cargo atual: a duração é calculada, não digitada. */
+  since?: { year: number; month: number }
 }
 
 /** Mais recente primeiro. */
@@ -21,6 +23,7 @@ export const experience: readonly ExperienceEntry[] = [
     company: 'Beerpass Club',
     technologies: ['React Native', 'Angular', 'React', 'Next', 'Node.js', 'TypeScript', 'Kotlin', 'Firebase', 'AWS'],
     current: true,
+    since: { year: 2026, month: 1 },
   },
   {
     id: 'beerpass-pleno',

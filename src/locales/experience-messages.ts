@@ -3,7 +3,8 @@ import type { ExperienceId } from '@/data/experience'
 export type ExperienceItemCopy = {
   role: string
   period: string
-  duration: string
+  /** Ausente no cargo atual: a duração vem de `monthsSince`. */
+  duration?: string
   responsibilities: string
 }
 
@@ -16,7 +17,6 @@ export const experienceMessagesPtBR: ExperienceMessages = {
     'beerpass-senior': {
       role: 'Engenheiro de Software Full Stack Sênior',
       period: 'Jan/2026 – atual',
-      duration: '5 meses',
       responsibilities: '',
     },
     'beerpass-pleno': {
@@ -52,7 +52,6 @@ export const experienceMessagesEnUS: ExperienceMessages = {
     'beerpass-senior': {
       role: 'Senior Full Stack Software Engineer',
       period: 'Jan/2026 – present',
-      duration: '5 months',
       responsibilities: '',
     },
     'beerpass-pleno': {
