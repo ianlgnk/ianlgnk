@@ -1,199 +1,154 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:is(.dark *));
-
-@theme {
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
-
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-
-  --color-primary: hsl(var(--primary));
-  --color-primary-text: hsl(var(--primary-text));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-
-  --animate-hero-name-gradient: hero-name-gradient 5.5s ease-in-out infinite;
-  --animate-hero-cursor: hero-cursor 1s step-end infinite;
-
-  @keyframes hero-name-gradient {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
-  @keyframes hero-cursor {
-    0%,
-    45% {
-      opacity: 1;
-    }
-    50%,
-    100% {
-      opacity: 0.2;
-    }
-  }
+/* Paleta única (vinho + rosa). Variáveis semânticas: um tema futuro troca só estes valores. */
+:root {
+  --background: #1b1012;
+  --foreground: #eadfcd;
+  --muted-foreground: #8f7f78;
+  --accent: #ff3d7f;
+  --accent-foreground: #1b1012;
+  --border: rgb(234 223 205 / 0.16);
+  --grid: rgb(234 223 205 / 0.07);
+  --grid-size: 22px;
+  color-scheme: dark;
 }
 
-@layer base {
-  :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 4%;
-    --primary: 142 71% 45%;
-    /* Variante escura do verde para texto sobre fundo claro (≥ 4.5:1). */
-    --primary-text: 142 72% 29%;
-    --primary-foreground: 144 61% 9%;
-    --secondary: 240 5% 92%;
-    --secondary-foreground: 240 6% 12%;
-    --muted: 240 5% 92%;
-    --muted-foreground: 240 4% 40%;
-    --accent: 240 5% 92%;
-    --accent-foreground: 240 6% 12%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 6% 88%;
-    --input: 240 6% 88%;
-    --ring: 142 71% 45%;
-    --radius: 0.5rem;
-  }
+@theme inline {
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: var(--font-mono);
 
-  .dark {
-    --background: 240 8% 6%;
-    --foreground: 0 0% 96%;
-    --card: 240 7% 9%;
-    --card-foreground: 0 0% 96%;
-    --popover: 240 7% 9%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 142 71% 45%;
-    --primary-text: var(--primary);
-    --primary-foreground: 144 61% 9%;
-    --secondary: 240 4% 16%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 58%;
-    --accent: 240 4% 16%;
-    --accent-foreground: 0 0% 96%;
-    --destructive: 0 62% 42%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 18%;
-    --input: 240 4% 18%;
-    --ring: 142 71% 45%;
-  }
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
   }
 
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
+  html {
+    background: var(--background);
+  }
+
+  body {
+    min-height: 100dvh;
+    color: var(--foreground);
+    font-family: var(--font-mono);
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--background);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  button,
+  [role='button'] {
     cursor: pointer;
   }
+}
 
+/* Texto em pontos (dot-matrix): o texto real continua no DOM. */
+.dotmatrix {
+  color: transparent;
+  background-image: radial-gradient(circle, var(--foreground) 1.6px, transparent 2.1px);
+  background-size: 5px 5px;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Cursor retangular rosa. */
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: -0.12em;
+  background: var(--accent);
+}
+
+/* Barra de nível: 10 quadrados de 7px (gap 2px); `--level` = quadrados preenchidos. */
+.px-bar {
+  --level: 0;
+  display: block;
+  width: 88px;
+  height: 7px;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0 calc(var(--level) * 9px),
+    rgb(234 223 205 / 0.22) 0 100%
+  );
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 7px, transparent 7px 9px);
+  mask: repeating-linear-gradient(90deg, #000 0 7px, transparent 7px 9px);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Revela da esquerda para a direita em passos, como pixels acendendo. */
+@keyframes ignite {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes type-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Toda animação existe só quando o usuário não pediu movimento reduzido. */
+@media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
 
-  /* `clip` evita scroll horizontal sem criar scroll container (sticky segue funcionando). */
-  main {
-    overflow-x: clip;
+  .cursor {
+    animation: blink 1s steps(1) infinite;
   }
 
-  body {
-    @apply min-h-dvh bg-background font-sans text-foreground antialiased;
+  .ignite {
+    animation:
+      ignite 1s steps(16) both,
+      shimmer 4s ease-in-out 1.2s infinite;
   }
 
-  html.theme-fallback-transitioning body {
-    transition:
-      background-color 300ms ease,
-      color 300ms ease;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html.theme-fallback-transitioning body {
-      transition-duration: 0ms;
-    }
-  }
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 450ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  /* Sem o blend `plus-lighter` padrão do navegador, que clareia a sobreposição. */
-  mix-blend-mode: normal;
-}
-
-/* O snapshot antigo fica parado por baixo; sem isso o navegador aplica um
-   fade-out e a página inteira some em vez de o círculo nascer no clique. */
-::view-transition-old(root) {
-  z-index: 1;
-  animation: none;
-}
-
-::view-transition-new(root) {
-  z-index: 2;
-  animation-name: theme-reveal;
-}
-
-@keyframes theme-reveal {
-  from {
-    clip-path: circle(0px at var(--click-x) var(--click-y));
-  }
-
-  to {
-    clip-path: circle(150vmax at var(--click-x) var(--click-y));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 0ms;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-pulse,
-  .animate-hero-name-gradient,
-  .animate-hero-cursor {
-    animation: none;
-  }
-
-  html {
-    scroll-behavior: auto;
+  .type-in {
+    animation: type-in 0.35s ease-out both;
   }
 }

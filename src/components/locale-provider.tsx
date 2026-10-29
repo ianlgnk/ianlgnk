@@ -9,26 +9,20 @@ import {
   type ReactNode,
 } from 'react'
 
-export type Locale = 'pt-BR' | 'en-US'
+import { DEFAULT_LOCALE, resolveLocale, type Locale } from '@/lib/locale'
+
+export type { Locale }
 
 export const SUPPORTED_LOCALES: readonly Locale[] = ['pt-BR', 'en-US']
 
 const STORAGE_KEY = 'ianlgnk-locale'
 
-const DEFAULT_LOCALE: Locale = 'en-US'
-
-function isLocale(value: string | null): value is Locale {
-  return value === 'pt-BR' || value === 'en-US'
-}
-
 function readStoredLocale(): Locale {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (isLocale(raw)) return raw
+    return resolveLocale(localStorage.getItem(STORAGE_KEY))
   } catch {
-    /* ignore */
+    return DEFAULT_LOCALE
   }
-  return DEFAULT_LOCALE
 }
 
 function applyDomLocale(locale: Locale) {

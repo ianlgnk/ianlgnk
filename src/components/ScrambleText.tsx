@@ -1,8 +1,8 @@
-import { useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState, type ElementType } from 'react'
 
 import { randomGlyph } from '@/lib/scramble-glyphs'
 import { cn } from '@/lib/utils'
+import { useReducedMotion } from '@/lib/use-reduced-motion'
 import { SCRAMBLE_DURATION_MS } from '@/locales/scramble-stagger'
 
 type ScrambleTextProps = {
