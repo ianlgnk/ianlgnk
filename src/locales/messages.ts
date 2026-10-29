@@ -49,12 +49,13 @@ export type Messages = {
     roleTitle: string
     bioLine1: string
     bioLine2: string
+    ctaContact: string
     ctaProjects: string
     ctaCv: string
     ariaGithub: string
     ariaLinkedin: string
     ariaLattes: string
-    typewriterPhrases: readonly [string, string, string, string]
+    typewriterPhrases: readonly [string, string, string]
   }
   about: AboutMessages
   experience: ExperienceMessages
@@ -107,13 +108,13 @@ export const messages: Record<Locale, Messages> = {
       roleTitle: 'Engenheiro de Software Full Stack',
       bioLine1: 'Estudando programação desde os 15 anos.',
       bioLine2: 'Desenvolvendo soluções Web/Mobile desde os 19!',
+      ctaContact: 'Vamos conversar',
       ctaProjects: 'Ver Projetos',
       ctaCv: 'Baixar CV',
       ariaGithub: 'GitHub',
       ariaLinkedin: 'LinkedIn',
       ariaLattes: 'Currículo Lattes',
       typewriterPhrases: [
-        'Engenheiro de Software Full Stack',
         'Desenvolvedor React',
         'Engenheiro Node.js',
         'Desenvolvedor Web/Mobile',
@@ -166,13 +167,13 @@ export const messages: Record<Locale, Messages> = {
       roleTitle: 'Full Stack Software Engineer',
       bioLine1: "I've been studying programming since I was 15.",
       bioLine2: "I've been building Web/Mobile solutions since I was 19!",
+      ctaContact: "Let's talk",
       ctaProjects: 'View projects',
       ctaCv: 'Download CV',
       ariaGithub: 'GitHub',
       ariaLinkedin: 'LinkedIn',
       ariaLattes: 'Lattes CV',
       typewriterPhrases: [
-        'Full Stack Software Engineer',
         'React Developer',
         'Node.js Engineer',
         'Web/Mobile Developer',

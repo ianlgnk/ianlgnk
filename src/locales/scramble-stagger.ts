@@ -20,6 +20,7 @@ export const scrambleStagger = {
   heroBio2: scrambleRow(2),
   heroCtaProjects: scrambleRow(3),
   heroCtaCv: scrambleRow(4),
+  heroCtaContact: scrambleRow(5),
   aboutSectionLabel: scrambleRow(0),
   aboutSummary: scrambleRow(1),
   aboutMetric0: scrambleRow(2),

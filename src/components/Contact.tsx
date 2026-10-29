@@ -12,6 +12,7 @@ import type { ElementType, ReactNode } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 import { Button } from "@/components/ui/button";
+import { AvailabilityBadge } from "@/components/AvailabilityBadge";
 import { ScrambleText } from "@/components/ScrambleText";
 import {
   emailJsTemplateFields,
@@ -128,24 +129,6 @@ function getEmailJsConfig() {
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim() ?? "";
   const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim() ?? "";
   return { publicKey, serviceId, templateId, isReady: Boolean(publicKey && serviceId && templateId) };
-}
-
-function AvailabilityBadge({ children }: { children: ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/35 bg-primary/10 px-3 py-1.5 text-sm font-medium text-foreground">
-      <span className="relative flex size-3 shrink-0 items-center justify-center">
-        <span
-          className="absolute -inset-1 rounded-full border border-primary/55 bg-primary/10 animate-pulse"
-          aria-hidden
-        />
-        <span
-          className="relative size-2.5 rounded-full border-2 border-primary bg-background shadow-[0_0_10px_hsl(var(--primary)_/_0.45)]"
-          aria-hidden
-        />
-      </span>
-      {children}
-    </div>
-  );
 }
 
 const socialEase = [0.22, 1, 0.36, 1] as const;

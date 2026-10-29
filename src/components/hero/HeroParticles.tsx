@@ -81,6 +81,7 @@ export function HeroParticles() {
     ro.observe(canvas.parentElement ?? canvas)
     window.addEventListener('mousemove', onMove)
 
+    let running = false
     const linkDist = 118
     const linkDistSq = linkDist * linkDist
 
@@ -157,13 +158,29 @@ export function HeroParticles() {
         ctx.fill()
       }
 
-      rafRef.current = requestAnimationFrame(loop)
+      if (running) rafRef.current = requestAnimationFrame(loop)
     }
 
-    rafRef.current = requestAnimationFrame(loop)
+    const start = () => {
+      if (running) return
+      running = true
+      rafRef.current = requestAnimationFrame(loop)
+    }
+    const stop = () => {
+      running = false
+      cancelAnimationFrame(rafRef.current)
+    }
+
+    // Só anima enquanto a hero está visível.
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start()
+      else stop()
+    })
+    io.observe(canvas.parentElement ?? canvas)
 
     return () => {
-      cancelAnimationFrame(rafRef.current)
+      stop()
+      io.disconnect()
       ro.disconnect()
       window.removeEventListener('mousemove', onMove)
     }
