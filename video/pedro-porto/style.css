@@ -1,0 +1,222 @@
+/* Fonte do portfólio do Pedro (Alte Haas Grotesk) e o mono da loja (Anonymous Pro). */
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('./fonts/AlteHaasGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Alte Haas Grotesk';
+  src: url('./fonts/AlteHaasGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: block;
+}
+
+:root {
+  --cream: #fffbf3;
+  --ink: #2d2d2d;
+  --orange: #f0712f;
+  --muted: #8a857c;
+  --mono: 'Anonymous Pro', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+#stage {
+  position: relative;
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: 'Alte Haas Grotesk', system-ui, sans-serif;
+  background:
+    radial-gradient(60% 70% at 80% 55%, rgb(240 113 47 / 0.1), transparent 70%),
+    radial-gradient(40% 50% at 8% 8%, rgb(45 45 45 / 0.05), transparent 70%),
+    var(--cream);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+/* Texto à esquerda, telas à direita */
+.copy {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  width: 400px;
+  transform: translateY(-50%);
+}
+
+/* O "[ • ]" do menu do portfólio do Pedro */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: '[ • ]';
+  color: var(--orange);
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+.title {
+  margin-top: 18px;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.title em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.phones {
+  position: absolute;
+  right: 70px;
+  top: 74px; /* (800 - 652) / 2: sem transform, que o motion anima */
+  display: flex;
+  gap: 28px;
+}
+
+.phone {
+  width: 300px;
+  height: 652px;
+  padding: 9px;
+  border-radius: 50px;
+  background: linear-gradient(160deg, #4a4845, #1e1d1c 45%, #3a3936);
+  box-shadow:
+    0 0 0 1px rgb(45 45 45 / 0.2),
+    0 40px 80px rgb(45 45 45 / 0.28),
+    0 0 120px rgb(240 113 47 / 0.12);
+}
+
+.phone img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 41px;
+  object-fit: cover;
+  object-position: top;
+  background: var(--cream);
+}
+
+/* Cena central (abertura e fecho) */
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.center .logo {
+  width: 132px;
+}
+
+.center .title {
+  max-width: 900px;
+  margin-top: 26px;
+  font-size: 64px;
+}
+
+/* "do portfólio à loja." quebra inteiro para a segunda linha */
+.center .title em {
+  white-space: nowrap;
+}
+
+.url {
+  margin-top: 22px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 24px;
+  letter-spacing: 0.04em;
+}
+
+/* Janela de navegador com as telas de desktop */
+.browser {
+  position: absolute;
+  right: 56px;
+  top: 161px; /* (800 - 478) / 2 */
+  width: 704px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow:
+    0 0 0 1px rgb(45 45 45 / 0.16),
+    0 40px 90px rgb(45 45 45 / 0.24),
+    0 0 140px rgb(240 113 47 / 0.12);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  background: #f1ebe0;
+  border-bottom: 1px solid rgb(45 45 45 / 0.12);
+}
+
+.browser-bar i {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: rgb(45 45 45 / 0.22);
+}
+
+.browser-bar span {
+  margin-left: 16px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+/* 704 × 440: proporção 16:10 das capturas */
+.browser-view {
+  position: relative;
+  height: 440px;
+  overflow: hidden;
+}
+
+.browser-view img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+}
+
+/* Grade de camisetas no print da página do projeto, sem a coluna de texto à esquerda */
+#projeto .browser-view img {
+  transform-origin: 54% 30%;
+}
+
+/* O carrinho entra por cima da coleção */
+.browser-view .over {
+  opacity: 0;
+}
