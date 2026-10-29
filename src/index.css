@@ -104,9 +104,18 @@
   mask-position: 100% 0;
 }
 
-/* Partículas ativas (canvas por cima): os pontos em CSS somem; a varredura rosa continua. */
+/* Partículas carregando: esconde os pontos em CSS para a entrada começar dos pontos espalhados. */
+.particles-pending .dotmatrix {
+  visibility: hidden;
+}
+
+/* Partículas ativas (canvas): os pontos e a varredura rosa passam a ser desenhados lá. */
 .particles-live .dotmatrix {
   background-image: none;
+}
+
+.particles-live .scan::after {
+  content: none;
 }
 
 /* Cursor retangular rosa. */

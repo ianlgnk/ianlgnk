@@ -5,10 +5,14 @@ import { cn } from '@/lib/utils'
 
 type HeroNameProps = { name: string; className?: string }
 
+/** Se o módulo ou a fonte demorarem mais que isso, o nome em CSS aparece no lugar. */
+const PARTICLES_FALLBACK_MS = 2500
+
 /**
- * Liga as partículas que fogem do cursor no primeiro movimento do mouse sobre o Hero
- * (só com mouse e sem movimento reduzido). O módulo é carregado sob demanda e só entra
- * depois da animação de entrada, para não cortá-la.
+ * Liga as partículas do nome (sem movimento reduzido). Módulo e fonte carregam em
+ * paralelo com os pontos em CSS escondidos, para a entrada começar dos pontos
+ * espalhados. Se passar de `PARTICLES_FALLBACK_MS`, o nome em CSS aparece e as
+ * partículas assumem depois, sem entrada.
  */
 function useNameParticles(h1: React.RefObject<HTMLHeadingElement | null>) {
   const reduced = useReducedMotion()
@@ -16,27 +20,29 @@ function useNameParticles(h1: React.RefObject<HTMLHeadingElement | null>) {
   useEffect(() => {
     const el = h1.current
     const area = el?.closest('section')
-    if (!el || !area || reduced || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    if (!el || !area || reduced) return
 
     let unmount: (() => void) | undefined
     let cancelled = false
+    el.classList.add('particles-pending')
+    const fallback = window.setTimeout(() => el.classList.remove('particles-pending'), PARTICLES_FALLBACK_MS)
 
-    const start = async () => {
-      area.removeEventListener('pointermove', start)
-      const [{ mountNameParticles }] = await Promise.all([
-        import('@/components/hero/name-particles'),
-        document.fonts.ready,
-        ...el.getAnimations({ subtree: true })
-          .filter((a) => (a as CSSAnimation).animationName === 'ignite')
-          .map((a) => a.finished.catch(() => {})),
-      ])
-      if (!cancelled) unmount = mountNameParticles(el, area)
-    }
+    void Promise.all([
+      import('@/components/hero/name-particles'),
+      document.fonts.load(`700 1em ${getComputedStyle(el).fontFamily}`).catch(() => []),
+    ])
+      .then(([{ mountNameParticles }]) => {
+        if (cancelled) return
+        window.clearTimeout(fallback)
+        unmount = mountNameParticles(el, area, { entrance: el.classList.contains('particles-pending') })
+      })
+      .catch(() => {})
+      .finally(() => el.classList.remove('particles-pending'))
 
-    area.addEventListener('pointermove', start)
     return () => {
       cancelled = true
-      area.removeEventListener('pointermove', start)
+      window.clearTimeout(fallback)
+      el.classList.remove('particles-pending')
       unmount?.()
     }
   }, [h1, reduced])
