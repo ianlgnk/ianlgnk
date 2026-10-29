@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { ScrambleText } from '@/components/ScrambleText'
 import { ProjectMedia } from '@/components/projects/ProjectMedia'
 import { toggleOpen } from '@/components/projects/toggle-open'
 import { projects, type ProjectLink, type ProjectSlug } from '@/data/projects'
@@ -37,7 +38,7 @@ export function ProjectLog() {
         id="projetos-title"
         className="mb-4 text-xs font-medium uppercase tracking-[0.18em] text-accent sm:text-sm"
       >
-        {m.projects.title}
+        <ScrambleText text={m.projects.title} />
       </h2>
 
       <ul>
@@ -64,7 +65,7 @@ export function ProjectLog() {
                 >
                   <span className="w-6 shrink-0 text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
                   <span className={cn('min-w-0 flex-1', isOpen && 'text-accent')}>{project.name}</span>
-                  <span className="shrink-0 text-muted-foreground">{copy.short}</span>
+                  <span className="shrink-0 text-muted-foreground"><ScrambleText text={copy.short} /></span>
                   <span aria-hidden className="shrink-0 text-accent">
                     {isOpen ? '▾' : '▸'}
                   </span>

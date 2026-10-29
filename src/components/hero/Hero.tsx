@@ -1,3 +1,4 @@
+import { ScrambleText } from '@/components/ScrambleText'
 import { HeroLog } from '@/components/hero/HeroLog'
 import { HeroName } from '@/components/hero/HeroName'
 import { personal } from '@/data/personal'
@@ -25,7 +26,7 @@ export function Hero() {
         href={withBase('sobre/')}
         className="mt-10 inline-flex items-center gap-3 bg-accent px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-accent-foreground transition-opacity hover:opacity-90 sm:text-sm"
       >
-        {m.hero.cta}
+        <ScrambleText text={m.hero.cta} />
         <span aria-hidden className="cursor" style={{ background: 'var(--accent-foreground)' }} />
       </a>
     </section>

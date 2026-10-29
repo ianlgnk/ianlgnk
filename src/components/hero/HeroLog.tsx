@@ -1,3 +1,4 @@
+import { ScrambleText } from '@/components/ScrambleText'
 import { projects } from '@/data/projects'
 import { useMessages } from '@/locales/use-messages'
 
@@ -19,7 +20,7 @@ export function HeroLog() {
           >
             <span className="w-6 shrink-0 text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
             <span className="min-w-0 flex-1 truncate">{project.name}</span>
-            <span className="shrink-0 text-accent">{m.projects.items[project.slug].short}</span>
+            <span className="shrink-0 text-accent"><ScrambleText text={m.projects.items[project.slug].short} /></span>
           </a>
         </li>
       ))}

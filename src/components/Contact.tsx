@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { AvailabilityBadge } from '@/components/AvailabilityBadge'
+import { ScrambleText } from '@/components/ScrambleText'
 import { personal } from '@/data/personal'
 import { copyText } from '@/lib/copy-text'
 import { cn, sectionShell } from '@/lib/utils'
@@ -32,7 +33,7 @@ export function Contact() {
         <AvailabilityBadge>{m.contact.badge}</AvailabilityBadge>
 
         <h2 id="contato-title" className="mt-6 text-2xl font-bold uppercase tracking-[0.06em] sm:text-4xl">
-          {m.contact.title}
+          <ScrambleText text={m.contact.title} />
         </h2>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -41,7 +42,7 @@ export function Contact() {
             onClick={onCopy}
             className="bg-accent px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-accent-foreground transition-opacity hover:opacity-90 sm:text-sm"
           >
-            {m.contact.copyEmail}
+            <ScrambleText text={m.contact.copyEmail} />
           </button>
           <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={outlineLink}>
             {m.contact.linkedin} ↗

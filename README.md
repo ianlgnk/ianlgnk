@@ -27,7 +27,7 @@ Este repositório é o **código-fonte do meu portfólio** — o mesmo projeto q
 
 ## Projetos da faculdade
 
-Referência aos repositórios que fui construindo na graduação. GIFs e capturas de demonstração estão em [`public/college-projects/`](public/college-projects/) (servidos pelo site e reutilizados aqui no README).
+Referência aos repositórios que fui construindo na graduação.
 
 | Repositório | Notas |
 | :--- | :--- |
@@ -45,43 +45,17 @@ Referência aos repositórios que fui construindo na graduação. GIFs e captura
 | [**todo-list**](https://github.com/ianlgnk/todo-list) | To-do com Vue e `localStorage`; [demo](https://todo-list-ianlgk.netlify.app/). |
 | [**snake-fila**](https://github.com/ianlgnk/snake-fila) | Snake em C com lógica de fila (trabalho de AEDS — UFOP). |
 
-<details>
-<summary><b>Pré-visualizações</b> (GIF / imagem)</summary>
-
-<p align="center">
-  <b>GitHub Profile Explorer</b><br />
-  <a href="https://github.com/ianlgnk/github-profile-explorer"><img src="public/college-projects/github-explorer.gif" alt="Demo do GitHub Profile Explorer" width="640" /></a>
-</p>
-
-<p align="center">
-  <b>Guess the Number</b><br />
-  <a href="https://github.com/ianlgnk/guess-the-number"><img src="public/college-projects/guess-the-number.gif" alt="Demo do Guess the Number" width="640" /></a>
-</p>
-
-<p align="center">
-  <b>To-do List</b><br />
-  <a href="https://github.com/ianlgnk/todo-list"><img src="public/college-projects/ToDo-Gif.gif" alt="Demo da To-do List" width="640" /></a>
-</p>
-
-<p align="center">
-  <b>Conversor CLT → PJ</b><br />
-  <a href="https://github.com/ianlgnk/clt-pj-converter"><img src="public/college-projects/converter-clt-pj.png" alt="Screenshot do conversor CLT PJ" width="640" /></a>
-</p>
-
-</details>
-
 <br />
 
 ## Stack
 
 | Tecnologia | Papel no projeto |
 | :--- | :--- |
-| **React 19** | UI em componentes; duas páginas (Home e Sobre). |
+| **React 19** | UI em componentes; duas páginas estáticas: Home (`/`) e Sobre (`/sobre/`). |
 | **TypeScript** | Tipagem estática em dados, mensagens i18n e props dos componentes. |
 | **Vite 8** | Dev server, HMR e build de produção para `dist/`. |
-| **Tailwind CSS** | Estilos utilitários, tema claro/escuro e layout responsivo. |
-| **Framer Motion** | Animações de entrada, transições e microinterações. |
-| **Radix UI** | Primitivos acessíveis (ex.: `Slot` no botão). |
+| **Tailwind CSS 4** | Tokens (`@theme`), grade e utilitários; tema único vinho + rosa. |
+| **Vitest** | Testes da lógica pura (nível de skills, uptime, idioma, dados). |
 | **GitHub Actions** | CI: instala dependências, build e publicação no GitHub Pages. |
 
 <p align="left">
@@ -89,7 +63,6 @@ Referência aos repositórios que fui construindo na graduação. GIFs e captura
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion" />
 </p>
 
 <br />
@@ -105,13 +78,13 @@ yarn install
 yarn dev
 ```
 
-O app sobe em **http://localhost:2000** com `base` em `/` (padrão do Vite).
+O app sobe em **http://localhost:2000** com `base` em `/` (padrão do Vite); a página Sobre fica em **/sobre/**.
 
 Para testar o build como no GitHub Pages (assets em `/ianlgnk/`):
 
 ```bash
 VITE_BASE_PATH=/ianlgnk/ yarn build
-yarn preview
+VITE_BASE_PATH=/ianlgnk/ yarn preview   # http://localhost:4173/ianlgnk/ e /ianlgnk/sobre/
 ```
 
 <br />
@@ -132,6 +105,8 @@ Comandos úteis localmente:
 ```bash
 yarn build    # tsc -b && vite build
 yarn lint     # ESLint
+yarn test     # Vitest (lógica pura)
+node scripts/initial-js-size.mjs dist/index.html   # orçamento de JS inicial (≤ 106 kB gzip)
 yarn preview  # serve a pasta dist/ após o build
 ```
 

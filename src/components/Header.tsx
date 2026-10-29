@@ -1,4 +1,5 @@
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { ScrambleText } from '@/components/ScrambleText'
 import { personal } from '@/data/personal'
 import { withBase } from '@/lib/base-url'
 import { cn, sectionShell } from '@/lib/utils'
@@ -35,7 +36,7 @@ export function Header({ current }: { current: 'home' | 'about' }) {
                 current === 'about' ? 'text-accent' : 'text-foreground',
               )}
             >
-              {m.nav.about}
+              <ScrambleText text={m.nav.about} />
             </a>
             <LanguageToggle />
           </nav>
