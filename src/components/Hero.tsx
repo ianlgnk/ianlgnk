@@ -18,7 +18,7 @@ import { cn, sectionShell } from "@/lib/utils";
 /** Filenames in `public/cv/`. */
 const CV_FILE_BY_LOCALE: Record<Locale, string> = {
   "pt-BR": "Curriculo_Ian_Langkammer_Batista_PT.pdf",
-  "en-US": "Resume_Ian_Langkammer_Batista_EN.pdf",
+  "en-US": "Curriculo_Ian_Langkammer_Batista_US.pdf",
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
