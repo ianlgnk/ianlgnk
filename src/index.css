@@ -104,6 +104,11 @@
   mask-position: 100% 0;
 }
 
+/* Partículas ativas (canvas por cima): os pontos em CSS somem; a varredura rosa continua. */
+.particles-live .dotmatrix {
+  background-image: none;
+}
+
 /* Cursor retangular rosa. */
 .cursor {
   display: inline-block;
