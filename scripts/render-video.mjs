@@ -57,8 +57,11 @@ const shoot = async (file) => {
   const { data } = await send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: W, height: H, scale: 1 } })
   writeFileSync(file, Buffer.from(data, 'base64'))
 }
+// `__seek` pode devolver uma promessa (composições com <video> esperam o `seeked` de cada clipe).
 const seek = async (time) => {
-  await evaluate(`window.__seek(${time}); new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))`)
+  await evaluate(
+    `Promise.resolve(window.__seek(${time})).then(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))`,
+  )
 }
 
 mkdirSync(OUT_DIR, { recursive: true })
@@ -69,6 +72,7 @@ for (const locale of LOCALES) {
   await sleep(1500)
   await evaluate('window.__ready')
   const duration = await evaluate('window.__duration')
+  const posterAt = (await evaluate('window.__poster')) ?? 4.6
   const tag = locale === 'pt-BR' ? 'pt' : 'en'
 
   if (stills) {
@@ -101,8 +105,9 @@ for (const locale of LOCALES) {
   }
   run(['-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-an', path.join(OUT_DIR, `video-${tag}.mp4`)])
   run(['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '38', '-row-mt', '1', '-pix_fmt', 'yuv420p', '-an', path.join(OUT_DIR, `video-${tag}.webm`)])
-  // Capa (imagem parada para movimento reduzido e antes do play): cena do app do aluno.
-  const posterFrame = String(Math.round(4.6 * FPS)).padStart(5, '0')
+  // Capa (imagem parada para movimento reduzido e antes do play): `window.__poster` ou, sem ele,
+  // 4,6s (a cena do app do aluno no Avance).
+  const posterFrame = String(Math.round(posterAt * FPS)).padStart(5, '0')
   spawnSync('ffmpeg', ['-y', '-i', path.join(framesDir, `${posterFrame}.png`), '-q:v', '4', path.join(OUT_DIR, `poster-${tag}.jpg`)], { stdio: 'inherit' })
 }
 
