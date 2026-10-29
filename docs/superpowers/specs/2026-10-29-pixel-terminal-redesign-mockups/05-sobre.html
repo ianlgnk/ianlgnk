@@ -1,0 +1,132 @@
+<style>
+  .w { --bg:#1b1012; --ink:#eadfcd; --dim:#8f7f78; --pink:#ff3d7f; --line:rgba(234,223,205,.07);
+       position:relative; height:430px; padding:14px 14px; overflow:hidden; border-radius:6px;
+       background:
+         linear-gradient(var(--line) 1px, transparent 1px) 0 0/22px 22px,
+         linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/22px 22px, var(--bg);
+       color:var(--ink); font-family:"SF Mono","JetBrains Mono",Menlo,monospace; text-transform:uppercase; }
+  .hd { display:flex; justify-content:space-between; font-size:9px; letter-spacing:.14em; color:var(--dim); margin-bottom:9px }
+  .hd b { color:var(--pink); font-weight:600 }
+  h5 { margin:0 0 5px; font-size:9px; letter-spacing:.18em; color:var(--pink); font-weight:600 }
+  p { margin:0; font-size:9px; line-height:1.55; letter-spacing:.04em; text-transform:none; color:#cfc4b2 }
+  .sk { display:flex; align-items:center; gap:6px; font-size:9px; letter-spacing:.1em; margin:3px 0 }
+  .sk span:first-child { width:78px }
+  .px { display:flex; gap:2px } .px i { width:7px; height:7px; background:var(--ink); display:block } .px i.o { background:transparent; border:1px solid rgba(234,223,205,.35) }
+  .px.pk i:not(.o) { background:var(--pink) }
+
+  /* A git log */
+  .gl { border-left:1px solid rgba(234,223,205,.3); margin-left:4px; padding-left:12px; position:relative }
+  .gl .c { position:relative; margin-bottom:9px }
+  .gl .c::before { content:""; position:absolute; left:-17px; top:3px; width:9px; height:9px; background:var(--bg); border:1px solid var(--ink); }
+  .gl .c.head::before { background:var(--pink); border-color:var(--pink) }
+  .gl .h { font-size:9px; letter-spacing:.1em; color:var(--dim) } .gl .h b { color:var(--pink); font-weight:600 }
+  .gl .r { font-size:11px; letter-spacing:.06em; margin:1px 0 }
+  .two { display:grid; grid-template-columns:1.25fr 1fr; gap:14px }
+
+  /* B datasheet */
+  .ds { display:grid; grid-template-columns:150px 1fr; gap:14px }
+  .kv div { display:flex; justify-content:space-between; border-top:1px solid rgba(234,223,205,.15); padding:3px 0; font-size:9px; letter-spacing:.1em }
+  .kv div span:first-child { color:var(--dim) }
+  .tb div { display:grid; grid-template-columns:70px 1fr 54px; gap:8px; border-top:1px solid rgba(234,223,205,.15); padding:4px 0; font-size:9px; letter-spacing:.08em }
+  .tb div span:first-child { color:var(--dim) } .tb div span:last-child { color:var(--pink); text-align:right }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:3px 10px; margin-top:6px }
+
+  /* C numbered sections */
+  .sec { border-top:1px solid rgba(234,223,205,.2); padding:7px 0 9px; display:grid; grid-template-columns:54px 1fr; gap:10px }
+  .sec .n { font-size:30px; font-weight:900; line-height:.9; color:transparent;
+            background: radial-gradient(circle, var(--ink) 1.3px, transparent 1.7px) 0 0/4px 4px; -webkit-background-clip:text; background-clip:text }
+  .sec h4 { margin:0 0 3px; font-size:10px; letter-spacing:.16em; font-weight:700 }
+  .chips span { display:inline-block; border:1px solid rgba(234,223,205,.35); padding:2px 6px; margin:2px 3px 0 0; font-size:8px; letter-spacing:.1em }
+  .chips span.on { background:var(--pink); border-color:var(--pink); color:var(--bg) }
+</style>
+
+<h2>Como organizar a página "Sobre"?</h2>
+<p class="subtitle" style="text-transform:none;color:inherit">Uma página só, com sua história na programação, a experiência e as skills. Os dados dos mockups são os reais.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="about-gitlog" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="w">
+        <div class="hd"><span>/SOBRE</span><b>$ GIT LOG --EXPERIENCE</b></div>
+        <div class="two">
+          <div class="gl">
+            <div class="c head"><div class="h"><b>HEAD → ATUAL</b> · JAN/2026–</div><div class="r">SÊNIOR FULL STACK</div><p>Beerpass Club · React Native, Angular, Node, AWS</p></div>
+            <div class="c"><div class="h">MAI/2023–JAN/2026</div><div class="r">PLENO FULL STACK</div><p>Beerpass Club · 2 anos e 9 meses</p></div>
+            <div class="c"><div class="h">OUT/2021–ABR/2023</div><div class="r">JÚNIOR → PLENO</div><p>Saúde Agora · full stack</p></div>
+            <div class="c"><div class="h">JUN–DEZ/2021</div><div class="r">WEB DEVELOPER</div><p>Visão Tecnologia e Sistemas</p></div>
+          </div>
+          <div>
+            <h5>SOBRE</h5>
+            <p>Programo desde os 15; Sistemas de Informação na UFOP; inglês Cambridge B2.</p>
+            <h5 style="margin-top:12px">SKILLS</h5>
+            <div class="sk"><span>REACT</span><div class="px pk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i></div></div>
+            <div class="sk"><span>TYPESCRIPT</span><div class="px pk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+            <div class="sk"><span>NODE.JS</span><div class="px pk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i></div></div>
+            <div class="sk"><span>FIREBASE</span><div class="px pk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · Git log</h3>
+      <p>Experiência como histórico de commits (HEAD = cargo atual) numa linha do tempo vertical; sobre e skills ao lado. Bem "dev".</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="about-datasheet" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="w">
+        <div class="hd"><span>/SOBRE</span><b>FICHA TÉCNICA</b></div>
+        <div class="ds">
+          <div class="kv">
+            <div><span>NOME</span><span>IAN L. BATISTA</span></div>
+            <div><span>FUNÇÃO</span><span>FULL STACK</span></div>
+            <div><span>LOCAL</span><span>BH · MG</span></div>
+            <div><span>DESDE</span><span>15 ANOS</span></div>
+            <div><span>IDIOMAS</span><span>PT · EN B2</span></div>
+            <div><span>FORMAÇÃO</span><span>UFOP · SI</span></div>
+          </div>
+          <div>
+            <h5>EXPERIÊNCIA</h5>
+            <div class="tb">
+              <div><span>2026–</span><span>BEERPASS CLUB · SÊNIOR</span><span>ATUAL</span></div>
+              <div><span>2023–26</span><span>BEERPASS CLUB · PLENO</span><span>2A9M</span></div>
+              <div><span>2021–23</span><span>SAÚDE AGORA · JR/PLENO</span><span>1A7M</span></div>
+              <div><span>2021</span><span>VISÃO TEC. E SISTEMAS</span><span>7M</span></div>
+            </div>
+            <h5 style="margin-top:12px">SKILLS</h5>
+            <div class="grid3">
+              <div class="sk"><span style="width:52px">REACT</span><div class="px"><i></i><i></i><i></i><i></i><i class="o"></i></div></div>
+              <div class="sk"><span style="width:52px">TS</span><div class="px"><i></i><i></i><i></i><i></i><i></i></div></div>
+              <div class="sk"><span style="width:52px">NODE</span><div class="px"><i></i><i></i><i></i><i></i><i class="o"></i></div></div>
+              <div class="sk"><span style="width:52px">RN</span><div class="px"><i></i><i></i><i></i><i></i><i class="o"></i></div></div>
+              <div class="sk"><span style="width:52px">FIRE</span><div class="px"><i></i><i></i><i></i><i class="o"></i><i class="o"></i></div></div>
+              <div class="sk"><span style="width:52px">AWS</span><div class="px"><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Ficha técnica</h3>
+      <p>Painel de dados: chave/valor de quem você é à esquerda, tabela de experiência e grade de skills à direita. Denso e escaneável.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="about-numbered" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="w">
+        <div class="hd"><span>/SOBRE</span><b>3 SEÇÕES</b></div>
+        <div class="sec"><div class="n">01</div><div><h4>SOBRE MIM</h4><p>Programo desde os 15. Hoje construo apps e sistemas web de ponta a ponta, do React Native ao Firebase e à AWS.</p></div></div>
+        <div class="sec"><div class="n">02</div><div><h4>EXPERIÊNCIA</h4><p>Beerpass Club (2023–atual, pleno → sênior) · Saúde Agora (2021–23) · Visão Tecnologia e Sistemas (2021).</p></div></div>
+        <div class="sec"><div class="n">03</div><div><h4>SKILLS</h4><div class="chips"><span class="on">REACT</span><span class="on">TYPESCRIPT</span><span class="on">NODE.JS</span><span>REACT NATIVE</span><span>FIREBASE</span><span>AWS</span><span>ANGULAR</span><span>KOTLIN</span><span>PYTHON</span></div></div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · Três seções numeradas</h3>
+      <p>Números grandes em pontos separam Sobre, Experiência e Skills; skills como chips que acendem ao rolar. Mais limpo e editorial.</p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,89 @@
+<style>
+  .px { --bg:#0c0c0d; --ink:#ece6d6; --dim:#8b867a; --accent:#ece6d6; --line:rgba(236,230,214,.07);
+        position:relative; height:250px; padding:14px 16px; overflow:hidden; border-radius:6px;
+        background:
+          linear-gradient(var(--line) 1px, transparent 1px) 0 0/22px 22px,
+          linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/22px 22px,
+          var(--bg);
+        color:var(--ink); font-family:"SF Mono","JetBrains Mono",Menlo,monospace; text-transform:uppercase; }
+  .px.paper { --bg:#cdc3ab; --ink:#141414; --dim:#5d5848; --accent:#141414; --line:rgba(0,0,0,.09); }
+  .px.wine  { --bg:#1b1012; --ink:#eadfcd; --dim:#8f7f78; --accent:#ff3d7f; --line:rgba(234,223,205,.07); }
+  .px .bar { display:flex; justify-content:space-between; font-size:9px; letter-spacing:.14em; color:var(--dim); }
+  .px .name { margin-top:14px; font-size:27px; font-weight:800; letter-spacing:.06em; line-height:1; }
+  .px .role { margin-top:6px; font-size:10px; letter-spacing:.18em; color:var(--accent); }
+  .px .dots { margin-top:12px; height:46px;
+        background: radial-gradient(circle, var(--ink) 1.3px, transparent 1.7px) 0 0/8px 8px; opacity:.55; }
+  .px .eq { margin-top:8px; display:flex; align-items:flex-end; gap:3px; height:34px; }
+  .px .eq i { flex:1; background:var(--ink); display:block; }
+  .px .cta { position:absolute; left:16px; bottom:14px; font-size:10px; letter-spacing:.16em;
+        border:1px solid var(--ink); padding:5px 9px; }
+  .px .cta.fill { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+  .px .stat { position:absolute; right:16px; bottom:16px; font-size:9px; letter-spacing:.14em; color:var(--dim); text-align:right; line-height:1.5; }
+</style>
+
+<h2>Qual paleta mais combina com o que você imaginou?</h2>
+<p class="subtitle">Mesma estética (grade + pixel + mono), só muda o tom. Pode clicar em mais de uma; no terminal você me diz o que levar de cada.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="paper" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="px paper">
+        <div class="bar"><span>IANLGNK / PORTFOLIO</span><span>BH · 2026</span></div>
+        <div class="name">IAN LANGKAMMER</div>
+        <div class="role">FULL STACK ENGINEER</div>
+        <div class="dots"></div>
+        <div class="eq">
+          <i style="height:30%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:95%"></i><i style="height:60%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:40%"></i><i style="height:65%"></i><i style="height:25%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:90%"></i>
+        </div>
+        <div class="cta">SOBRE MIM →</div>
+        <div class="stat">NODE · REACT<br>TS · MOBILE</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · Papel bege</h3>
+      <p>Fundo bege, tinta preta. Estilo "display de equipamento" da primeira tela. Mais incomum e editorial.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="black" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="px">
+        <div class="bar"><span>IANLGNK / PORTFOLIO</span><span>00:01:00 | 00:05:30</span></div>
+        <div class="name">IAN LANGKAMMER</div>
+        <div class="role">FULL STACK ENGINEER</div>
+        <div class="dots"></div>
+        <div class="eq">
+          <i style="height:30%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:95%"></i><i style="height:60%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:40%"></i><i style="height:65%"></i><i style="height:25%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:90%"></i>
+        </div>
+        <div class="cta">SOBRE MIM →</div>
+        <div class="stat">NODE · REACT<br>TS · MOBILE</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Preto + creme</h3>
+      <p>Quase preto, texto creme, sem cor de destaque. As telas de áudio da segunda imagem. Sóbrio e limpo.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="wine" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="px wine">
+        <div class="bar"><span>IANLGNK / PORTFOLIO</span><span>ORBITAL-26</span></div>
+        <div class="name">IAN LANGKAMMER</div>
+        <div class="role">FULL STACK ENGINEER</div>
+        <div class="dots"></div>
+        <div class="eq">
+          <i style="height:30%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:95%"></i><i style="height:60%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:85%"></i><i style="height:40%"></i><i style="height:65%"></i><i style="height:25%"></i><i style="height:75%"></i><i style="height:55%"></i><i style="height:90%"></i>
+        </div>
+        <div class="cta fill">SOBRE MIM →</div>
+        <div class="stat">NODE · REACT<br>TS · MOBILE</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · Vinho + rosa</h3>
+      <p>Marrom-vinho escuro com um toque de rosa neon como único destaque (tela BMS/HVAC). Mais ousado.</p>
+    </div>
+  </div>
+
+</div>
