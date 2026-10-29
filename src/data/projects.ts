@@ -1,3 +1,5 @@
+import type { Locale } from '@/lib/locale'
+
 export type ProjectSlug =
   | 'avance-trainer'
   | 'pedro-porto-design'
@@ -9,9 +11,13 @@ export type ProjectLink = {
   href: string
 }
 
+/** Caminhos relativos a `public/` (a UI aplica `withBase`). */
+export type VideoFiles = { webm: string; mp4: string; poster: string }
+
 export type ProjectMediaSource =
   | { type: 'image'; src: string; alt: string }
-  | { type: 'video'; src: string; poster: string }
+  /** Uma versão por idioma: os textos estão dentro do vídeo. */
+  | { type: 'video'; sources: Record<Locale, VideoFiles> }
 
 export type Project = {
   slug: ProjectSlug
@@ -32,6 +38,22 @@ export const projects: readonly Project[] = [
     name: 'Avance Trainer',
     tags: ['Expo/React Native', 'React 19', 'Firebase', 'Gemini'],
     links: [{ kind: 'site', href: 'https://avancetrainer.com' }],
+    // Gerado por `node scripts/render-video.mjs avance` a partir de video/avance/.
+    media: {
+      type: 'video',
+      sources: {
+        'pt-BR': {
+          webm: 'projects/avance/video-pt.webm',
+          mp4: 'projects/avance/video-pt.mp4',
+          poster: 'projects/avance/poster-pt.jpg',
+        },
+        'en-US': {
+          webm: 'projects/avance/video-en.webm',
+          mp4: 'projects/avance/video-en.mp4',
+          poster: 'projects/avance/poster-en.jpg',
+        },
+      },
+    },
   },
   {
     slug: 'pedro-porto-design',

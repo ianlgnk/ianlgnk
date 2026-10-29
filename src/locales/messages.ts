@@ -29,6 +29,8 @@ export type Messages = {
   }
   projects: {
     title: string
+    /** `aria-label` do vídeo; `{name}` = nome do projeto. */
+    videoLabel: string
     private: string
     links: { site: string; playStore: string; appStore: string }
     items: Record<ProjectSlug, { short: string; description: string }>
@@ -72,6 +74,7 @@ export const messages: Record<Locale, Messages> = {
     },
     projects: {
       title: 'Projetos :: 04',
+      videoLabel: 'Vídeo de apresentação do {name}',
       private: 'Sob demanda · privado',
       links: { site: 'Visitar site', playStore: 'Google Play', appStore: 'App Store' },
       items: {
@@ -143,6 +146,7 @@ export const messages: Record<Locale, Messages> = {
     },
     projects: {
       title: 'Projects :: 04',
+      videoLabel: '{name} presentation video',
       private: 'On request · private',
       links: { site: 'Visit site', playStore: 'Google Play', appStore: 'App Store' },
       items: {
