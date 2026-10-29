@@ -71,6 +71,13 @@
   background-clip: text;
 }
 
+/* Bloco de pontos (mock de mídia): a cor do ponto vem de `--dot`. */
+.dots-fill {
+  --dot: var(--foreground);
+  background-image: radial-gradient(circle, var(--dot) 1.4px, transparent 1.9px);
+  background-size: 6px 6px;
+}
+
 /* Cursor retangular rosa. */
 .cursor {
   display: inline-block;
