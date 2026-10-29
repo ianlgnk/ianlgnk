@@ -76,13 +76,12 @@ Referência aos repositórios que fui construindo na graduação. GIFs e captura
 
 | Tecnologia | Papel no projeto |
 | :--- | :--- |
-| **React 19** | UI em componentes; seções do site (Hero, About, Experience, Projects, Skills, Contact). |
+| **React 19** | UI em componentes; duas páginas (Home e Sobre). |
 | **TypeScript** | Tipagem estática em dados, mensagens i18n e props dos componentes. |
 | **Vite 8** | Dev server, HMR e build de produção para `dist/`. |
 | **Tailwind CSS** | Estilos utilitários, tema claro/escuro e layout responsivo. |
 | **Framer Motion** | Animações de entrada, transições e microinterações. |
 | **Radix UI** | Primitivos acessíveis (ex.: `Slot` no botão). |
-| **EmailJS** | Envio do formulário de contato no browser (variáveis `VITE_EMAILJS_*`). |
 | **GitHub Actions** | CI: instala dependências, build e publicação no GitHub Pages. |
 
 <p align="left">
@@ -103,7 +102,6 @@ Referência aos repositórios que fui construindo na graduação. GIFs e captura
 git clone https://github.com/ianlgnk/ianlgnk.git
 cd ianlgnk
 yarn install
-cp .env.example .env   # opcional: formulário de contato (EmailJS)
 yarn dev
 ```
 
@@ -116,14 +114,6 @@ VITE_BASE_PATH=/ianlgnk/ yarn build
 yarn preview
 ```
 
-Variáveis no `.env` (ver `.env.example`):
-
-| Variável | Uso |
-| :--- | :--- |
-| `VITE_EMAILJS_PUBLIC_KEY` | Chave pública do EmailJS |
-| `VITE_EMAILJS_SERVICE_ID` | ID do serviço |
-| `VITE_EMAILJS_TEMPLATE_ID` | ID do template (`from_name`, `from_email`, `message`) |
-
 <br />
 
 ## Build e deploy
@@ -131,7 +121,7 @@ Variáveis no `.env` (ver `.env.example`):
 O workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) roda em cada **push na `main`**:
 
 1. **Checkout** do repositório e **Node 24** (cache do Yarn).
-2. **`yarn install --frozen-lockfile`** e gravação do `.env` a partir do secret **`ENV`** (variáveis do EmailJS em produção).
+2. **`yarn install --frozen-lockfile`**.
 3. **`yarn build`** com `VITE_BASE_PATH=/ianlgnk/` — o Vite gera `dist/` com caminhos corretos para o subpath do GitHub Pages.
 4. **Upload** do artefato e **deploy** no ambiente `github-pages`.
 
