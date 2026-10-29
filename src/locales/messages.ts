@@ -31,6 +31,10 @@ export type Messages = {
     title: string
     /** `aria-label` do vídeo; `{name}` = nome do projeto. */
     videoLabel: string
+    /** `aria-label` do botão que abre o vídeo em tela cheia; `{name}` = nome do projeto. */
+    videoFullscreen: string
+    /** Etiqueta visível sobre o vídeo (hover/foco). */
+    fullscreen: string
     private: string
     links: { site: string; playStore: string; appStore: string }
     items: Record<ProjectSlug, { short: string; description: string }>
@@ -75,6 +79,8 @@ export const messages: Record<Locale, Messages> = {
     projects: {
       title: 'Projetos :: 04',
       videoLabel: 'Vídeo de apresentação do {name}',
+      videoFullscreen: 'Ver o vídeo do {name} em tela cheia',
+      fullscreen: 'Tela cheia',
       private: 'Sob demanda · privado',
       links: { site: 'Visitar site', playStore: 'Google Play', appStore: 'App Store' },
       items: {
@@ -147,6 +153,8 @@ export const messages: Record<Locale, Messages> = {
     projects: {
       title: 'Projects :: 04',
       videoLabel: '{name} presentation video',
+      videoFullscreen: 'Watch the {name} video full screen',
+      fullscreen: 'Full screen',
       private: 'On request · private',
       links: { site: 'Visit site', playStore: 'Google Play', appStore: 'App Store' },
       items: {
