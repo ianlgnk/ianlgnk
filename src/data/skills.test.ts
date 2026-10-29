@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { skillCategories } from './skills'
+import { infraTools, skillCategories } from './skills'
 
 describe('skillCategories', () => {
   it('keeps every proficiency between 0 and 100', () => {
@@ -12,8 +12,8 @@ describe('skillCategories', () => {
     }
   })
 
-  it('has no duplicate skill names', () => {
-    const names = skillCategories.flatMap((c) => c.skills.map((s) => s.name))
+  it('has no duplicate skill names, infra tools included', () => {
+    const names = [...skillCategories.flatMap((c) => c.skills.map((s) => s.name)), ...infraTools]
     expect(new Set(names).size).toBe(names.length)
   })
 

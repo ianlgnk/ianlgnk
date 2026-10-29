@@ -5,6 +5,7 @@ export type SkillsMessages = {
     backend: string
     tools: string
     methodologies: string
+    infra: string
   }
 }
 
@@ -15,6 +16,7 @@ export const skillsMessagesPtBR: SkillsMessages = {
     backend: 'Back-end & DB',
     tools: 'Ferramentas',
     methodologies: 'Metodologias',
+    infra: 'Infra & observabilidade',
   },
 }
 
@@ -25,5 +27,6 @@ export const skillsMessagesEnUS: SkillsMessages = {
     backend: 'Back-end & DB',
     tools: 'Tools',
     methodologies: 'Methodologies',
+    infra: 'Infra & observability',
   },
 }

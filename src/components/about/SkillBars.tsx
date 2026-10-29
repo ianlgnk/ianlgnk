@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 
-import { skillCategories } from '@/data/skills'
+import { infraTools, skillCategories } from '@/data/skills'
 import { levelSquares } from '@/lib/skill-level'
 import { useMessages } from '@/locales/use-messages'
 
@@ -46,6 +46,19 @@ export function SkillBars({ className }: SkillBarsProps) {
             </ul>
           </div>
         ))}
+
+        <div className="break-inside-avoid pb-6">
+          <h3 className="mb-2 text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-xs">
+            {m.skills.categories.infra}
+          </h3>
+          <ul className="flex flex-wrap gap-1.5 border-t border-border pt-2.5">
+            {infraTools.map((tool) => (
+              <li key={tool} className="border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-[0.1em]">
+                {tool}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   )

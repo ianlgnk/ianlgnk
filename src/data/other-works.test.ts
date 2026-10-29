@@ -10,9 +10,13 @@ describe('otherWorks', () => {
     expect(b?.links).toContainEqual({ label: 'bastianettoalessi.com.br', href: 'https://www.bastianettoalessi.com.br/' })
   })
 
-  it('links the thesis to its two repositories', () => {
+  it('links the thesis to the published monograph and its two repositories', () => {
     const hrefs = otherWorks.find((w) => w.id === 'tcc-ecommerce')?.links.map((l) => l.href)
-    expect(hrefs).toEqual(['https://github.com/ianlgnk/tcc', 'https://github.com/ianlgnk/tcc-cloudfunctions'])
+    expect(hrefs).toEqual([
+      'https://monografias.ufop.br/handle/35400000/7416',
+      'https://github.com/ianlgnk/tcc',
+      'https://github.com/ianlgnk/tcc-cloudfunctions',
+    ])
   })
 })
 

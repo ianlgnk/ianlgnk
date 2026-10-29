@@ -44,7 +44,6 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'Git', proficiency: 95 },
       { name: 'GitHub', proficiency: 90 },
-      { name: 'GitLab', proficiency: 80 },
       { name: 'Figma', proficiency: 50 },
     ],
   },
@@ -55,4 +54,14 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Agile', proficiency: 85 },
     ],
   },
+]
+
+/** Infra e observabilidade usadas nos projetos: etiquetas, sem nível (como no currículo). */
+export const infraTools: readonly string[] = [
+  'EAS',
+  'Sentry',
+  'Crashlytics',
+  'Cloudflare',
+  'Google Analytics',
+  'Microsoft Clarity',
 ]

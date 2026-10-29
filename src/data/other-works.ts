@@ -24,6 +24,7 @@ export const otherWorks: readonly OtherWork[] = [
     year: '2024–2025',
     tags: ['Vite', 'TypeScript', 'Firebase', 'Cloud Functions'],
     links: [
+      { label: 'monografias.ufop.br', href: 'https://monografias.ufop.br/handle/35400000/7416' },
       { label: 'tcc', href: 'https://github.com/ianlgnk/tcc' },
       { label: 'tcc-cloudfunctions', href: 'https://github.com/ianlgnk/tcc-cloudfunctions' },
     ],
