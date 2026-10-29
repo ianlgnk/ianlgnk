@@ -21,26 +21,26 @@ export const experience: readonly ExperienceEntry[] = [
   {
     id: 'beerpass-senior',
     company: 'Beerpass Club',
-    technologies: ['React Native', 'Angular', 'React', 'Next', 'Node.js', 'TypeScript', 'Kotlin', 'Firebase', 'AWS'],
+    technologies: ['React Native', 'TypeScript', 'Kotlin', 'Java', 'Node.js', 'Firebase', 'Expo/EAS'],
     current: true,
     since: { year: 2026, month: 1 },
   },
   {
     id: 'beerpass-pleno',
     company: 'Beerpass Club',
-    technologies: ['React Native', 'Angular', 'React', 'Next', 'Node.js', 'TypeScript', 'Kotlin', 'Firebase', 'AWS'],
+    technologies: ['React Native', 'React', 'TypeScript', 'Node.js', 'Firebase', 'Kotlin', 'Swift'],
     current: false,
   },
   {
     id: 'saude-pleno',
     company: 'Saúde Agora',
-    technologies: ['Vue', 'Hibernate', 'Node.js', 'JavaScript', 'TypeScript', 'Java', 'PostgreSQL'],
+    technologies: ['Java', 'Hibernate', 'PostgreSQL', 'Vue.js', 'JavaScript'],
     current: false,
   },
   {
     id: 'saude-junior',
     company: 'Saúde Agora',
-    technologies: ['Vue', 'Hibernate', 'Node.js', 'JavaScript', 'TypeScript', 'Java', 'PostgreSQL'],
+    technologies: ['Java', 'Hibernate', 'PostgreSQL', 'Vue.js', 'JavaScript'],
     current: false,
   },
   {

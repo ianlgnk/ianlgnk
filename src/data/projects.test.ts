@@ -51,3 +51,9 @@ describe('projects', () => {
     }
   })
 })
+
+describe('projects (names as in the résumé)', () => {
+  it('calls the Pedro Porto project "Pedro Porto Studios"', () => {
+    expect(bySlug('pedro-porto-design')?.name).toBe('Pedro Porto Studios')
+  })
+})

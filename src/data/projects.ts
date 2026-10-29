@@ -35,7 +35,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'pedro-porto-design',
-    name: 'Pedro Porto Design',
+    name: 'Pedro Porto Studios',
     tags: ['React 19', 'TypeScript', 'Tailwind', 'Firebase', 'Mercado Pago'],
     links: [{ kind: 'site', href: 'https://pedroportodesign.online' }],
   },

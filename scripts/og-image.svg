@@ -23,7 +23,7 @@
 
     <text x="56" y="132" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="26" fill="#8f7f78"><tspan fill="#ff3d7f">$</tspan> whoami</text>
     <text x="56" y="232" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="88" font-weight="700" fill="#eadfcd">Ian Langkammer</text>
-    <text x="56" y="300" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="38" fill="#ff3d7f">Full Stack Software Engineer</text>
+    <text x="56" y="300" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="38" fill="#ff3d7f">Senior Software Engineer &amp; Architect</text>
 
     <text x="56" y="372" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="26" fill="#8f7f78"><tspan fill="#ff3d7f">$</tspan> stack --list</text>
     <text x="56" y="414" font-family="Menlo, Monaco, 'Courier New', monospace" font-size="30" fill="#eadfcd">React · Node.js · TypeScript · React Native</text>

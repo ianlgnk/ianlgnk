@@ -107,7 +107,7 @@ export const messages: Record<Locale, Messages> = {
       github: 'GitHub',
     },
     footer: {
-      whoamiOut: 'ianlgnk — engenheiro full stack · BH, MG',
+      whoamiOut: 'ianlgnk — engenheiro de software sênior e arquiteto · BH, MG',
       uptimePrefix: 'sessão ativa há',
       exit: '[ SESSÃO ENCERRADA ]',
     },
@@ -118,12 +118,12 @@ export const messages: Record<Locale, Messages> = {
       home: {
         title: 'Ian Langkammer · Portfólio',
         description:
-          'Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.',
+          'Portfólio de Ian Langkammer — Engenheiro de Software e Arquiteto Sênior, Belo Horizonte.',
       },
       about: {
         title: 'Sobre · Ian Langkammer',
         description:
-          'Trajetória, experiência e skills de Ian Langkammer, Engenheiro de Software Full Stack.',
+          'Trajetória, experiência e skills de Ian Langkammer, Engenheiro de Software e Arquiteto Sênior.',
       },
     },
   },
@@ -178,7 +178,7 @@ export const messages: Record<Locale, Messages> = {
       github: 'GitHub',
     },
     footer: {
-      whoamiOut: 'ianlgnk — full stack engineer · BH, MG',
+      whoamiOut: 'ianlgnk — senior software engineer & architect · BH, MG',
       uptimePrefix: 'session active for',
       exit: '[ SESSION ENDED ]',
     },
@@ -189,12 +189,12 @@ export const messages: Record<Locale, Messages> = {
       home: {
         title: 'Ian Langkammer · Portfolio',
         description:
-          'Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte.',
+          'Portfolio of Ian Langkammer — Senior Software Engineer & Architect, Belo Horizonte.',
       },
       about: {
         title: 'About · Ian Langkammer',
         description:
-          'Background, experience and skills of Ian Langkammer, Full Stack Software Engineer.',
+          'Background, experience and skills of Ian Langkammer, Senior Software Engineer & Architect.',
       },
     },
   },

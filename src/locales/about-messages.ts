@@ -26,7 +26,7 @@ export const aboutMessagesPtBR: AboutMessages = {
   bioTitle: 'Sobre',
   skillsTitle: 'Skills',
   summary:
-    'Engenheiro de Software Full Stack com sólida base em tecnologias web, mobile e experiência prática desde os 15 anos. Atua em projetos com foco em front-end e back-end, utilizando frameworks modernos e metodologias ágeis. Entusiasta de boas práticas de código, arquitetura limpa e aprendizado contínuo.',
+    'Engenheiro de Software e Arquiteto Sênior com mais de 5 anos de experiência construindo produtos mobile, web e embarcados em terminais POS de ponta a ponta, da arquitetura e do código ao deploy e ao monitoramento. Forte em React Native, TypeScript e Node.js, com experiência nativa em Kotlin, Java e Swift.',
   sinceLine: 'Programo desde os 15 anos.',
   education: [
     {
@@ -56,7 +56,7 @@ export const aboutMessagesEnUS: AboutMessages = {
   bioTitle: 'About',
   skillsTitle: 'Skills',
   summary:
-    'Full Stack Software Engineer with a strong foundation in web and mobile technologies and hands-on experience since age 15. Works on projects focused on front-end and back-end, using modern frameworks and agile practices. Passionate about clean code, solid architecture, and continuous learning.',
+    'Senior Software Engineer and Architect with 5+ years of experience building mobile, web and embedded-POS products end to end, from architecture and code to deployment and monitoring. Strong in React Native, TypeScript and Node.js, with native Kotlin, Java and Swift experience.',
   sinceLine: 'Programming since age 15.',
   education: [
     {
@@ -65,8 +65,8 @@ export const aboutMessagesEnUS: AboutMessages = {
       period: '2020–2025',
     },
     {
-      title: 'Technical degree in Internet Informatics',
-      institution: 'IFNMG, Teófilo Otoni campus',
+      title: 'Technical Degree in Web Development (integrated with high school)',
+      institution: 'Federal Institute of Northern Minas Gerais (IFNMG)',
       period: '2017–2019',
     },
     {
