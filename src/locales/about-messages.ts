@@ -1,3 +1,5 @@
+import type { collegeRepos } from '@/data/other-works'
+
 export type AboutEducationCopy = {
   title: string
   institution: string
@@ -17,6 +19,15 @@ export type AboutMessages = {
   education: readonly [AboutEducationCopy, AboutEducationCopy, AboutEducationCopy]
   downloadCv: string
   backHome: string
+  otherWorks: {
+    title: string
+    freelance: string
+    collegeTitle: string
+    collegeIntro: string
+    demo: string
+    items: Record<'bastianetto' | 'tcc-ecommerce', string>
+    college: Record<(typeof collegeRepos)[number]['id'], string>
+  }
 }
 
 export const aboutMessagesPtBR: AboutMessages = {
@@ -47,6 +58,32 @@ export const aboutMessagesPtBR: AboutMessages = {
   ],
   downloadCv: 'Baixar CV',
   backHome: 'Voltar ao início',
+  otherWorks: {
+    title: 'Outros trabalhos',
+    freelance: 'Freelance',
+    collegeTitle: 'Projetos da faculdade',
+    collegeIntro: 'Repositórios da graduação, para referência.',
+    demo: 'demo',
+    items: {
+      bastianetto: "Site institucional para o escritório Bastianetto Alessi, feito como freelance.",
+      'tcc-ecommerce': "Trabalho de conclusão do curso: plataforma de e-commerce para uma marca independente de roupas.",
+    },
+    college: {
+        'atelie-da-gisa': "SPA de vendas de macramê: Next.js, Firebase, shadcn.",
+        'pandafilmes-frontend': "Catálogo de filmes com Vue, Vuetify, Vue Router e Vuex.",
+        'social4devs-frontend': "Rede social para devs: Vue 3, TypeScript, Naive UI.",
+        'github-profile-explorer': "Busca de usuários do GitHub (React, TypeScript e API).",
+        'clt-pj-converter': "Conversor de salário CLT → PJ (Vue 3, TypeScript).",
+        'cassandra-project': "Exploração do Cassandra (NoSQL): front Vue e API em Node.",
+        'shot_in_fly': "Jogo em Java (JDK 8) com sockets e threads.",
+        'guess-the-number': "Adivinha o número (React).",
+        'todo-list': "To-do com Vue e localStorage.",
+        'insertion-sort_assembly': "Insertion sort em Assembly (UFOP).",
+        'snake-fila': "Snake em C com lógica de fila (UFOP).",
+        'tcc': "Front-end do TCC (Vite, TypeScript), deploy no Firebase.",
+        'tcc-cloudfunctions': "Cloud Functions (TypeScript) do TCC.",
+    },
+  },
 }
 
 export const aboutMessagesEnUS: AboutMessages = {
@@ -77,4 +114,30 @@ export const aboutMessagesEnUS: AboutMessages = {
   ],
   downloadCv: 'Download CV',
   backHome: 'Back home',
+  otherWorks: {
+    title: 'Other work',
+    freelance: 'Freelance',
+    collegeTitle: 'College projects',
+    collegeIntro: 'Repositories from my degree, for reference.',
+    demo: 'demo',
+    items: {
+      bastianetto: "Institutional website for the Bastianetto Alessi firm, built as a freelance job.",
+      'tcc-ecommerce': "Undergraduate thesis: e-commerce platform for an independent clothing brand.",
+    },
+    college: {
+        'atelie-da-gisa': "Macramé sales SPA: Next.js, Firebase, shadcn.",
+        'pandafilmes-frontend': "Movie catalog with Vue, Vuetify, Vue Router and Vuex.",
+        'social4devs-frontend': "Social network for developers: Vue 3, TypeScript, Naive UI.",
+        'github-profile-explorer': "GitHub user search (React, TypeScript and API).",
+        'clt-pj-converter': "Brazilian CLT → PJ salary converter (Vue 3, TypeScript).",
+        'cassandra-project': "Exploring Cassandra (NoSQL): Vue front end and Node API.",
+        'shot_in_fly': "Java (JDK 8) game with sockets and threads.",
+        'guess-the-number': "Guess-the-number game (React).",
+        'todo-list': "To-do list with Vue and localStorage.",
+        'insertion-sort_assembly': "Insertion sort in Assembly (UFOP).",
+        'snake-fila': "Snake in C using queue logic (UFOP).",
+        'tcc': "Thesis front end (Vite, TypeScript), Firebase deploy.",
+        'tcc-cloudfunctions': "Cloud Functions (TypeScript) for the thesis.",
+    },
+  },
 }

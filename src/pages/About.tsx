@@ -1,4 +1,5 @@
 import { AboutBlock } from '@/components/about/AboutBlock'
+import { OtherWorks } from '@/components/about/OtherWorks'
 import { GitLog } from '@/components/about/GitLog'
 import { SkillBars } from '@/components/about/SkillBars'
 import { ScrambleText } from '@/components/ScrambleText'
@@ -25,6 +26,7 @@ export function About() {
               <SkillBars />
             </div>
           </div>
+          <OtherWorks />
         </div>
       </main>
       <TerminalFooter />
