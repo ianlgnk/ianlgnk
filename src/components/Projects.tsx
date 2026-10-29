@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 
 import { ScrambleText } from "@/components/ScrambleText";
+import { SectionHeader } from "@/components/SectionHeader";
 import {
   academicProjects,
   mainProjects,
@@ -707,18 +708,12 @@ export function Projects() {
           viewport={view}
           transition={{ duration: 0.45, ease: easeOut }}
         >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
-            <ScrambleText
-              text={m.projects.sectionTitle}
-              staggerMs={scrambleStagger.projectsTitle}
-            />
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            <ScrambleText
-              text={m.projects.sectionSubtitle}
-              staggerMs={scrambleStagger.projectsSubtitle}
-            />
-          </p>
+          <SectionHeader
+            title={m.projects.sectionTitle}
+            titleStaggerMs={scrambleStagger.projectsTitle}
+            subtitle={m.projects.sectionSubtitle}
+            subtitleStaggerMs={scrambleStagger.projectsSubtitle}
+          />
 
           <div className="mt-10 space-y-8">
             {featured ? (

@@ -1,5 +1,5 @@
 import { useEffect, useState, type MouseEvent } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useScroll } from 'framer-motion'
 import {
   BriefcaseBusiness,
   FolderKanban,
@@ -119,6 +119,7 @@ function scrollToSectionId(id: string) {
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const activeSectionId = useActiveSectionId()
+  const { scrollYProgress } = useScroll()
   const m = useMessages()
 
   const handleMobileNavClick =
@@ -172,15 +173,23 @@ export function Navbar() {
                 href={href}
                 aria-current={active ? 'true' : undefined}
                 className={cn(
-                  'group inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
+                  'group relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors',
                   active
-                    ? 'bg-muted text-foreground'
+                    ? 'text-foreground'
                     : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                 )}
               >
+                {active ? (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 rounded-md bg-muted"
+                    transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                    aria-hidden
+                  />
+                ) : null}
                 <Icon
                   className={cn(
-                    'size-4 shrink-0 transition-colors',
+                    'relative size-4 shrink-0 transition-colors',
                     active
                       ? 'text-primary-text'
                       : 'text-muted-foreground group-hover:text-primary-text',
@@ -188,6 +197,7 @@ export function Navbar() {
                   aria-hidden
                 />
                 <ScrambleText
+                  className="relative"
                   text={label}
                   staggerMs={scrambleStagger.navLink(index)}
                 />
@@ -212,6 +222,12 @@ export function Navbar() {
           </Button>
         </div>
       </div>
+
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 origin-left bg-primary"
+        style={{ scaleX: scrollYProgress }}
+        aria-hidden
+      />
 
       <AnimatePresence initial={false}>
         {open ? (

@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { ScrambleText } from "@/components/ScrambleText";
+import { SectionHeader } from "@/components/SectionHeader";
 import { about } from "@/data/about";
 import { cn, sectionShell } from "@/lib/utils";
 import { scrambleStagger } from "@/locales/scramble-stagger";
@@ -211,28 +212,11 @@ export function About() {
       className="border-b border-border/60 py-20 sm:py-24"
     >
       <div className={sectionShell}>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={view}
-            transition={{ duration: 0.4, ease: easeOut }}
-            className="shrink-0 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-primary-text"
-          >
-            <ScrambleText
-              text={m.about.sectionLabel}
-              staggerMs={scrambleStagger.aboutSectionLabel}
-            />
-          </motion.h2>
-          <motion.div
-            className="h-px flex-1 origin-left bg-primary sm:max-w-xl"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={view}
-            transition={{ duration: 0.75, ease: easeOut, delay: 0.12 }}
-            aria-hidden
-          />
-        </div>
+        <SectionHeader
+          reveal
+          title={m.about.sectionLabel}
+          titleStaggerMs={scrambleStagger.aboutSectionLabel}
+        />
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10">
           <motion.div

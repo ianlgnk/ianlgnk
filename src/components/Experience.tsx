@@ -18,6 +18,7 @@ import { Building2, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ScrambleText } from "@/components/ScrambleText";
+import { SectionHeader } from "@/components/SectionHeader";
 import type { ExperienceItem } from "@/data/experience";
 import { experienceCore } from "@/data/experience";
 import { formatNamed } from "@/lib/format-named";
@@ -325,25 +326,13 @@ export function Experience() {
       className="scroll-mt-4 border-b border-border/60 py-20 sm:py-24"
     >
       <div className={sectionShell}>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={view}
-          transition={{ duration: 0.45, ease }}
-        >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
-            <ScrambleText
-              text={m.experience.sectionTitle}
-              staggerMs={scrambleStagger.experienceTitle}
-            />
-          </h2>
-          <p className="mt-2 max-w-2xl text-muted-foreground">
-            <ScrambleText
-              text={m.experience.sectionSubtitle}
-              staggerMs={scrambleStagger.experienceSubtitle}
-            />
-          </p>
-        </motion.div>
+        <SectionHeader
+          reveal
+          title={m.experience.sectionTitle}
+          titleStaggerMs={scrambleStagger.experienceTitle}
+          subtitle={m.experience.sectionSubtitle}
+          subtitleStaggerMs={scrambleStagger.experienceSubtitle}
+        />
 
         <div ref={timelineRef} className="relative mt-14 pb-6 pt-2">
           <div

@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { useState } from "react";
 
 import { ScrambleText } from "@/components/ScrambleText";
+import { SectionHeader } from "@/components/SectionHeader";
 import { getSkillVisual } from "@/data/skillBadges";
 import {
   isCategoryVisible,
@@ -211,7 +212,7 @@ function SkillCell({
             <SkillIcon skill={skill} />
           </span>
           <span
-            className="min-w-0 flex-1 truncate font-mono text-xs font-medium text-card-foreground sm:text-sm"
+            className="min-w-0 flex-1 font-mono text-xs font-medium leading-tight text-card-foreground max-sm:line-clamp-2 sm:truncate sm:text-sm"
             title={skill.name}
           >
             {skill.name}
@@ -271,7 +272,7 @@ function CategoryCardContent({ category }: { category: SkillCategory }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 sm:gap-4 sm:p-5 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 sm:gap-4 sm:p-5 lg:grid-cols-2">
         {category.skills.map((skill, skillIndex) => (
           <SkillCell key={skill.name} skill={skill} skillIndex={skillIndex} />
         ))}
@@ -298,18 +299,12 @@ export function Skills() {
           viewport={view}
           transition={{ duration: 0.45, ease: easeOut }}
         >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
-            <ScrambleText
-              text={m.skills.sectionTitle}
-              staggerMs={scrambleStagger.skillsSectionTitle}
-            />
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            <ScrambleText
-              text={m.skills.sectionSubtitle}
-              staggerMs={scrambleStagger.skillsSectionSubtitle}
-            />
-          </p>
+          <SectionHeader
+            title={m.skills.sectionTitle}
+            titleStaggerMs={scrambleStagger.skillsSectionTitle}
+            subtitle={m.skills.sectionSubtitle}
+            subtitleStaggerMs={scrambleStagger.skillsSectionSubtitle}
+          />
 
           <div
             className="mt-8 flex flex-wrap gap-2"
@@ -344,7 +339,7 @@ export function Skills() {
           <motion.div
             layout
             className={cn(
-              "mt-10 grid gap-6 sm:grid-cols-2",
+              "mt-10 grid gap-6 lg:grid-cols-2",
               visible.length === 1 && "sm:mx-auto sm:max-w-2xl sm:grid-cols-1",
             )}
             transition={{ layout: { duration: 0.35, ease: easeOut } }}
