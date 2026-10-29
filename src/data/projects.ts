@@ -1,85 +1,64 @@
-export type ProjectStatus = 'in_progress' | 'completed' | 'archived'
-
 export type ProjectSlug =
-  | 'netracker'
-  | 'pyfaces'
-  | 'tcc-ecommerce'
-  | 'bastianetto'
-  | 'academic-cnpq'
-  | 'academic-irrigation'
+  | 'avance-trainer'
+  | 'pedro-porto-design'
+  | 'beerpass-club'
+  | 'inkaboxe'
+
+export type ProjectLink = {
+  kind: 'site' | 'play-store' | 'app-store'
+  href: string
+}
+
+export type ProjectMediaSource =
+  | { type: 'image'; src: string; alt: string }
+  | { type: 'video'; src: string; poster: string }
 
 export type Project = {
   slug: ProjectSlug
-  tags: string[]
-  github?: string
-  demo?: string
-  featured?: boolean
-  status: ProjectStatus
-  image?: string
-  /** Reference year next to the status pill (last meaningful activity). */
-  statusYear?: number
+  /** Nome próprio: não é traduzido. */
+  name: string
+  tags: readonly string[]
+  links: readonly ProjectLink[]
+  /** Sem link público (repositórios privados). */
+  isPrivate?: boolean
+  /** Mídia real; enquanto ausente, a UI mostra o bloco de pontos (mock). */
+  media?: ProjectMediaSource
 }
 
-/** Projeto em destaque + listagem principal — títulos em `messages.projects.titles`. */
-export const mainProjects: Project[] = [
+/** Ordem de exibição definida pelo Ian. Textos por locale: `messages.projects.items`. */
+export const projects: readonly Project[] = [
   {
-    slug: 'netracker',
-    tags: ['React', 'Node.js', 'SaaS'],
-    status: 'in_progress',
-    featured: true,
-    github: '',
-    demo: '',
-    image: undefined,
-    statusYear: 2026,
+    slug: 'avance-trainer',
+    name: 'Avance Trainer',
+    tags: ['Expo/React Native', 'React 19', 'Firebase', 'Gemini'],
+    links: [{ kind: 'site', href: 'https://avancetrainer.com' }],
   },
   {
-    slug: 'pyfaces',
-    tags: ['Python', 'Flask', 'DeepFace', 'Android'],
-    status: 'completed',
-    github: '',
-    demo: '',
-    image: undefined,
-    statusYear: 2026,
+    slug: 'pedro-porto-design',
+    name: 'Pedro Porto Design',
+    tags: ['React 19', 'TypeScript', 'Tailwind', 'Firebase', 'Mercado Pago'],
+    links: [{ kind: 'site', href: 'https://pedroportodesign.online' }],
   },
   {
-    slug: 'tcc-ecommerce',
-    tags: ['UFOP', '2024–2025', 'TCC', 'E-commerce'],
-    status: 'completed',
-    github: '',
-    demo:
-      'https://www.monografias.ufop.br/bitstream/35400000/7416/3/MONOGRAFIA_DesenvolvimentoEcommerceMarca.pdf',
-    image: undefined,
-    statusYear: 2025,
+    slug: 'beerpass-club',
+    name: 'Beerpass Club',
+    tags: ['React Native', 'Expo'],
+    links: [
+      {
+        kind: 'play-store',
+        href: 'https://play.google.com/store/apps/details?id=com.beerpass.clientapp&hl=pt_BR',
+      },
+      {
+        kind: 'app-store',
+        href: 'https://apps.apple.com/br/app/beerpass-club/id1605400165',
+      },
+    ],
   },
   {
-    slug: 'bastianetto',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'Motion', 'Freelance'],
-    status: 'completed',
-    github: '',
-    demo: 'https://www.bastianettoalessi.com.br/',
-    image: undefined,
-    statusYear: 2021,
-  },
-]
-
-/** Projetos acadêmicos (seção colapsável) */
-export const academicProjects: Project[] = [
-  {
-    slug: 'academic-cnpq',
-    tags: ['IFNMG', 'Teófilo Otoni', '2018–2019', 'CNPq', 'Pesquisa', 'POO'],
-    status: 'completed',
-    github: '',
-    demo: '',
-    image: undefined,
-    statusYear: 2018,
-  },
-  {
-    slug: 'academic-irrigation',
-    tags: ['IFNMG', 'Teófilo Otoni', '2017–2018', 'Extensão', 'IoT'],
-    status: 'completed',
-    github: '',
-    demo: '',
-    image: undefined,
-    statusYear: 2017,
+    slug: 'inkaboxe',
+    name: 'InkaBoxe',
+    tags: ['Python', 'FastAPI', 'DeepFace', 'React', 'PWA', 'Firebase'],
+    links: [],
+    isPrivate: true,
   },
 ]
