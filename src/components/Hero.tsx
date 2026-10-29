@@ -15,10 +15,10 @@ import { useMessages } from "@/locales/use-messages";
 import { scrambleStagger } from "@/locales/scramble-stagger";
 import { cn, sectionShell } from "@/lib/utils";
 
-/** Filenames in `public/cv/` (asset names keep mixed casing). */
+/** Filenames in `public/cv/`. */
 const CV_FILE_BY_LOCALE: Record<Locale, string> = {
-  "pt-BR": "ianlgnk(pt-Br).pdf",
-  "en-US": "ianlgnk(en-Us).pdf",
+  "pt-BR": "Curriculo_Ian_Langkammer_Batista_PT.pdf",
+  "en-US": "Resume_Ian_Langkammer_Batista_EN.pdf",
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
