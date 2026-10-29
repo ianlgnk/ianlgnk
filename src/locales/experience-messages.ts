@@ -12,8 +12,6 @@ export type ExperienceMessages = {
 }
 
 export const experienceMessagesPtBR: ExperienceMessages = {
-  sectionSubtitle:
-    'Trajetória profissional em ordem cronológica (mais recente primeiro).',
   items: {
     'beerpass-senior': {
       role: 'Engenheiro de Software Full Stack Sênior',
@@ -50,8 +48,6 @@ export const experienceMessagesPtBR: ExperienceMessages = {
 }
 
 export const experienceMessagesEnUS: ExperienceMessages = {
-  sectionSubtitle:
-    'Professional path in chronological order (most recent first).',
   items: {
     'beerpass-senior': {
       role: 'Senior Full Stack Software Engineer',

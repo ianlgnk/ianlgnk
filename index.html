@@ -4,67 +4,35 @@
     <meta charset="UTF-8" />
     <script>
       try {
-        var t = localStorage.getItem("ianlgnk-theme");
-        var dark;
-        if (t === "light") dark = false;
-        else if (t === "dark") dark = true;
-        else dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        document.documentElement.classList.toggle("dark", dark);
-      } catch (_) {
-        document.documentElement.classList.add("dark");
-      }
+        if (localStorage.getItem("ianlgnk-locale") === "pt-BR") {
+          document.documentElement.lang = "pt-BR";
+          document.title = "Ian Langkammer · Portfólio";
+          var d = document.querySelector('meta[name="description"]');
+          if (d) d.setAttribute("content", "Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.");
+        }
+      } catch (_) {}
     </script>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑🏼‍💻</text></svg>"
-    />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte."
-    />
-    <meta name="theme-color" content="#0e0e11" />
+    <meta name="theme-color" content="#1b1012" />
+    <meta name="description" content="Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ian Langkammer" />
     <meta property="og:title" content="Ian Langkammer · Portfolio" />
-    <meta
-      property="og:description"
-      content="Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte."
-    />
+    <meta property="og:description" content="Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte." />
     <meta property="og:url" content="https://ianlgnk.github.io/ianlgnk/" />
-    <meta
-      property="og:image"
-      content="https://ianlgnk.github.io/ianlgnk/og-image.png"
-    />
+    <meta property="og:image" content="https://ianlgnk.github.io/ianlgnk/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Terminal card with the name Ian Langkammer, Full Stack Software Engineer"
-    />
+    <meta property="og:image:alt" content="Ian Langkammer, Full Stack Software Engineer" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <title>Ian Langkammer · Portfolio</title>
-    <script>
-      try {
-        var loc = localStorage.getItem("ianlgnk-locale");
-        var descEl = document.querySelector('meta[name="description"]');
-        if (loc === "pt-BR") {
-          document.documentElement.lang = "pt-BR";
-          if (descEl)
-            descEl.setAttribute(
-              "content",
-              "Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.",
-            );
-          document.title = "Ian Langkammer · Portfólio";
-        }
-      } catch (_) {}
-    </script>
   </head>
   <body>
     <div id="root"></div>
