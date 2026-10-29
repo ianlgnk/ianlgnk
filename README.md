@@ -107,7 +107,7 @@ cp .env.example .env   # opcional: formulário de contato (EmailJS)
 yarn dev
 ```
 
-O app sobe em **http://localhost:5173** com `base` em `/` (padrão do Vite).
+O app sobe em **http://localhost:2000** com `base` em `/` (padrão do Vite).
 
 Para testar o build como no GitHub Pages (assets em `/ianlgnk/`):
 
