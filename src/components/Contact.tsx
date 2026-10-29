@@ -171,9 +171,9 @@ function SocialLinkButton({
       rel="noopener noreferrer"
       className={cn(
         "group/social flex w-full max-w-[280px] items-center gap-3 rounded-lg border px-4 py-3 text-sm font-medium transition-colors",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         variant === "primary"
-          ? "border-primary bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+          ? "border-primary bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
           : "border-zinc-300 bg-zinc-50 text-foreground hover:border-primary/50 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800/90 dark:hover:bg-zinc-800",
       )}
       whileHover={{ x: 4 }}
@@ -199,9 +199,9 @@ function SocialLinkButton({
 }
 
 const fieldBaseClass = cn(
-  "w-full rounded-lg border px-3.5 py-2.5 text-sm shadow-sm transition-colors",
+  "w-full rounded-lg border px-3.5 py-2.5 text-sm shadow-xs transition-colors",
   "border-zinc-300 bg-zinc-50 text-foreground placeholder:text-muted-foreground",
-  "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20",
+  "focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary/20",
   "dark:border-zinc-700 dark:bg-zinc-800",
 );
 
@@ -416,7 +416,7 @@ export function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8"
+              className="rounded-xl border border-border bg-card p-6 shadow-xs sm:p-8"
               noValidate
             >
               <h3 className="font-mono text-sm font-semibold text-foreground">

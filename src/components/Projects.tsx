@@ -355,7 +355,7 @@ function ProjectCard({
   return (
     <article
       className={cn(
-        "group/card relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm",
+        "group/card relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-xs",
         "transition-all duration-200 ease-out",
         "hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20",
       )}
@@ -515,7 +515,7 @@ function CollegeRepoCard({
   return (
     <article
       className={cn(
-        "group/card relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm",
+        "group/card relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-xs",
         "transition-all duration-200 ease-out",
         "hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20",
       )}
@@ -593,7 +593,7 @@ function AcademicCollapsible() {
           onClick={() => setOpen((v) => !v)}
           className={cn(
             "inline-flex items-center gap-2 self-start rounded-lg text-sm font-medium text-primary transition-colors",
-            "hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45",
+            "hover:text-primary/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45",
             "sm:self-auto",
           )}
         >

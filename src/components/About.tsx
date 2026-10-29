@@ -101,7 +101,7 @@ function MetricCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={view}
       transition={{ duration: 0.45, ease: easeOut, delay: entranceDelay }}
-      className="rounded-lg border border-border/80 bg-card/40 px-5 py-5 shadow-sm backdrop-blur-sm"
+      className="rounded-lg border border-border/80 bg-card/40 px-5 py-5 shadow-xs backdrop-blur-xs"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -173,7 +173,7 @@ function EducationCard({
         delay: 0.12 + index * 0.08,
       }}
       className={cn(
-        "group rounded-lg border border-border/80 bg-card/30 p-5 shadow-sm backdrop-blur-sm",
+        "group rounded-lg border border-border/80 bg-card/30 p-5 shadow-xs backdrop-blur-xs",
         "transition-[transform,box-shadow,border-color] duration-300 ease-out",
         "hover:-translate-y-1 hover:border-primary/45",
         "hover:shadow-[0_0_28px_-6px_rgba(34,197,94,0.28)]",
@@ -240,7 +240,7 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={view}
             transition={{ duration: 0.48, ease: easeOut, delay: 0.06 }}
-            className="text-lg font-medium leading-relaxed text-foreground sm:text-xl lg:col-span-7"
+            className="text-lg font-medium leading-relaxed text-foreground sm:text-xl sm:leading-7 lg:col-span-7"
           >
             <ScrambleText
               as="p"

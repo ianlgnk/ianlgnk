@@ -325,7 +325,7 @@ export function Skills() {
                   onClick={() => setFilter(id)}
                   className={cn(
                     "rounded-lg border px-3.5 py-2 text-sm font-medium transition-colors duration-200 ease-out",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45",
+                    "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45",
                     active
                       ? "border-primary bg-primary text-primary-foreground shadow-md shadow-primary/25"
                       : "border-border bg-muted text-muted-foreground hover:border-border hover:bg-muted/80 hover:text-foreground",
@@ -374,7 +374,7 @@ export function Skills() {
                   transition={{ layout: { duration: 0.32, ease: easeOut } }}
                   className={cn(
                     "flex flex-col overflow-hidden rounded-xl border border-border bg-card",
-                    "shadow-sm",
+                    "shadow-xs",
                   )}
                 >
                   <CategoryCardContent category={category} />

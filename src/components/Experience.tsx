@@ -73,7 +73,7 @@ function TimelineDot({ emphasized }: { emphasized: boolean }) {
       ) : null}
       <span
         className={cn(
-          "relative size-3.5 rounded-full border-2 bg-background shadow-sm transition-[border-color,box-shadow] duration-200",
+          "relative size-3.5 rounded-full border-2 bg-background shadow-xs transition-[border-color,box-shadow] duration-200",
           emphasized
             ? "border-primary shadow-[0_0_14px_hsl(var(--primary)_/_0.4)]"
             : "border-muted-foreground/55",
@@ -121,8 +121,8 @@ function ExperienceCard({
       viewport={view}
       transition={{ duration: 0.48, ease }}
       className={cn(
-        "relative w-full max-w-md rounded-xl border border-border bg-card/95 p-6 text-card-foreground shadow-sm",
-        "backdrop-blur-sm transition-[transform,box-shadow,border-color] duration-200",
+        "relative w-full max-w-md rounded-xl border border-border bg-card/95 p-6 text-card-foreground shadow-xs",
+        "backdrop-blur-xs transition-[transform,box-shadow,border-color] duration-200",
         "hover:-translate-y-1 hover:border-primary/45",
         "hover:shadow-[0_14px_44px_-14px_hsl(var(--primary)_/_0.16)]",
       )}
@@ -134,7 +134,7 @@ function ExperienceCard({
         aria-label={formatNamed(m.experience.visitSiteAria, {
           company: item.company,
         })}
-        className="absolute right-4 top-4 block rounded-lg ring-offset-2 ring-offset-background transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:right-5 sm:top-5"
+        className="absolute right-4 top-4 block rounded-lg ring-offset-2 ring-offset-background transition hover:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/60 sm:right-5 sm:top-5"
       >
         {logoFailed ? (
           <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-muted text-muted-foreground sm:size-10">
@@ -181,7 +181,7 @@ function ExperienceCard({
           href={item.websiteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-block font-medium text-primary underline-offset-2 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="mt-1 inline-block font-medium text-primary underline-offset-2 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           {item.company}
         </a>
