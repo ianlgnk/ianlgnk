@@ -1,17 +1,38 @@
-import { useEffect, useLayoutEffect } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react'
 
 import { useMessages } from '@/locales/use-messages'
 
-import { About } from '@/components/About'
-import { Contact } from '@/components/Contact'
-import { Experience } from '@/components/Experience'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Navbar } from '@/components/Navbar'
-import { Projects } from '@/components/Projects'
-import { Skills } from '@/components/Skills'
 
 import { DocumentMetaSync } from '@/components/DocumentMetaSync'
+
+/** Seções abaixo da dobra: chunks separados, pré-carregados logo após o primeiro paint. */
+const sectionImports = {
+  about: () => import('@/components/About'),
+  experience: () => import('@/components/Experience'),
+  projects: () => import('@/components/Projects'),
+  skills: () => import('@/components/Skills'),
+  contact: () => import('@/components/Contact'),
+}
+
+const About = lazy(() => sectionImports.about().then((m) => ({ default: m.About })))
+const Experience = lazy(() =>
+  sectionImports.experience().then((m) => ({ default: m.Experience })),
+)
+const Projects = lazy(() =>
+  sectionImports.projects().then((m) => ({ default: m.Projects })),
+)
+const Skills = lazy(() => sectionImports.skills().then((m) => ({ default: m.Skills })))
+const Contact = lazy(() =>
+  sectionImports.contact().then((m) => ({ default: m.Contact })),
+)
+
+/** Mantém o `id` (scroll spy / âncoras) e reserva altura enquanto o chunk carrega. */
+function SectionFallback({ id }: { id: string }) {
+  return <section id={id} className="min-h-[60vh]" aria-hidden />
+}
 
 function scrollToHashElement() {
   const raw = window.location.hash.slice(1)
@@ -27,6 +48,26 @@ function App() {
 
   useLayoutEffect(() => {
     scrollToHashElement()
+  }, [])
+
+  useEffect(() => {
+    const preload = () => {
+      void Promise.all(Object.values(sectionImports).map((load) => load())).then(
+        () => {
+          // Se a URL abriu numa âncora, reposiciona depois do layout final.
+          if (window.location.hash) requestAnimationFrame(scrollToHashElement)
+        },
+      )
+    }
+    // Safari não tem requestIdleCallback.
+    const hasIdle = 'requestIdleCallback' in window
+    const handle = hasIdle
+      ? window.requestIdleCallback(preload, { timeout: 1500 })
+      : window.setTimeout(preload, 400)
+    return () => {
+      if (hasIdle) window.cancelIdleCallback(handle)
+      else window.clearTimeout(handle)
+    }
   }, [])
 
   useEffect(() => {
@@ -47,11 +88,21 @@ function App() {
       <Navbar />
       <main id="main-content" tabIndex={-1} className="outline-hidden">
         <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Contact />
+        <Suspense fallback={<SectionFallback id="sobre" />}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionFallback id="experiencia" />}>
+          <Experience />
+        </Suspense>
+        <Suspense fallback={<SectionFallback id="projetos" />}>
+          <Projects />
+        </Suspense>
+        <Suspense fallback={<SectionFallback id="habilidades" />}>
+          <Skills />
+        </Suspense>
+        <Suspense fallback={<SectionFallback id="contato" />}>
+          <Contact />
+        </Suspense>
       </main>
       <Footer />
     </div>

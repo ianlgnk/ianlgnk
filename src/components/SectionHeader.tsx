@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 
 import { ScrambleText } from '@/components/ScrambleText'
 import { cn } from '@/lib/utils'

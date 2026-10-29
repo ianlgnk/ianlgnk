@@ -1,5 +1,4 @@
-import emailjs from "@emailjs/browser";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import {
   Check,
   GraduationCap,
@@ -311,6 +310,7 @@ export function Contact() {
 
     setSubmitStatus("loading");
     try {
+      const { default: emailjs } = await import("@emailjs/browser");
       await emailjs.send(
         serviceId,
         templateId,

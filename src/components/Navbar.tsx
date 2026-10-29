@@ -1,5 +1,5 @@
 import { useEffect, useState, type MouseEvent } from 'react'
-import { AnimatePresence, motion, useScroll } from 'framer-motion'
+import { AnimatePresence, m as motion, useScroll } from 'framer-motion'
 import {
   BriefcaseBusiness,
   FolderKanban,

@@ -8,7 +8,7 @@ import {
 } from "react";
 import {
   AnimatePresence,
-  motion,
+  m as motion,
   useMotionValueEvent,
   useScroll,
   useTransform,

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { ChevronDown, ExternalLink, ImageIcon, Sparkles } from "lucide-react";
 import { useId, useState } from "react";
 import { FaGithub } from "react-icons/fa6";

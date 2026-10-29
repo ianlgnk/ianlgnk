@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m as motion } from "framer-motion";
 import { Code2, Kanban, LayoutGrid, Server, Wrench } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useState } from "react";

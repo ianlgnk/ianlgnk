@@ -1,4 +1,4 @@
-import { MotionConfig } from 'framer-motion'
+import { LazyMotion, MotionConfig } from 'framer-motion'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -7,12 +7,17 @@ import { LocaleProvider } from '@/components/locale-provider.tsx'
 import { ThemeProvider } from '@/components/theme-provider.tsx'
 import '@/index.css'
 
+const loadMotionFeatures = () =>
+  import('@/lib/motion-features').then((mod) => mod.default)
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <LocaleProvider>
         <MotionConfig reducedMotion="user">
-          <App />
+          <LazyMotion features={loadMotionFeatures} strict>
+            <App />
+          </LazyMotion>
         </MotionConfig>
       </LocaleProvider>
     </ThemeProvider>

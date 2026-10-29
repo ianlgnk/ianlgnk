@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
 import { Fragment } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";

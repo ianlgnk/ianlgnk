@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView } from "framer-motion";
+import { animate, m as motion, useInView } from "framer-motion";
 import {
   Clock,
   FolderKanban,

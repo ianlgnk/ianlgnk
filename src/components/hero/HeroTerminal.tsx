@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m as motion } from 'framer-motion'
 
 import { personal } from '@/data/personal'
 import { useMessages } from '@/locales/use-messages'

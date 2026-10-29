@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Download, GraduationCap, MessageCircle } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
