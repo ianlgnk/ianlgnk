@@ -1,7 +1,6 @@
 import { DocumentMetaSync } from '@/components/DocumentMetaSync'
 import { Header } from '@/components/Header'
-
-import { cn, sectionShell } from '@/lib/utils'
+import { Hero } from '@/components/hero/Hero'
 
 export function Home() {
   return (
@@ -9,7 +8,7 @@ export function Home() {
       <DocumentMetaSync page="home" />
       <Header current="home" />
       <main id="main-content" tabIndex={-1} className="outline-none">
-        <div className={cn('py-16', sectionShell)}>Home</div>
+        <Hero />
       </main>
     </>
   )
