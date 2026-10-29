@@ -3,6 +3,7 @@ import { Contact } from '@/components/Contact'
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/hero/Hero'
 import { ProjectLog } from '@/components/projects/ProjectLog'
+import { TerminalFooter } from '@/components/TerminalFooter'
 
 export function Home() {
   return (
@@ -14,6 +15,7 @@ export function Home() {
         <ProjectLog />
         <Contact />
       </main>
+      <TerminalFooter />
     </>
   )
 }

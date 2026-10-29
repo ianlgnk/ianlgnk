@@ -12,6 +12,10 @@ export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? '/',
   /** Duas páginas estáticas (`/` e `/sobre/`), sem fallback de SPA. */
   appType: 'mpa',
+  /** Rótulo "build" do footer: ano.mês do build. */
+  define: {
+    __BUILD_VERSION__: JSON.stringify(new Date().toISOString().slice(0, 7).replace('-', '.')),
+  },
   server: {
     port: 2000,
   },
