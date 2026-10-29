@@ -1,200 +1,201 @@
-import type { Locale } from '@/components/locale-provider'
-
+import type { ProjectSlug } from '@/data/projects'
+import type { Locale } from '@/lib/locale'
 import type { AboutMessages } from '@/locales/about-messages'
 import { aboutMessagesEnUS, aboutMessagesPtBR } from '@/locales/about-messages'
-import type { ContactMessages } from '@/locales/contact-messages'
-import { contactMessagesEnUS, contactMessagesPtBR } from '@/locales/contact-messages'
 import type { ExperienceMessages } from '@/locales/experience-messages'
 import {
   experienceMessagesEnUS,
   experienceMessagesPtBR,
 } from '@/locales/experience-messages'
-import type { ProjectsMessages } from '@/locales/projects-messages'
-import {
-  projectsMessagesEnUS,
-  projectsMessagesPtBR,
-} from '@/locales/projects-messages'
 import type { SkillsMessages } from '@/locales/skills-messages'
-import {
-  skillsMessagesEnUS,
-  skillsMessagesPtBR,
-} from '@/locales/skills-messages'
+import { skillsMessagesEnUS, skillsMessagesPtBR } from '@/locales/skills-messages'
+
+type DocumentCopy = { title: string; description: string }
 
 export type Messages = {
   nav: {
-    sectionLabelDesktop: string
-    sectionLabelMobile: string
-    openMenu: string
-    closeMenu: string
     skipToContent: string
-    links: {
-      hero: string
-      about: string
-      experience: string
-      projects: string
-      skills: string
-      contact: string
-    }
+    home: string
+    about: string
+    /** `aria-label` do seletor de idioma. */
+    localeLabel: string
   }
-  theme: {
-    ariaUseLight: string
-    ariaUseDark: string
-  }
-  localeMenu: {
-    ariaButton: string
-    ptBr: string
-    enUs: string
-  }
+  localeMenu: { ptBr: string; enUs: string }
   hero: {
-    roleTitle: string
-    bioLine1: string
-    bioLine2: string
-    ctaContact: string
-    ctaProjects: string
-    ctaCv: string
-    ariaGithub: string
-    ariaLinkedin: string
-    ariaLattes: string
-    typewriterPhrases: readonly [string, string, string]
+    tag: string
+    online: string
+    cta: string
+    nameAria: string
+  }
+  projects: {
+    title: string
+    private: string
+    links: { site: string; playStore: string; appStore: string }
+    items: Record<ProjectSlug, { short: string; description: string }>
+  }
+  contact: {
+    title: string
+    badge: string
+    copyEmail: string
+    copied: string
+    copyFailed: string
+    linkedin: string
+    github: string
+  }
+  footer: {
+    whoamiOut: string
+    /** Seguido de `HH:MM:SS`. */
+    uptimePrefix: string
+    exit: string
   }
   about: AboutMessages
   experience: ExperienceMessages
-  projects: ProjectsMessages
-  contact: ContactMessages
   skills: SkillsMessages
-  footer: {
-    /** `{name}` = portfolio owner. Text before the heart (heart is styled in `Footer`). */
-    creditLead: string
-    /** Text after the heart (leading space if needed). */
-    creditTrail: string
-    stackWith: string
-    stackAnd: string
-    navAria: string
-  }
-  /** `<title>` e `meta name="description"` (SEO / partilhas). */
-  document: {
-    title: string
-    description: string
-  }
+  /** `<title>` e `meta description` por página. */
+  document: { home: DocumentCopy; about: DocumentCopy }
 }
 
 export const messages: Record<Locale, Messages> = {
   'pt-BR': {
     nav: {
-      sectionLabelDesktop: 'Principal',
-      sectionLabelMobile: 'Mobile',
-      openMenu: 'Abrir menu',
-      closeMenu: 'Fechar menu',
       skipToContent: 'Pular para o conteúdo',
-      links: {
-        hero: 'Início',
-        about: 'Sobre',
-        experience: 'Experiência',
-        projects: 'Projetos',
-        skills: 'Habilidades',
-        contact: 'Contato',
+      home: 'Início',
+      about: 'Sobre',
+      localeLabel: 'Idioma',
+    },
+    localeMenu: { ptBr: 'PT', enUs: 'EN' },
+    hero: {
+      tag: 'IANLGNK :: PORTFOLIO',
+      online: 'Online',
+      cta: 'Sobre mim →',
+      nameAria: 'Ian Langkammer',
+    },
+    projects: {
+      title: 'Projetos :: 04',
+      private: 'Sob demanda · privado',
+      links: { site: 'Visitar site', playStore: 'Google Play', appStore: 'App Store' },
+      items: {
+        'avance-trainer': {
+          short: 'App + painel',
+          description:
+            'App em que o treinador acompanha seus alunos: treinos, avaliações corporais, nutrição, engajamento e cobrança. Inclui app mobile (treinador e aluno), landing e painel web do treinador, backend serverless e IA (Gemini) nos clientes.',
+        },
+        'pedro-porto-design': {
+          short: 'Portfólio + loja',
+          description:
+            'Arquivo visual e portfólio do designer Pedro Henrique Porto, reconstruído em código, mais uma loja com checkout via Mercado Pago e backend em Cloud Functions.',
+        },
+        'beerpass-club': {
+          short: 'App Android/iOS',
+          description:
+            'App do cliente da Beerpass Club, desenvolvido por Ian e publicado no Android e no iOS.',
+        },
+        inkaboxe: {
+          short: 'Reconhecimento facial',
+          description:
+            'Sistema completo de reconhecimento facial: uma API local em Python roda no próprio tablet para cadastro e verificação sem depender de cloud, e uma SPA de gestão em React, instalável como PWA no tablet, também faz o reconhecimento. Backend em Cloud Functions.',
+        },
       },
     },
-    theme: {
-      ariaUseLight: 'Ativar tema claro',
-      ariaUseDark: 'Ativar tema escuro',
+    contact: {
+      title: 'Vamos conversar?',
+      badge: 'Disponível para freelas e oportunidades',
+      copyEmail: 'Copiar e-mail',
+      copied: 'E-mail copiado!',
+      copyFailed: 'Não foi possível copiar. Selecione o e-mail abaixo.',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
     },
-    localeMenu: {
-      ariaButton: 'Escolher idioma do site',
-      ptBr: 'Português (Brasil)',
-      enUs: 'English (United States)',
-    },
-    hero: {
-      roleTitle: 'Engenheiro de Software Full Stack',
-      bioLine1: 'Estudando programação desde os 15 anos.',
-      bioLine2: 'Desenvolvendo soluções Web/Mobile desde os 19!',
-      ctaContact: 'Vamos conversar',
-      ctaProjects: 'Ver Projetos',
-      ctaCv: 'Baixar CV',
-      ariaGithub: 'GitHub',
-      ariaLinkedin: 'LinkedIn',
-      ariaLattes: 'Currículo Lattes',
-      typewriterPhrases: [
-        'Desenvolvedor React',
-        'Engenheiro Node.js',
-        'Desenvolvedor Web/Mobile',
-      ],
+    footer: {
+      whoamiOut: 'ianlgnk — engenheiro full stack · BH, MG',
+      uptimePrefix: 'sessão ativa há',
+      exit: '[ SESSÃO ENCERRADA ]',
     },
     about: aboutMessagesPtBR,
     experience: experienceMessagesPtBR,
-    projects: projectsMessagesPtBR,
-    contact: contactMessagesPtBR,
     skills: skillsMessagesPtBR,
-    footer: {
-      creditLead: '© 2026 {name} · Feito com ',
-      creditTrail: 'em Belo Horizonte',
-      stackWith: 'com',
-      stackAnd: 'e',
-      navAria: 'Mapa do site',
-    },
     document: {
-      title: 'Ian Langkammer · Portfólio',
-      description:
-        'Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.',
+      home: {
+        title: 'Ian Langkammer · Portfólio',
+        description:
+          'Portfólio de Ian Langkammer — Engenheiro de Software Full Stack, Belo Horizonte.',
+      },
+      about: {
+        title: 'Sobre · Ian Langkammer',
+        description:
+          'Trajetória, experiência e skills de Ian Langkammer, Engenheiro de Software Full Stack.',
+      },
     },
   },
   'en-US': {
     nav: {
-      sectionLabelDesktop: 'Main',
-      sectionLabelMobile: 'Mobile',
-      openMenu: 'Open menu',
-      closeMenu: 'Close menu',
       skipToContent: 'Skip to content',
-      links: {
-        hero: 'Home',
-        about: 'About',
-        experience: 'Experience',
-        projects: 'Projects',
-        skills: 'Skills',
-        contact: 'Contact',
+      home: 'Home',
+      about: 'About',
+      localeLabel: 'Language',
+    },
+    localeMenu: { ptBr: 'PT', enUs: 'EN' },
+    hero: {
+      tag: 'IANLGNK :: PORTFOLIO',
+      online: 'Online',
+      cta: 'About me →',
+      nameAria: 'Ian Langkammer',
+    },
+    projects: {
+      title: 'Projects :: 04',
+      private: 'On request · private',
+      links: { site: 'Visit site', playStore: 'Google Play', appStore: 'App Store' },
+      items: {
+        'avance-trainer': {
+          short: 'App + panel',
+          description:
+            'App where trainers follow their students: workouts, body assessments, nutrition, engagement and billing. Includes a mobile app (trainer and student), a landing page and web panel for trainers, a serverless backend and AI (Gemini) in the clients.',
+        },
+        'pedro-porto-design': {
+          short: 'Portfolio + shop',
+          description:
+            "Visual archive and portfolio of designer Pedro Henrique Porto, rebuilt in code, plus a shop with Mercado Pago checkout and a Cloud Functions backend.",
+        },
+        'beerpass-club': {
+          short: 'Android/iOS app',
+          description:
+            "Beerpass Club's customer app, built by Ian and published on Android and iOS.",
+        },
+        inkaboxe: {
+          short: 'Face recognition',
+          description:
+            'A complete face recognition system: a local Python API runs on the tablet itself for enrollment and verification without relying on the cloud, and a React management SPA, installable as a PWA on the tablet, also performs the recognition. Cloud Functions backend.',
+        },
       },
     },
-    theme: {
-      ariaUseLight: 'Switch to light theme',
-      ariaUseDark: 'Switch to dark theme',
+    contact: {
+      title: "Let's talk?",
+      badge: 'Available for freelance and opportunities',
+      copyEmail: 'Copy email',
+      copied: 'Email copied!',
+      copyFailed: 'Could not copy. Select the email below.',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
     },
-    localeMenu: {
-      ariaButton: 'Choose site language',
-      ptBr: 'Português (Brasil)',
-      enUs: 'English (United States)',
-    },
-    hero: {
-      roleTitle: 'Full Stack Software Engineer',
-      bioLine1: "I've been studying programming since I was 15.",
-      bioLine2: "I've been building Web/Mobile solutions since I was 19!",
-      ctaContact: "Let's talk",
-      ctaProjects: 'View projects',
-      ctaCv: 'Download CV',
-      ariaGithub: 'GitHub',
-      ariaLinkedin: 'LinkedIn',
-      ariaLattes: 'Lattes CV',
-      typewriterPhrases: [
-        'React Developer',
-        'Node.js Engineer',
-        'Web/Mobile Developer',
-      ],
+    footer: {
+      whoamiOut: 'ianlgnk — full stack engineer · BH, MG',
+      uptimePrefix: 'session active for',
+      exit: '[ SESSION ENDED ]',
     },
     about: aboutMessagesEnUS,
     experience: experienceMessagesEnUS,
-    projects: projectsMessagesEnUS,
-    contact: contactMessagesEnUS,
     skills: skillsMessagesEnUS,
-    footer: {
-      creditLead: '© 2026 {name} · Made with ',
-      creditTrail: 'in Belo Horizonte',
-      stackWith: 'with',
-      stackAnd: 'and',
-      navAria: 'Site map',
-    },
     document: {
-      title: 'Ian Langkammer · Portfolio',
-      description:
-        'Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte.',
+      home: {
+        title: 'Ian Langkammer · Portfolio',
+        description:
+          'Portfolio of Ian Langkammer — Full Stack Software Engineer, Belo Horizonte.',
+      },
+      about: {
+        title: 'About · Ian Langkammer',
+        description:
+          'Background, experience and skills of Ian Langkammer, Full Stack Software Engineer.',
+      },
     },
   },
 }

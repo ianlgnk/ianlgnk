@@ -8,26 +8,12 @@ export type ExperienceItemCopy = {
 }
 
 export type ExperienceMessages = {
-  sectionTitle: string
-  sectionSubtitle: string
-  /** Use `{company}` placeholder. */
-  visitSiteAria: string
-  badgeCurrent: string
-  badgePast: string
-  responsibilitiesToggle: string
-  responsibilitiesPlaceholder: string
   items: Record<ExperienceId, ExperienceItemCopy>
 }
 
 export const experienceMessagesPtBR: ExperienceMessages = {
-  sectionTitle: 'Experiência',
   sectionSubtitle:
     'Trajetória profissional em ordem cronológica (mais recente primeiro).',
-  visitSiteAria: 'Visitar site de {company} (abre em nova aba)',
-  badgeCurrent: 'Atual',
-  badgePast: 'Anterior',
-  responsibilitiesToggle: 'Responsabilidades',
-  responsibilitiesPlaceholder: 'Descrição das responsabilidades em breve.',
   items: {
     'beerpass-senior': {
       role: 'Engenheiro de Software Full Stack Sênior',
@@ -64,14 +50,8 @@ export const experienceMessagesPtBR: ExperienceMessages = {
 }
 
 export const experienceMessagesEnUS: ExperienceMessages = {
-  sectionTitle: 'Experience',
   sectionSubtitle:
     'Professional path in chronological order (most recent first).',
-  visitSiteAria: 'Visit {company} website (opens in a new tab)',
-  badgeCurrent: 'Current',
-  badgePast: 'Past',
-  responsibilitiesToggle: 'Responsibilities',
-  responsibilitiesPlaceholder: 'Responsibilities description coming soon.',
   items: {
     'beerpass-senior': {
       role: 'Senior Full Stack Software Engineer',
