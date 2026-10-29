@@ -60,6 +60,22 @@ export const projects: readonly Project[] = [
     name: 'Pedro Porto Studios',
     tags: ['React 19', 'TypeScript', 'Tailwind', 'Firebase', 'Mercado Pago'],
     links: [{ kind: 'site', href: 'https://pedroportodesign.online' }],
+    // Gerado por `node scripts/render-video.mjs pedro-porto` a partir de video/pedro-porto/.
+    media: {
+      type: 'video',
+      sources: {
+        'pt-BR': {
+          webm: 'projects/pedro-porto/video-pt.webm',
+          mp4: 'projects/pedro-porto/video-pt.mp4',
+          poster: 'projects/pedro-porto/poster-pt.jpg',
+        },
+        'en-US': {
+          webm: 'projects/pedro-porto/video-en.webm',
+          mp4: 'projects/pedro-porto/video-en.mp4',
+          poster: 'projects/pedro-porto/poster-en.jpg',
+        },
+      },
+    },
   },
   {
     slug: 'beerpass-club',

@@ -47,21 +47,29 @@ describe('projects', () => {
     expect(inkaboxe?.links).toEqual([])
   })
 
-  it('uses https links; only Avance Trainer has real media for now', () => {
+  it('uses https links; only Avance Trainer and Pedro Porto have real media for now', () => {
     for (const p of projects) {
       for (const l of p.links) expect(l.href.startsWith('https://')).toBe(true)
     }
-    expect(projects.filter((p) => p.media).map((p) => p.slug)).toEqual(['avance-trainer'])
+    expect(projects.filter((p) => p.media).map((p) => p.slug)).toEqual(['avance-trainer', 'pedro-porto-design'])
   })
 
-  it('gives Avance Trainer a presentation video per locale, with files in public/', () => {
-    const media = bySlug('avance-trainer')?.media
+  it.each([
+    ['avance-trainer', 'avance'],
+    ['pedro-porto-design', 'pedro-porto'],
+  ])('gives %s a presentation video per locale, with files in public/', (slug, dir) => {
+    const media = bySlug(slug)?.media
     expect(media?.type).toBe('video')
     if (media?.type !== 'video') return
     expect(media.sources['pt-BR']).toEqual({
-      webm: 'projects/avance/video-pt.webm',
-      mp4: 'projects/avance/video-pt.mp4',
-      poster: 'projects/avance/poster-pt.jpg',
+      webm: `projects/${dir}/video-pt.webm`,
+      mp4: `projects/${dir}/video-pt.mp4`,
+      poster: `projects/${dir}/poster-pt.jpg`,
+    })
+    expect(media.sources['en-US']).toEqual({
+      webm: `projects/${dir}/video-en.webm`,
+      mp4: `projects/${dir}/video-en.mp4`,
+      poster: `projects/${dir}/poster-en.jpg`,
     })
     for (const locale of ['pt-BR', 'en-US'] as const) {
       for (const file of Object.values(media.sources[locale])) {
