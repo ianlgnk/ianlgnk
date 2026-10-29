@@ -153,10 +153,15 @@
 ::view-transition-new(root) {
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Sem o blend `plus-lighter` padrão do navegador, que clareia a sobreposição. */
+  mix-blend-mode: normal;
 }
 
+/* O snapshot antigo fica parado por baixo; sem isso o navegador aplica um
+   fade-out e a página inteira some em vez de o círculo nascer no clique. */
 ::view-transition-old(root) {
   z-index: 1;
+  animation: none;
 }
 
 ::view-transition-new(root) {
