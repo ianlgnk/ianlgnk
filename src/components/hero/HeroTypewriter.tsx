@@ -63,12 +63,12 @@ export function HeroTypewriter({ className }: { className?: string }) {
         "font-mono text-lg text-muted-foreground sm:text-xl",
         className,
       )}
-      aria-live="polite"
     >
-      <span>{reduced ? phrases[0] : display}</span>
+      <span aria-hidden>{reduced ? phrases[0] : display}</span>
+      <span className="sr-only">{phrases.join(", ")}</span>
       {!reduced ? (
         <span
-          className="ml-0.5 inline-block w-[0.55ch] animate-hero-cursor font-medium text-primary"
+          className="ml-0.5 inline-block w-[0.55ch] animate-hero-cursor font-medium text-primary-text"
           aria-hidden
         >
           |

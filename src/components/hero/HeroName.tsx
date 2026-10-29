@@ -65,6 +65,7 @@ export function HeroName({ name, className }: HeroNameProps) {
 
   return (
     <h1
+      aria-label={name}
       className={cn(
         'font-mono text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl',
         className,
@@ -72,7 +73,7 @@ export function HeroName({ name, className }: HeroNameProps) {
     >
       <span
         className="inline-block bg-gradient-to-r from-primary via-foreground to-primary bg-[length:200%_auto] bg-clip-text text-transparent animate-hero-name-gradient"
-        aria-label={name}
+        aria-hidden
       >
         {text}
       </span>

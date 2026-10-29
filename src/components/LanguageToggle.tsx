@@ -145,7 +145,7 @@ export function LanguageToggle() {
                   {code === 'pt-BR' ? m.localeMenu.ptBr : m.localeMenu.enUs}
                 </span>
                 {locale === code ? (
-                  <Check className="size-4 shrink-0 text-primary" aria-hidden />
+                  <Check className="size-4 shrink-0 text-primary-text" aria-hidden />
                 ) : null}
               </button>
             ))}

@@ -144,7 +144,7 @@ export function Navbar() {
         <a
           href="#hero"
           className={cn(
-            'font-mono text-sm font-semibold tracking-tight transition-colors hover:text-primary sm:text-base',
+            'font-mono text-sm font-semibold tracking-tight transition-colors hover:text-primary-text sm:text-base',
             activeSectionId === 'hero'
               ? 'text-foreground'
               : 'text-muted-foreground',
@@ -155,7 +155,7 @@ export function Navbar() {
           }}
         >
           {personal.handle}
-          <span className="text-primary">.</span>
+          <span className="text-primary-text">.</span>
         </a>
 
         <nav
@@ -182,8 +182,8 @@ export function Navbar() {
                   className={cn(
                     'size-4 shrink-0 transition-colors',
                     active
-                      ? 'text-primary'
-                      : 'text-muted-foreground group-hover:text-primary',
+                      ? 'text-primary-text'
+                      : 'text-muted-foreground group-hover:text-primary-text',
                   )}
                   aria-hidden
                 />
@@ -262,8 +262,8 @@ export function Navbar() {
                         className={cn(
                           'size-5 shrink-0 transition-colors',
                           active
-                            ? 'text-primary'
-                            : 'text-muted-foreground group-hover:text-primary',
+                            ? 'text-primary-text'
+                            : 'text-muted-foreground group-hover:text-primary-text',
                         )}
                         aria-hidden
                       />

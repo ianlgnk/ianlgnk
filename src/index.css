@@ -17,6 +17,7 @@
   --color-foreground: hsl(var(--foreground));
 
   --color-primary: hsl(var(--primary));
+  --color-primary-text: hsl(var(--primary-text));
   --color-primary-foreground: hsl(var(--primary-foreground));
 
   --color-secondary: hsl(var(--secondary));
@@ -71,6 +72,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 4%;
     --primary: 142 71% 45%;
+    /* Variante escura do verde para texto sobre fundo claro (≥ 4.5:1). */
+    --primary-text: 142 72% 29%;
     --primary-foreground: 144 61% 9%;
     --secondary: 240 5% 92%;
     --secondary-foreground: 240 6% 12%;
@@ -94,6 +97,7 @@
     --popover: 240 7% 9%;
     --popover-foreground: 0 0% 96%;
     --primary: 142 71% 45%;
+    --primary-text: var(--primary);
     --primary-foreground: 144 61% 9%;
     --secondary: 240 4% 16%;
     --secondary-foreground: 0 0% 96%;
@@ -121,6 +125,11 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* `clip` evita scroll horizontal sem criar scroll container (sticky segue funcionando). */
+  main {
+    overflow-x: clip;
   }
 
   body {
@@ -169,5 +178,17 @@
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: 0ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-hero-name-gradient,
+  .animate-hero-cursor {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

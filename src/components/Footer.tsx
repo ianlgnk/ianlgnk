@@ -126,7 +126,7 @@ export function Footer() {
                 href="https://react.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-green-600 underline-offset-2 transition-colors hover:text-green-500 hover:underline dark:text-green-400 dark:hover:text-green-300"
+                className="font-medium text-green-700 underline-offset-2 transition-colors hover:text-green-500 hover:underline dark:text-green-400 dark:hover:text-green-300"
               >
                 React
               </a>{" "}
@@ -138,7 +138,7 @@ export function Footer() {
                 href="https://tailwindcss.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-green-600 underline-offset-2 transition-colors hover:text-green-500 hover:underline dark:text-green-400 dark:hover:text-green-300"
+                className="font-medium text-green-700 underline-offset-2 transition-colors hover:text-green-500 hover:underline dark:text-green-400 dark:hover:text-green-300"
               >
                 Tailwind
               </a>

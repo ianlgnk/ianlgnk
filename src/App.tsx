@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect } from 'react'
 
+import { useMessages } from '@/locales/use-messages'
+
 import { About } from '@/components/About'
 import { Contact } from '@/components/Contact'
 import { Experience } from '@/components/Experience'
@@ -21,6 +23,8 @@ function scrollToHashElement() {
 }
 
 function App() {
+  const m = useMessages()
+
   useLayoutEffect(() => {
     scrollToHashElement()
   }, [])
@@ -34,8 +38,14 @@ function App() {
   return (
     <div className="min-h-dvh bg-background">
       <DocumentMetaSync />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+      >
+        {m.nav.skipToContent}
+      </a>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1} className="outline-hidden">
         <Hero />
         <About />
         <Experience />

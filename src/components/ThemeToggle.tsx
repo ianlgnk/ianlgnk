@@ -19,7 +19,7 @@ export function ThemeToggle() {
       aria-label={
         isDark ? m.theme.ariaUseLight : m.theme.ariaUseDark
       }
-      className="text-foreground transition-colors hover:text-primary"
+      className="text-foreground transition-colors hover:text-primary-text"
     >
       <motion.span
         key={isDark ? 'sun' : 'moon'}

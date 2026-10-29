@@ -26,6 +26,7 @@ export type Messages = {
     sectionLabelMobile: string
     openMenu: string
     closeMenu: string
+    skipToContent: string
     links: {
       hero: string
       about: string
@@ -83,6 +84,7 @@ export const messages: Record<Locale, Messages> = {
       sectionLabelMobile: 'Mobile',
       openMenu: 'Abrir menu',
       closeMenu: 'Fechar menu',
+      skipToContent: 'Pular para o conteúdo',
       links: {
         hero: 'Início',
         about: 'Sobre',
@@ -141,6 +143,7 @@ export const messages: Record<Locale, Messages> = {
       sectionLabelMobile: 'Mobile',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
+      skipToContent: 'Skip to content',
       links: {
         hero: 'Home',
         about: 'About',

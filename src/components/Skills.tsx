@@ -94,7 +94,7 @@ function categoryScrambleStagger(categoryId: string): {
 function CategoryHeaderIcon({ categoryId }: { categoryId: string }) {
   const Icon = CATEGORY_HEADER_ICON[categoryId] ?? Code2;
   return (
-    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted text-primary">
+    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-border bg-muted text-primary-text">
       <Icon className="size-5" strokeWidth={1.75} aria-hidden />
     </span>
   );
@@ -298,7 +298,7 @@ export function Skills() {
           viewport={view}
           transition={{ duration: 0.45, ease: easeOut }}
         >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
+          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
             <ScrambleText
               text={m.skills.sectionTitle}
               staggerMs={scrambleStagger.skillsSectionTitle}
@@ -322,6 +322,7 @@ export function Skills() {
                 <button
                   key={id}
                   type="button"
+                  aria-pressed={active}
                   onClick={() => setFilter(id)}
                   className={cn(
                     "rounded-lg border px-3.5 py-2 text-sm font-medium transition-colors duration-200 ease-out",

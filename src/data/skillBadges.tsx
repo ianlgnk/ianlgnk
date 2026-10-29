@@ -136,12 +136,12 @@ export const skillVisualByName: Record<string, SkillVisual> = {
   Scrum: meta(
     Kanban,
     "border-primary/35 bg-primary/10 text-foreground",
-    "text-primary",
+    "text-primary-text",
   ),
   Agile: meta(
     Workflow,
     "border-primary/35 bg-primary/10 text-foreground",
-    "text-primary",
+    "text-primary-text",
   ),
 };
 

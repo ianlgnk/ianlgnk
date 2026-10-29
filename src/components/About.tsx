@@ -105,7 +105,7 @@ function MetricCard({
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-mono text-3xl font-semibold tabular-nums tracking-tight text-primary sm:text-4xl">
+          <p className="font-mono text-3xl font-semibold tabular-nums tracking-tight text-primary-text sm:text-4xl">
             {display}
             {suffix}
           </p>
@@ -113,7 +113,7 @@ function MetricCard({
             <ScrambleText text={label} staggerMs={labelStaggerMs} />
           </p>
         </div>
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10 text-primary">
+        <div className="flex size-11 shrink-0 items-center justify-center rounded-md border border-primary/25 bg-primary/10 text-primary-text">
           <Icon className="size-5" aria-hidden />
         </div>
       </div>
@@ -184,7 +184,7 @@ function EducationCard({
           className="flex size-11 shrink-0 items-center justify-center rounded-md border border-border bg-muted/50 text-xl transition-colors group-hover:border-primary/30 group-hover:bg-primary/10"
           aria-hidden
         >
-          <Icon className="size-5 text-primary" />
+          <Icon className="size-5 text-primary-text" />
         </div>
         <div className="min-w-0 flex-1">
           <h3 className="font-semibold leading-snug text-foreground">
@@ -193,7 +193,7 @@ function EducationCard({
           <p className="mt-1 text-sm text-muted-foreground">
             <ScrambleText text={institution} staggerMs={stagger.institution} />
           </p>
-          <p className="mt-2 font-mono text-xs uppercase tracking-wider text-primary">
+          <p className="mt-2 font-mono text-xs uppercase tracking-wider text-primary-text">
             <ScrambleText text={period} staggerMs={stagger.period} />
           </p>
         </div>
@@ -217,7 +217,7 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={view}
             transition={{ duration: 0.4, ease: easeOut }}
-            className="shrink-0 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-primary"
+            className="shrink-0 font-mono text-sm font-semibold uppercase tracking-[0.2em] text-primary-text"
           >
             <ScrambleText
               text={m.about.sectionLabel}

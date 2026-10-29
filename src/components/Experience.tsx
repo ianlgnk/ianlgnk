@@ -159,7 +159,7 @@ function ExperienceCard({
           className={cn(
             "inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium",
             item.current
-              ? "border-primary/40 bg-primary/15 text-primary"
+              ? "border-primary/40 bg-primary/15 text-primary-text"
               : "border-border bg-muted/90 text-muted-foreground",
           )}
         >
@@ -181,7 +181,7 @@ function ExperienceCard({
           href={item.websiteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-block font-medium text-primary underline-offset-2 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="mt-1 inline-block font-medium text-primary-text underline-offset-2 transition-colors hover:text-primary-text/85 hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           {item.company}
         </a>
@@ -331,7 +331,7 @@ export function Experience() {
           viewport={view}
           transition={{ duration: 0.45, ease }}
         >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
+          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
             <ScrambleText
               text={m.experience.sectionTitle}
               staggerMs={scrambleStagger.experienceTitle}

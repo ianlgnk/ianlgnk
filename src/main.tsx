@@ -1,3 +1,4 @@
+import { MotionConfig } from 'framer-motion'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -10,7 +11,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <LocaleProvider>
-        <App />
+        <MotionConfig reducedMotion="user">
+          <App />
+        </MotionConfig>
       </LocaleProvider>
     </ThemeProvider>
   </StrictMode>,

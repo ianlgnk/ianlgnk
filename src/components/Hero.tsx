@@ -50,11 +50,11 @@ export function Hero() {
           <motion.p
             {...enter}
             transition={{ ...enter.transition, delay: 0 }}
-            className="font-mono text-sm text-primary sm:text-base"
+            className="font-mono text-sm text-primary-text sm:text-base"
           >
             <ScrambleText
               text={m.hero.roleTitle}
-              className="font-mono text-sm text-primary sm:text-base"
+              className="font-mono text-sm text-primary-text sm:text-base"
               staggerMs={scrambleStagger.heroRole}
             />
           </motion.p>
@@ -128,7 +128,7 @@ export function Hero() {
               href={personal.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-text"
               aria-label={m.hero.ariaGithub}
             >
               <FaGithub className="size-5" />
@@ -137,7 +137,7 @@ export function Hero() {
               href={personal.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-text"
               aria-label={m.hero.ariaLinkedin}
             >
               <FaLinkedin className="size-5" />
@@ -146,7 +146,7 @@ export function Hero() {
               href={personal.lattes}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-text"
               aria-label={m.hero.ariaLattes}
             >
               <GraduationCap className="size-5" />

@@ -113,7 +113,7 @@ function FormBanner({
           transition={{ duration: 0.28, ease: errEase }}
           className={cn(
             "text-sm",
-            variant === "error" ? "text-destructive" : "text-primary",
+            variant === "error" ? "text-destructive" : "text-primary-text",
           )}
         >
           {children}
@@ -368,7 +368,7 @@ export function Contact() {
             className="space-y-6"
           >
             <div>
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-primary-text">
                 <ScrambleText
                   text={m.contact.label}
                   staggerMs={scrambleStagger.contactLabel}

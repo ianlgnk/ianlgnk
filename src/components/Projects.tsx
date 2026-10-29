@@ -52,7 +52,7 @@ const featuredVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1.02,
+    scale: 1,
     transition: { duration: 0.55, ease: easeOut },
   },
 };
@@ -62,7 +62,7 @@ function statusBadgeClass(status: ProjectStatus) {
     case "in_progress":
       return "border-amber-500/45 bg-amber-500/12 text-amber-800 dark:text-amber-300";
     case "completed":
-      return "border-primary/40 bg-primary/10 text-primary";
+      return "border-primary/40 bg-primary/10 text-primary-text";
     case "archived":
       return "border-border bg-muted text-muted-foreground";
     default:
@@ -152,7 +152,7 @@ function LinkIconButton({
       className={cn(
         "inline-flex size-11 items-center justify-center rounded-full",
         "border border-border bg-card/95 text-card-foreground shadow-lg",
-        "transition-colors duration-200 hover:border-primary/60 hover:bg-primary/10 hover:text-primary",
+        "transition-colors duration-200 hover:border-primary/60 hover:bg-primary/10 hover:text-primary-text",
       )}
     >
       {children}
@@ -184,6 +184,7 @@ function ImageHoverOverlay({
       className={cn(
         "pointer-events-none absolute inset-0 z-10 hidden items-center justify-center gap-3 bg-foreground/55 opacity-0 transition-opacity duration-200",
         "md:flex md:group-hover/image:pointer-events-auto md:group-hover/image:opacity-100",
+        "md:group-focus-within/image:pointer-events-auto md:group-focus-within/image:opacity-100",
       )}
     >
       <div className="flex gap-3">
@@ -231,7 +232,7 @@ function FooterLinks({
           href={gh}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+          className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-text"
           aria-label={formatNamed(m.projects.ariaGithub, { name: displayTitle })}
         >
           <FaGithub className="size-4" />
@@ -242,7 +243,7 @@ function FooterLinks({
           href={demoRaw}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+          className="inline-flex size-10 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-text"
           aria-label={demoLabel}
         >
           <ExternalLink className="size-4" />
@@ -404,7 +405,7 @@ function FeaturedProjectCard({ project }: { project: Project }) {
     >
       <div className="flex flex-1 flex-col justify-center p-6 sm:p-8 lg:order-1 lg:max-w-[55%]">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full border border-primary/35 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+          <span className="inline-flex items-center gap-1 rounded-full border border-primary/35 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary-text">
             <Sparkles className="size-3.5" aria-hidden />
             <ScrambleText
               text={m.projects.featuredLabel}
@@ -592,8 +593,8 @@ function AcademicCollapsible() {
           aria-controls={open ? panelId : undefined}
           onClick={() => setOpen((v) => !v)}
           className={cn(
-            "inline-flex items-center gap-2 self-start rounded-lg text-sm font-medium text-primary transition-colors",
-            "hover:text-primary/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45",
+            "inline-flex items-center gap-2 self-start rounded-lg text-sm font-medium text-primary-text transition-colors",
+            "hover:text-primary-text/80 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45",
             "sm:self-auto",
           )}
         >
@@ -706,7 +707,7 @@ export function Projects() {
           viewport={view}
           transition={{ duration: 0.45, ease: easeOut }}
         >
-          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary">
+          <h2 className="font-mono text-sm font-semibold uppercase tracking-widest text-primary-text">
             <ScrambleText
               text={m.projects.sectionTitle}
               staggerMs={scrambleStagger.projectsTitle}
