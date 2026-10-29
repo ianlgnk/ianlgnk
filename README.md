@@ -97,7 +97,7 @@ Referência aos repositórios que fui construindo na graduação. GIFs e captura
 
 ## Desenvolvimento local
 
-**Requisito:** [Node.js 22](https://nodejs.org/) (ver `.nvmrc` e `engines` no `package.json`).
+**Requisito:** [Node.js 24](https://nodejs.org/) (ver `.nvmrc` e `engines` no `package.json`).
 
 ```bash
 git clone https://github.com/ianlgnk/ianlgnk.git
@@ -130,7 +130,7 @@ Variáveis no `.env` (ver `.env.example`):
 
 O workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) roda em cada **push na `main`**:
 
-1. **Checkout** do repositório e **Node 22** (cache do Yarn).
+1. **Checkout** do repositório e **Node 24** (cache do Yarn).
 2. **`yarn install --frozen-lockfile`** e gravação do `.env` a partir do secret **`ENV`** (variáveis do EmailJS em produção).
 3. **`yarn build`** com `VITE_BASE_PATH=/ianlgnk/` — o Vite gera `dist/` com caminhos corretos para o subpath do GitHub Pages.
 4. **Upload** do artefato e **deploy** no ambiente `github-pages`.
