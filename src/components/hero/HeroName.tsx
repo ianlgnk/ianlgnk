@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 import { cn } from '@/lib/utils'
 
 type HeroNameProps = { name: string; className?: string }
@@ -19,8 +21,14 @@ export function HeroName({ name, className }: HeroNameProps) {
         className,
       )}
     >
-      {words.map((word) => (
-        <span key={word} aria-hidden className="dotmatrix ignite block w-fit">
+      {words.map((word, i) => (
+        <span
+          key={word}
+          aria-hidden
+          data-text={word}
+          className="dotmatrix ignite scan block w-fit"
+          style={{ '--word-delay': `${i * 0.25}s` } as CSSProperties}
+        >
           {word}
         </span>
       ))}

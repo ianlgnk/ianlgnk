@@ -78,6 +78,32 @@
   background-size: 6px 6px;
 }
 
+/*
+ * Varredura rosa por cima do nome: uma cópia do texto (`data-text`) em pontos rosa,
+ * visível só sob uma faixa da máscara. Sem animação ela fica fora da área visível.
+ */
+.scan {
+  position: relative;
+}
+
+.scan::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--accent) 1.6px, transparent 2.1px);
+  background-size: 5px 5px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-mask-image: linear-gradient(90deg, transparent 42%, #000 48%, #000 52%, transparent 58%);
+  mask-image: linear-gradient(90deg, transparent 42%, #000 48%, #000 52%, transparent 58%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+}
+
 /* Cursor retangular rosa. */
 .cursor {
   display: inline-block;
@@ -118,13 +144,16 @@
   }
 }
 
-@keyframes shimmer {
-  0%,
-  100% {
-    opacity: 1;
+/* Faixa que varre o nome da esquerda para a direita e depois some até o próximo ciclo. */
+@keyframes scan {
+  0% {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
   }
-  50% {
-    opacity: 0.82;
+  45%,
+  100% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
   }
 }
 
@@ -150,9 +179,11 @@
   }
 
   .ignite {
-    animation:
-      ignite 1s steps(16) both,
-      shimmer 4s ease-in-out 1.2s infinite;
+    animation: ignite 1.4s steps(20) var(--word-delay, 0s) both;
+  }
+
+  .scan::after {
+    animation: scan 5s ease-in-out calc(1.8s + var(--word-delay, 0s)) infinite;
   }
 
   .type-in {
