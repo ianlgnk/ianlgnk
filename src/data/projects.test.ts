@@ -47,7 +47,7 @@ describe('projects', () => {
     expect(inkaboxe?.links).toEqual([])
   })
 
-  it('uses https links; only Avance Trainer, Pedro Porto and Beerpass have real media for now', () => {
+  it('uses https links; all four projects have real media', () => {
     for (const p of projects) {
       for (const l of p.links) expect(l.href.startsWith('https://')).toBe(true)
     }
@@ -55,6 +55,7 @@ describe('projects', () => {
       'avance-trainer',
       'pedro-porto-design',
       'beerpass-club',
+      'inkaboxe',
     ])
   })
 
@@ -62,6 +63,7 @@ describe('projects', () => {
     ['avance-trainer', 'avance'],
     ['pedro-porto-design', 'pedro-porto'],
     ['beerpass-club', 'beerpass'],
+    ['inkaboxe', 'inkaboxe'],
   ])('gives %s a presentation video per locale, with files in public/', (slug, dir) => {
     const media = bySlug(slug)?.media
     expect(media?.type).toBe('video')

@@ -114,5 +114,21 @@ export const projects: readonly Project[] = [
     tags: ['Python', 'FastAPI', 'DeepFace', 'React', 'PWA', 'Firebase'],
     links: [],
     isPrivate: true,
+    // Gerado por `node scripts/render-video.mjs inkaboxe` a partir de video/inkaboxe/.
+    media: {
+      type: 'video',
+      sources: {
+        'pt-BR': {
+          webm: 'projects/inkaboxe/video-pt.webm',
+          mp4: 'projects/inkaboxe/video-pt.mp4',
+          poster: 'projects/inkaboxe/poster-pt.jpg',
+        },
+        'en-US': {
+          webm: 'projects/inkaboxe/video-en.webm',
+          mp4: 'projects/inkaboxe/video-en.mp4',
+          poster: 'projects/inkaboxe/poster-en.jpg',
+        },
+      },
+    },
   },
 ]
