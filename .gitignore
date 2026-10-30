@@ -27,3 +27,6 @@ dist-ssr
 
 # Visual companion (brainstorming)
 .superpowers/
+
+# Vídeo do portfólio (LinkedIn): gerado, não faz parte do site
+video/portfolio/out/
