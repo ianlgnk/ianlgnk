@@ -25,7 +25,7 @@ export type AboutMessages = {
     collegeTitle: string
     collegeIntro: string
     demo: string
-    items: Record<'bastianetto' | 'tcc-ecommerce', string>
+    items: Record<'react-native-mesmart' | 'bastianetto' | 'tcc-ecommerce', string>
     college: Record<(typeof collegeRepos)[number]['id'], string>
   }
 }
@@ -65,6 +65,7 @@ export const aboutMessagesPtBR: AboutMessages = {
     collegeIntro: 'Repositórios da graduação, para referência.',
     demo: 'demo',
     items: {
+      'react-native-mesmart': "Biblioteca open source de módulos nativos Android para maquininhas POS: leitura RFID (Mifare), impressão térmica e pagamentos com Stone, PagBank e Paystore, em terminais Sunmi, Gertec, PAX e Tectoy. Criada e mantida por Ian, usada nas POS da Beerpass.",
       bastianetto: "Site institucional para o escritório Bastianetto Alessi, feito como freelance.",
       'tcc-ecommerce': "Trabalho de conclusão do curso: plataforma de e-commerce para uma marca independente de roupas.",
     },
@@ -121,6 +122,7 @@ export const aboutMessagesEnUS: AboutMessages = {
     collegeIntro: 'Repositories from my degree, for reference.',
     demo: 'demo',
     items: {
+      'react-native-mesmart': "Open-source library of native Android modules for POS terminals: RFID (Mifare) reading, thermal printing and payments with Stone, PagBank and Paystore, on Sunmi, Gertec, PAX and Tectoy devices. Built and maintained by Ian, used on Beerpass's POS terminals.",
       bastianetto: "Institutional website for the Bastianetto Alessi firm, built as a freelance job.",
       'tcc-ecommerce': "Undergraduate thesis: e-commerce platform for an independent clothing brand.",
     },
