@@ -102,9 +102,9 @@ export function stepDots(dots: Dot[], pointer: Point | null, rings: Ring[] = [])
 
 export type Start = { x: number; y: number; delay: number; phase: number }
 
-const HOLD_MS = 700
-const STAGGER_MS = 700
-const FLIGHT_MS = 1600
+const HOLD_MS = 150
+const STAGGER_MS = 500
+const FLIGHT_MS = 1300
 export const ENTRANCE_MS = HOLD_MS + STAGGER_MS + FLIGHT_MS
 /** Amplitude (px) da flutuação enquanto o ponto espera para partir. */
 const FLOAT = 6
@@ -118,11 +118,12 @@ export function scatterStarts(count: number, width: number, height: number, rand
   }))
 }
 
-const easeInOutCubic = (p: number) => (p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2)
+/** Sai rápido e freia ao chegar: o nome começa a se formar logo que os pontos aparecem. */
+const easeOutCubic = (p: number) => 1 - (1 - p) ** 3
 
 /**
  * Posiciona os pontos no instante `elapsed` (ms) da entrada: rosados flutuando no
- * começo, rosa forte no meio do voo, creme ao chegar. Devolve `true` enquanto algum
+ * começo, rosa forte ao partir, creme ao chegar. Devolve `true` enquanto algum
  * ponto ainda não chegou.
  */
 export function assembleDots(dots: Dot[], starts: Start[], elapsed: number): boolean {
@@ -140,7 +141,7 @@ export function assembleDots(dots: Dot[], starts: Start[], elapsed: number): boo
       continue
     }
     assembling = true
-    const e = easeInOutCubic(p)
+    const e = easeOutCubic(p)
     const fx = s.x + Math.sin(elapsed * 0.0021 + s.phase) * FLOAT
     const fy = s.y + Math.cos(elapsed * 0.0017 + s.phase) * FLOAT
     d.x = fx + (d.hx - fx) * e

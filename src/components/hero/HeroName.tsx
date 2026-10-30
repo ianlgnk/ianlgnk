@@ -8,6 +8,11 @@ type HeroNameProps = { name: string; className?: string }
 /** Se o módulo ou a fonte demorarem mais que isso, o nome em CSS aparece no lugar. */
 const PARTICLES_FALLBACK_MS = 2500
 
+const loadParticles = () => import('@/components/hero/name-particles')
+
+/** O módulo começa a baixar junto com o bundle, sem esperar o Hero montar (só sem movimento reduzido). */
+const preloaded = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? undefined : loadParticles()
+
 /**
  * Liga as partículas do nome (sem movimento reduzido). Módulo e fonte carregam em
  * paralelo com os pontos em CSS escondidos, para a entrada começar dos pontos
@@ -28,7 +33,7 @@ function useNameParticles(h1: React.RefObject<HTMLHeadingElement | null>) {
     const fallback = window.setTimeout(() => el.classList.remove('particles-pending'), PARTICLES_FALLBACK_MS)
 
     void Promise.all([
-      import('@/components/hero/name-particles'),
+      preloaded ?? loadParticles(),
       document.fonts.load(`700 1em ${getComputedStyle(el).fontFamily}`).catch(() => []),
     ])
       .then(([{ mountNameParticles }]) => {

@@ -4,8 +4,10 @@ import {
   assembleDots,
   createDots,
   createRing,
+  ENTRANCE_MS,
   msUntilScan,
   sampleDots,
+  SCAN_START_MS,
   scanCenter,
   scanTint,
   scatterStarts,
@@ -114,7 +116,7 @@ describe('entrance (scattered dots come together)', () => {
     const [s] = scatterStarts(1, 200, 100, () => seq[i++])
     expect(s.x).toBe(100)
     expect(s.y).toBe(25)
-    expect(s.delay).toBe(525)
+    expect(s.delay).toBe(375)
     expect(s.phase).toBeCloseTo(0.628, 3)
   })
 
@@ -124,18 +126,32 @@ describe('entrance (scattered dots come together)', () => {
     expect(dist(dots[0], 400, 300)).toBeLessThanOrEqual(6.01)
   })
 
-  it('has a dot halfway home and glowing pink in the middle of its flight', () => {
+  it('sets off toward the name right after a brief hold, fast from the start', () => {
     const dots = createDots([home])
-    assembleDots(dots, [start], 700 + 800)
-    expect(dots[0].x).toBeGreaterThan(247)
-    expect(dots[0].x).toBeLessThan(253)
+    const total = dist(dots[0], 400, 300)
+    assembleDots(dots, [start], 400)
+    expect(dist(dots[0], home.x, home.y)).toBeLessThan(total * 0.75)
+  })
+
+  it('glows pink as it sets off and cools down as it lands', () => {
+    const dots = createDots([home])
+    assembleDots(dots, [start], 150 + 260)
     expect(dots[0].heat).toBeGreaterThan(0.9)
+    assembleDots(dots, [start], 150 + 1170)
+    expect(dots[0].heat).toBeLessThan(0.1)
+  })
+
+  it('brings even the last dot to leave home within 2 s', () => {
+    const dots = createDots([home])
+    const starts = scatterStarts(1, 800, 600, () => 0.9999)
+    expect(ENTRANCE_MS).toBeLessThanOrEqual(2000)
+    expect(assembleDots(dots, starts, 2000)).toBe(false)
   })
 
   it('lands every dot exactly home and cream when the entrance ends, even the last to leave', () => {
     const dots = createDots([home, { x: 10, y: 10 }])
-    const starts = [start, { x: 0, y: 0, delay: 700, phase: 1 }]
-    expect(assembleDots(dots, starts, 3000)).toBe(false)
+    const starts = [start, { x: 0, y: 0, delay: 500, phase: 1 }]
+    expect(assembleDots(dots, starts, ENTRANCE_MS)).toBe(false)
     expect(dots.map((d) => [d.x, d.y, d.heat])).toEqual([
       [100, 50, 0],
       [10, 10, 0],
@@ -147,23 +163,24 @@ describe('pink sweep over the dots', () => {
   const word = { left: 0, width: 100 }
 
   it('waits for the name to come together before the first sweep', () => {
-    expect(scanCenter(3399, 0, word)).toBeNull()
+    expect(SCAN_START_MS).toBeGreaterThan(ENTRANCE_MS)
+    expect(scanCenter(SCAN_START_MS - 1, 0, word)).toBeNull()
   })
 
   it('sweeps a word from half a word before it to half a word past it', () => {
-    expect(scanCenter(3400, 0, word)).toBe(-50)
-    expect(scanCenter(3400 + 1125, 0, word)).toBeCloseTo(50)
-    expect(scanCenter(3400 + 2250, 0, word)).toBe(150)
+    expect(scanCenter(SCAN_START_MS, 0, word)).toBe(-50)
+    expect(scanCenter(SCAN_START_MS + 1125, 0, word)).toBeCloseTo(50)
+    expect(scanCenter(SCAN_START_MS + 2250, 0, word)).toBe(150)
   })
 
   it('rests between sweeps and repeats every 5 s', () => {
-    expect(scanCenter(3400 + 3000, 0, word)).toBeNull()
-    expect(scanCenter(3400 + 5000, 0, word)).toBe(-50)
+    expect(scanCenter(SCAN_START_MS + 3000, 0, word)).toBeNull()
+    expect(scanCenter(SCAN_START_MS + 5000, 0, word)).toBe(-50)
   })
 
   it('starts the second word a quarter of a second after the first', () => {
-    expect(scanCenter(3400, 1, word)).toBeNull()
-    expect(scanCenter(3650, 1, word)).toBe(-50)
+    expect(scanCenter(SCAN_START_MS, 1, word)).toBeNull()
+    expect(scanCenter(SCAN_START_MS + 250, 1, word)).toBe(-50)
   })
 
   it('tints dots fully in the band core and fades them to nothing at its edges', () => {
@@ -175,9 +192,9 @@ describe('pink sweep over the dots', () => {
   })
 
   it('says how long the loop can sleep until any word sweeps again', () => {
-    expect(msUntilScan(1000, 2)).toBe(2400)
-    expect(msUntilScan(3500, 2)).toBe(0)
-    expect(msUntilScan(3400 + 2400, 2)).toBe(0)
-    expect(msUntilScan(3400 + 3000, 2)).toBe(2000)
+    expect(msUntilScan(SCAN_START_MS - 1000, 2)).toBe(1000)
+    expect(msUntilScan(SCAN_START_MS + 100, 2)).toBe(0)
+    expect(msUntilScan(SCAN_START_MS + 2400, 2)).toBe(0)
+    expect(msUntilScan(SCAN_START_MS + 3000, 2)).toBe(2000)
   })
 })
