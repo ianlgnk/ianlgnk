@@ -1,0 +1,520 @@
+:root {
+  /* Laranja do botão "Cadastrar rosto" do sistema (#E88E24) sobre o fundo escuro dele */
+  --orange: #e88e24;
+  --bg: #120d0b;
+  --page: #16100d;
+  --fg: #f6efe8;
+  --muted: #a39a91;
+  --emerald: #10b981;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+#stage {
+  position: relative;
+  width: 1280px;
+  height: 800px;
+  overflow: hidden;
+  color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+  background:
+    radial-gradient(60% 70% at 80% 55%, rgb(232 142 36 / 0.14), transparent 70%),
+    radial-gradient(40% 50% at 8% 8%, rgb(232 142 36 / 0.06), transparent 70%),
+    var(--bg);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+/* Texto à esquerda, telas à direita */
+.copy {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  width: 410px;
+  transform: translateY(-50%);
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--orange);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--orange);
+}
+
+.title {
+  margin-top: 18px;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.title em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.note {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* Janela de navegador com as telas da gestão (sem endereço: o sistema é privado) */
+.browser {
+  position: absolute;
+  right: 56px;
+  top: 161px; /* (800 - 478) / 2 */
+  width: 704px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--page);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.09),
+    0 40px 90px rgb(0 0 0 / 0.55),
+    0 0 140px rgb(232 142 36 / 0.14);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  background: #221a16;
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+}
+
+.browser-bar i {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.18);
+}
+
+.browser-bar span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 16px;
+  padding: 4px 12px;
+  border-radius: 7px;
+  background: rgb(255 255 255 / 0.06);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.browser-bar span::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--orange);
+}
+
+/* 704 × 440: proporção 16:10 das capturas */
+.browser-view {
+  position: relative;
+  height: 440px;
+  overflow: hidden;
+  background: var(--page);
+}
+
+.browser-view img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+}
+
+/* A mensalidade entra por cima da lista de alunos */
+.browser-view .over {
+  opacity: 0;
+}
+
+#painel .browser-view img {
+  transform-origin: 52% 56%;
+}
+
+#alunos .browser-view img:not(.over) {
+  transform-origin: 18% 62%;
+}
+
+/* Barra lateral e cabeçalho fixos enquanto a página de presenças rola (recortes da própria captura) */
+.pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('./screens/presencas.jpg');
+  background-size: 704px auto;
+  background-position: 0 0;
+}
+
+.pin.side {
+  width: 23.6px;
+  height: 440px;
+}
+
+.pin.head {
+  width: 100%;
+  height: 23.6px;
+}
+
+/* Tablet com a verificação facial */
+.tablet {
+  position: absolute;
+  right: 60px;
+  top: 164px; /* (800 - 472) / 2 */
+  width: 680px;
+  height: 472px;
+  padding: 20px;
+  border-radius: 34px;
+  background: linear-gradient(160deg, #3b3532, #171311 45%, #2c2724);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.08),
+    0 40px 90px rgb(0 0 0 / 0.6),
+    0 0 140px rgb(232 142 36 / 0.14);
+}
+
+.screen {
+  position: relative;
+  width: 640px;
+  height: 432px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #0b0908;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.cam {
+  position: absolute;
+  inset: 0;
+}
+
+/* Botão de menu da câmera (canto superior esquerdo, como na tela do sistema) */
+.cam-menu {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.guide {
+  position: absolute;
+  left: 228px;
+  top: 64px;
+  width: 184px;
+  height: 222px;
+  color: rgb(255 255 255 / 0.75);
+}
+
+.guide svg {
+  position: absolute;
+  inset: 0;
+}
+
+.guide .base {
+  opacity: 0;
+}
+
+.guide .ok {
+  color: var(--emerald);
+  opacity: 0;
+}
+
+.guide .hold {
+  color: var(--orange);
+  opacity: 0;
+}
+
+.scanline {
+  position: absolute;
+  left: 236px;
+  top: 76px;
+  width: 168px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  box-shadow: 0 0 18px 4px rgb(232 142 36 / 0.45);
+  opacity: 0;
+}
+
+.marks {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+/* Mensagens da detecção, embaixo e ao centro */
+.status {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  display: grid;
+  justify-items: center;
+}
+
+.status p {
+  grid-area: 1 / 1;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.62);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.status p.found {
+  background: rgb(16 185 129 / 0.9);
+}
+
+.spin {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgb(255 255 255 / 0.3);
+  border-top-color: #fff;
+  border-radius: 999px;
+}
+
+/* Gaveta com o aluno identificado (sobe por cima da câmera) */
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 330px;
+  padding: 12px 22px 20px;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 18px 18px 0 0;
+  background: var(--page);
+  color: var(--fg);
+  box-shadow: 0 -20px 40px rgb(0 0 0 / 0.5);
+  transform: translateY(340px);
+}
+
+.handle {
+  width: 64px;
+  height: 5px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.sheet-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6ee7b7;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sheet-sub {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.student {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgb(16 185 129 / 0.35);
+  border-radius: 12px;
+  background: rgb(16 185 129 / 0.08);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #3a2b20;
+  color: #f4c58c;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.student b {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.student small {
+  display: block;
+  margin-top: 2px;
+  color: rgb(167 243 208 / 0.8);
+  font-size: 13px;
+}
+
+.fee {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: #a7f3d0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pick {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.chip {
+  padding: 8px 0;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 9px;
+  background: rgb(255 255 255 / 0.03);
+  color: #d9d0c8;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.chip.on {
+  border-color: var(--orange);
+  background: rgb(232 142 36 / 0.16);
+  color: #fff;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  margin-top: 14px;
+  border-radius: 10px;
+  background: var(--emerald);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.toasts {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 10px;
+  background: #221a16;
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.45);
+  opacity: 0;
+}
+
+/* Cena central (abertura e fecho) */
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.center .logo {
+  width: 112px;
+  height: 112px;
+  color: var(--orange);
+}
+
+.center .wordmark {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.center .wordmark span {
+  color: var(--orange);
+}
+
+.center .title {
+  max-width: 940px;
+  margin-top: 22px;
+  font-size: 62px;
+}
+
+.center .title em {
+  white-space: nowrap;
+}
+
+.stack {
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
