@@ -29,6 +29,14 @@ describe('projects', () => {
     })
   })
 
+  it('links Avance Trainer to its site, then the App Store, then Google Play', () => {
+    expect(bySlug('avance-trainer')?.links).toEqual([
+      { kind: 'site', href: 'https://avancetrainer.com' },
+      { kind: 'app-store', href: 'https://apps.apple.com/us/app/avance-for-trainers/id6779684493' },
+      { kind: 'play-store', href: 'https://play.google.com/store/apps/details?id=com.vertebra' },
+    ])
+  })
+
   it('links Beerpass Club to both stores', () => {
     const links = bySlug('beerpass-club')?.links
     expect(links).toContainEqual({

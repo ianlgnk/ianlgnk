@@ -37,7 +37,11 @@ export const projects: readonly Project[] = [
     slug: 'avance-trainer',
     name: 'Avance Trainer',
     tags: ['Expo/React Native', 'React 19', 'Firebase', 'Gemini'],
-    links: [{ kind: 'site', href: 'https://avancetrainer.com' }],
+    links: [
+      { kind: 'site', href: 'https://avancetrainer.com' },
+      { kind: 'app-store', href: 'https://apps.apple.com/us/app/avance-for-trainers/id6779684493' },
+      { kind: 'play-store', href: 'https://play.google.com/store/apps/details?id=com.vertebra' },
+    ],
     // Gerado por `node scripts/render-video.mjs avance` a partir de video/avance/.
     media: {
       type: 'video',
