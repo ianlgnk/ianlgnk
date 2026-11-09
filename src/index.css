@@ -62,11 +62,16 @@
   }
 }
 
-/* Texto em pontos (dot-matrix): o texto real continua no DOM. */
+/*
+ * Texto em pontos (dot-matrix): o texto real continua no DOM. A grade segue a fonte
+ * (5 px a 128 px, piso de 3 px no celular) e o ponto é proporcional à célula
+ * (1,6/2,1 px numa célula de 5 px) — igual a `dotGrid` nas partículas.
+ */
 .dotmatrix {
+  --dot-cell: clamp(3px, 0.0390625em, 5px);
   color: transparent;
-  background-image: radial-gradient(circle, var(--foreground) 1.6px, transparent 2.1px);
-  background-size: 5px 5px;
+  background-image: radial-gradient(circle closest-side, var(--foreground) 64%, transparent 84%);
+  background-size: var(--dot-cell) var(--dot-cell);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -92,8 +97,8 @@
   inset: 0;
   color: transparent;
   pointer-events: none;
-  background-image: radial-gradient(circle, var(--accent) 1.6px, transparent 2.1px);
-  background-size: 5px 5px;
+  background-image: radial-gradient(circle closest-side, var(--accent) 64%, transparent 84%);
+  background-size: var(--dot-cell) var(--dot-cell);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-mask-image: linear-gradient(90deg, transparent 42%, #000 48%, #000 52%, transparent 58%);

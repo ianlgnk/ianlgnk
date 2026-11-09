@@ -12,7 +12,20 @@ type Point = { x: number; y: number }
 type Span = { left: number; width: number }
 
 const CELL = 5
+/** Raio do ponto na grade cheia de `CELL` px. */
+const DOT_RADIUS = 1.7
 const RADIUS = 90
+
+/**
+ * Grade dos pontos pelo tamanho da fonte: 5 px no tamanho cheio (128 px) e encolhe junto
+ * com ela, para cada letra manter o mesmo desenho em pontos. No celular a grade fixa
+ * deixava só ~6 pontos de altura por letra; o piso de 3 px evita pontos que somem.
+ * Em CSS, o mesmo vale para `.dotmatrix` (`clamp(3px, 0.0390625em, 5px)`).
+ */
+export function dotGrid(fontSize: number): { cell: number; radius: number } {
+  const cell = Math.min(CELL, Math.max(3, (fontSize * CELL) / 128))
+  return { cell, radius: (cell * DOT_RADIUS) / CELL }
+}
 const STRENGTH = 6
 const SPRING = 0.06
 const DAMPING = 0.86
@@ -196,12 +209,11 @@ export function msUntilScan(elapsed: number, wordCount: number): number {
 
 /* Montagem no DOM. */
 
-const DOT_RADIUS = 1.7
 /** Tons entre creme (0) e rosa (1); cada um vira um sprite pré-desenhado. */
 const SHADES = 10
 
 /** Rasteriza uma palavra com a mesma fonte do CSS e devolve os pontos (coordenadas da palavra). */
-function wordPoints(el: HTMLElement): Point[] {
+function wordPoints(el: HTMLElement, cell: number): Point[] {
   const style = getComputedStyle(el)
   const width = Math.ceil(el.offsetWidth)
   const height = Math.ceil(el.offsetHeight)
@@ -221,7 +233,7 @@ function wordPoints(el: HTMLElement): Point[] {
   // Mesmo modelo do CSS: a caixa da fonte centralizada na altura da linha.
   const baseline = (height - (ascent + descent)) / 2 + ascent
   ctx.fillText(text, 0, baseline)
-  return sampleDots(ctx.getImageData(0, 0, width, height).data, width, height)
+  return sampleDots(ctx.getImageData(0, 0, width, height).data, width, height, cell)
 }
 
 function hexToRgb(hex: string, fallback: [number, number, number]): [number, number, number] {
@@ -232,10 +244,10 @@ function hexToRgb(hex: string, fallback: [number, number, number]): [number, num
 }
 
 /** Um sprite por tom (creme → rosa, um pouco maior quanto mais rosa), desenhado uma vez. */
-function makeSprites(ink: [number, number, number], accent: [number, number, number], dpr: number) {
+function makeSprites(ink: [number, number, number], accent: [number, number, number], radius: number, dpr: number) {
   return Array.from({ length: SHADES }, (_, b) => {
     const t = b / (SHADES - 1)
-    const r = DOT_RADIUS * (1 + t * 0.35)
+    const r = radius * (1 + t * 0.35)
     const size = Math.ceil(r * 2 + 2)
     const sprite = document.createElement('canvas')
     sprite.width = sprite.height = Math.ceil(size * dpr)
@@ -291,7 +303,8 @@ export function mountNameParticles(h1: HTMLElement, area: HTMLElement, { entranc
     canvas.style.width = `${width}px`
     canvas.style.height = `${height}px`
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    sprites = makeSprites(ink, accent, dpr)
+    const grid = dotGrid(parseFloat(getComputedStyle(h1).fontSize))
+    sprites = makeSprites(ink, accent, grid.radius, dpr)
 
     dots = []
     words = []
@@ -300,7 +313,7 @@ export function mountNameParticles(h1: HTMLElement, area: HTMLElement, { entranc
       const offset = word.getBoundingClientRect()
       const ox = offset.left - box.left
       const oy = offset.top - box.top
-      const points = wordPoints(word)
+      const points = wordPoints(word, grid.cell)
       words.push({ left: ox, width: offset.width })
       owner.push(...points.map(() => wi))
       dots.push(...createDots(points.map((p) => ({ x: p.x + ox, y: p.y + oy }))))

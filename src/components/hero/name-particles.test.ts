@@ -4,6 +4,7 @@ import {
   assembleDots,
   createDots,
   createRing,
+  dotGrid,
   ENTRANCE_MS,
   msUntilScan,
   sampleDots,
@@ -35,6 +36,28 @@ describe('sampleDots', () => {
 
   it('returns nothing for an empty image', () => {
     expect(sampleDots(new Uint8ClampedArray(10 * 10 * 4), 10, 10, 5)).toEqual([])
+  })
+})
+
+describe('dotGrid', () => {
+  it('keeps the 5px grid and 1.7px dots at the full desktop size (128px font)', () => {
+    expect(dotGrid(128)).toEqual({ cell: 5, radius: 1.7 })
+  })
+
+  it('shrinks the grid with the font, so letters keep the same dots in between', () => {
+    const { cell, radius } = dotGrid(96)
+    expect(cell).toBeCloseTo(3.75)
+    expect(radius).toBeCloseTo(1.275)
+  })
+
+  it('tightens the grid to 3px on a phone (~47px font), with dots shrunk to match', () => {
+    const { cell, radius } = dotGrid(46.875)
+    expect(cell).toBe(3)
+    expect(radius).toBeCloseTo(1.02)
+  })
+
+  it('never grows past the 5px grid', () => {
+    expect(dotGrid(200)).toEqual({ cell: 5, radius: 1.7 })
   })
 })
 
