@@ -47,13 +47,13 @@ Senior Software Engineer and Architect with 5+ years of experience building mobi
 
 | Company | Role | Period |
 | :--- | :--- | :--- |
-| **Confidential (current employer)** · Remote | Senior Software Engineer & Architect | Jan 2026 – Present |
+| **[Beerpass Club](https://www.beerpassclub.com/)** · Remote | Senior Software Engineer & Architect | Jan 2026 – Present |
 | | Software Engineer & Architect | May 2023 – Jan 2026 |
 | **Saúde Agora** · Remote | Software Engineer | Oct 2022 – Apr 2023 |
 | | Junior Software Engineer | Oct 2021 – Sep 2022 |
 | **Visão Tecnologia e Sistemas** · Remote | Web Developer | Jun 2021 – Oct 2021 |
 
-Saúde Agora is an all-in-one management platform for clinics and hospitals (Java, Hibernate, PostgreSQL, Vue.js).
+Beerpass Club is a self-service draft beer ecosystem; Saúde Agora is an all-in-one management platform for clinics and hospitals (Java, Hibernate, PostgreSQL, Vue.js).
 
 <br />
 
