@@ -94,11 +94,6 @@ export const messages: Record<Locale, Messages> = {
           description:
             'Arquivo visual e portfólio do designer Pedro Henrique Porto, reconstruído em código, mais uma loja com checkout via Mercado Pago e backend em Cloud Functions.',
         },
-        'beerpass-club': {
-          short: 'App Android/iOS',
-          description:
-            'App do cliente da Beerpass Club, desenvolvido por Ian e publicado no Android e no iOS.',
-        },
         inkaboxe: {
           short: 'Reconhecimento facial',
           description:
@@ -167,11 +162,6 @@ export const messages: Record<Locale, Messages> = {
           short: 'Portfolio + shop',
           description:
             "Visual archive and portfolio of designer Pedro Henrique Porto, rebuilt in code, plus a shop with Mercado Pago checkout and a Cloud Functions backend.",
-        },
-        'beerpass-club': {
-          short: 'Android/iOS app',
-          description:
-            "Beerpass Club's customer app, built by Ian and published on Android and iOS.",
         },
         inkaboxe: {
           short: 'Face recognition',

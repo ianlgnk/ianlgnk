@@ -12,6 +12,6 @@ describe('toggleOpen', () => {
   })
 
   it('switches to another project (only one open at a time)', () => {
-    expect(toggleOpen('avance-trainer', 'beerpass-club')).toBe('beerpass-club')
+    expect(toggleOpen('avance-trainer', 'pedro-porto-design')).toBe('pedro-porto-design')
   })
 })

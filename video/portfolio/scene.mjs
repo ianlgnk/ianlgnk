@@ -30,7 +30,7 @@ export const COPY = {
 export const POSTER_AT = 2
 
 /** Segundo de cada vídeo em que a cena abre: o trecho que melhor mostra o projeto. */
-const VIDEO_OFFSETS = { avance: 6.85, 'pedro-porto': 3.8, beerpass: 3.8, inkaboxe: 13.6 }
+const VIDEO_OFFSETS = { avance: 6.85, 'pedro-porto': 3.8, inkaboxe: 13.6 }
 
 const HEADER = 64
 
@@ -92,7 +92,6 @@ export async function scene(d, t) {
   await openProject(d, 'pedro-porto-design', 1.5)
   await d.say(t.range)
   await d.wait(0.5)
-  await openProject(d, 'beerpass-club', 1.6)
   await openProject(d, 'inkaboxe', 2.2)
 
   // Sobre: o clique é só visual, a navegação de verdade acontece na troca de cena

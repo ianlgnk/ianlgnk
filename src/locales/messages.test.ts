@@ -35,11 +35,6 @@ describe('messages', () => {
     }
   })
 
-  it('describes Beerpass Club in both languages', () => {
-    expect(messages['en-US'].projects.items['beerpass-club'].description).toContain('Beerpass Club')
-    expect(messages['pt-BR'].projects.items['beerpass-club'].description).toContain('Beerpass Club')
-  })
-
   it('gives each page its own document title', () => {
     for (const locale of ['pt-BR', 'en-US'] as const) {
       const { home, about } = messages[locale].document
@@ -47,10 +42,9 @@ describe('messages', () => {
     }
   })
 
-  it('has copy for all four projects', () => {
+  it('has copy for all three projects', () => {
     expect(Object.keys(messages['en-US'].projects.items).sort()).toEqual([
       'avance-trainer',
-      'beerpass-club',
       'inkaboxe',
       'pedro-porto-design',
     ])

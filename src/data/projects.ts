@@ -3,7 +3,6 @@ import type { Locale } from '@/lib/locale'
 export type ProjectSlug =
   | 'avance-trainer'
   | 'pedro-porto-design'
-  | 'beerpass-club'
   | 'inkaboxe'
 
 export type ProjectLink = {
@@ -77,37 +76,6 @@ export const projects: readonly Project[] = [
           webm: 'projects/pedro-porto/video-en.webm',
           mp4: 'projects/pedro-porto/video-en.mp4',
           poster: 'projects/pedro-porto/poster-en.jpg',
-        },
-      },
-    },
-  },
-  {
-    slug: 'beerpass-club',
-    name: 'Beerpass Club',
-    tags: ['React Native', 'Expo'],
-    links: [
-      {
-        kind: 'play-store',
-        href: 'https://play.google.com/store/apps/details?id=com.beerpass.clientapp&hl=pt_BR',
-      },
-      {
-        kind: 'app-store',
-        href: 'https://apps.apple.com/br/app/beerpass-club/id1605400165',
-      },
-    ],
-    // Gerado por `node scripts/render-video.mjs beerpass` a partir de video/beerpass/.
-    media: {
-      type: 'video',
-      sources: {
-        'pt-BR': {
-          webm: 'projects/beerpass/video-pt.webm',
-          mp4: 'projects/beerpass/video-pt.mp4',
-          poster: 'projects/beerpass/poster-pt.jpg',
-        },
-        'en-US': {
-          webm: 'projects/beerpass/video-en.webm',
-          mp4: 'projects/beerpass/video-en.mp4',
-          poster: 'projects/beerpass/poster-en.jpg',
         },
       },
     },

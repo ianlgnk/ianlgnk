@@ -26,9 +26,9 @@ Senior Software Engineer and Architect with 5+ years of experience building mobi
 
 ## Highlights
 
-- **Architecture ownership at Beerpass Club:** POS self-service apps, consumer mobile app, digital menu, back-office platform and in-venue displays. Promoted from Mid-level to Senior for it.
+- **Architecture ownership at my current company:** POS self-service apps, consumer mobile app, digital menu, back-office platform and in-venue displays. Promoted from Mid-level to Senior for it.
 - **Self-service on payment terminals:** adapted the app to run on 8+ POS models across Stone and PagBank, integrating acquirer SDKs and device-specific APIs.
-- **Consumer app redesign, solo:** rebuilt the Beerpass mobile app alone, cutting rage clicks by 20%+.
+- **Consumer app redesign, solo:** rebuilt the company's consumer mobile app alone, cutting rage clicks by 20%+.
 - **Avance Trainer, founder and sole developer:** iOS, Android and web SaaS with AI features, subscriptions and one-push CI/CD (~2,500 commits across 3 repositories).
 
 <br />
@@ -38,7 +38,6 @@ Senior Software Engineer and Architect with 5+ years of experience building mobi
 | Project | What it is | Stack |
 | :--- | :--- | :--- |
 | **[Avance Trainer](https://avancetrainer.com)** | Coaching platform for personal trainers and their clients: workouts, physical assessments, nutrition, engagement and recurring billing. iOS and Android apps plus a web dashboard, all built and operated solo. 5.0 ★ on both stores. | React Native, Expo, React 19, Vite, Firebase, Gemini 2.5 Flash, Asaas, Sentry |
-| **Beerpass Club** ([Google Play](https://play.google.com/store/apps/details?id=com.beerpass.clientapp&hl=pt_BR) · [App Store](https://apps.apple.com/br/app/beerpass-club/id1605400165)) | Self-service draft beer ecosystem. I own the architecture and redesigned and built the consumer mobile app. | React Native, TypeScript, Kotlin, Java, Node.js, Firebase, Expo/EAS |
 | **[Pedro Porto Studios Store](https://shop.pedroportodesign.online)** | Print-on-demand clothing store for designer Pedro Porto (pre-launch), built alone: Mercado Pago checkout (card and Pix), shipping via Melhor Envio, plus the designer's [portfolio site](https://pedroportodesign.online) rebuilt in code. | React 19, Vite, TypeScript, Firebase, Cloud Functions, Mercado Pago |
 | **InkaBoxe** | Offline facial-recognition check-in system for a martial arts academy: a Python API runs on an Android tablet via Termux and recognizes faces fully on-device, with no cloud dependency or recurring cost. Managed through a React PWA. Private repositories. | Python, FastAPI, DeepFace, OpenCV, React, Firebase |
 
@@ -48,13 +47,13 @@ Senior Software Engineer and Architect with 5+ years of experience building mobi
 
 | Company | Role | Period |
 | :--- | :--- | :--- |
-| **[Beerpass Club](https://www.beerpassclub.com/)** · Remote | Senior Software Engineer & Architect | Jan 2026 – Present |
+| **Confidential (current employer)** · Remote | Senior Software Engineer & Architect | Jan 2026 – Present |
 | | Software Engineer & Architect | May 2023 – Jan 2026 |
 | **Saúde Agora** · Remote | Software Engineer | Oct 2022 – Apr 2023 |
 | | Junior Software Engineer | Oct 2021 – Sep 2022 |
 | **Visão Tecnologia e Sistemas** · Remote | Web Developer | Jun 2021 – Oct 2021 |
 
-Beerpass Club is a self-service draft beer ecosystem; Saúde Agora is an all-in-one management platform for clinics and hospitals (Java, Hibernate, PostgreSQL, Vue.js).
+Saúde Agora is an all-in-one management platform for clinics and hospitals (Java, Hibernate, PostgreSQL, Vue.js).
 
 <br />
 
