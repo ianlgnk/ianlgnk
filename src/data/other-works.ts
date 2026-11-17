@@ -1,7 +1,7 @@
 export type WorkLink = { label: string; href: string }
 
 export type OtherWork = {
-  id: 'react-native-mesmart' | 'bastianetto' | 'tcc-ecommerce'
+  id: 'bastianetto' | 'tcc-ecommerce'
   /** Nome próprio: não é traduzido. */
   name: string
   year: string
@@ -11,16 +11,6 @@ export type OtherWork = {
 
 /** Trabalhos fora do currículo principal. Textos por locale: `messages.about.otherWorks.items`. */
 export const otherWorks: readonly OtherWork[] = [
-  {
-    id: 'react-native-mesmart',
-    name: 'react-native-mesmart',
-    year: '2024–2026',
-    tags: ['React Native', 'Kotlin', 'TypeScript', 'Android'],
-    links: [
-      { label: 'github', href: 'https://github.com/ianlgnk/react-native-mesmart' },
-      { label: 'npm', href: 'https://www.npmjs.com/package/react-native-mesmart' },
-    ],
-  },
   {
     id: 'bastianetto',
     name: 'Bastianetto Alessi',

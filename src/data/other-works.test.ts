@@ -3,18 +3,16 @@ import { describe, expect, it } from 'vitest'
 import { collegeRepos, otherWorks } from './other-works'
 
 describe('otherWorks', () => {
-  it('lists the react-native-mesmart library first, then Bastianetto Alessi (freelance, 2021) and the thesis', () => {
-    expect(otherWorks.map((w) => w.id)).toEqual(['react-native-mesmart', 'bastianetto', 'tcc-ecommerce'])
+  it('lists Bastianetto Alessi (freelance, 2021), then the thesis', () => {
+    expect(otherWorks.map((w) => w.id)).toEqual(['bastianetto', 'tcc-ecommerce'])
     const b = otherWorks.find((w) => w.id === 'bastianetto')
     expect(b?.year).toBe('2021')
     expect(b?.links).toContainEqual({ label: 'bastianettoalessi.com.br', href: 'https://www.bastianettoalessi.com.br/' })
   })
 
-  it('links the react-native-mesmart library to its public repository and npm package', () => {
-    expect(otherWorks.find((w) => w.id === 'react-native-mesmart')?.links).toEqual([
-      { label: 'github', href: 'https://github.com/ianlgnk/react-native-mesmart' },
-      { label: 'npm', href: 'https://www.npmjs.com/package/react-native-mesmart' },
-    ])
+  it('does not link anything from the Beerpass private code (contract, clauses 8 and 9)', () => {
+    const hrefs = otherWorks.flatMap((w) => w.links.map((l) => l.href))
+    expect(hrefs.some((h) => h.includes('mesmart'))).toBe(false)
   })
 
   it('links the thesis to the published monograph and its two repositories', () => {
